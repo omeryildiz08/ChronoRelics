@@ -12,6 +12,8 @@ public class SaveManager : MonoBehaviour
     public List<MergeableItemData> AllGameItems;
     private string saveFilePath;
 
+    public List<string> CurrentInventory = new List<string>();
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -42,6 +44,15 @@ public class SaveManager : MonoBehaviour
                 Debug.LogError($"KRİTİK: Çakışan ID tespit edildi: {item.ItemID}");
             
             ids.Add(item.ItemID);
+        }
+    }
+    public void AddRewardToInventory(string itemID)
+    {
+        if(!string.IsNullOrEmpty(itemID))
+        {
+            CurrentInventory.Add(itemID);
+            Debug.Log($"Envantere eklendi: {itemID}");
+            SaveGame();
         }
     }
     [ContextMenu("Save Game")]
@@ -80,6 +91,7 @@ public class SaveManager : MonoBehaviour
             }
 
         }
+        data.InventoryItemIDs = new List<string>(CurrentInventory);
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);
@@ -102,7 +114,8 @@ public class SaveManager : MonoBehaviour
 
         string json = File.ReadAllText(saveFilePath);
         GameSaveData data = JsonUtility.FromJson<GameSaveData>(json);
-
+        
+        CurrentInventory = new List<string>(data.InventoryItemIDs);
         //gridi yeniden inşa
         foreach (TileSaveData tileData in data.SavedTiles)
         {
@@ -140,7 +153,7 @@ public class SaveManager : MonoBehaviour
             }
         }
         Debug.Log("Oyun Yuklendi: " + saveFilePath);
-        
+        Debug.Log($"Oyun Yüklendi! Envanterde {CurrentInventory.Count} eşya var.");
 
     }
 

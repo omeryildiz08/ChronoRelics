@@ -6,6 +6,8 @@ public class GameSaveData
 {
   
     public List<TileSaveData> SavedTiles = new List<TileSaveData>();
+
+    public List<string> InventoryItemIDs = new List<string>();
 }
 
 [System.Serializable]
