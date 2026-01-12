@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 08ae2b4d81d529f4284f89a177f2d3b7
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Vipnagorgialla
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 408331d099411f74a83f89e6d30ab186, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
