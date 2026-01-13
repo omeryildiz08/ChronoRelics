@@ -5,6 +5,7 @@
   <Project Path="Unity.Services.Core.Telemetry.csproj" />
   <Project Path="Unity.VisualScripting.State.csproj" />
   <Project Path="Unity.VisualScripting.Core.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.Services.Core.Environments.Internal.csproj" />
   <Project Path="Unity.TextMeshPro.csproj" />
   <Project Path="Unity.Timeline.csproj" />
@@ -12,7 +13,6 @@
   <Project Path="Unity.Services.Core.Environments.csproj" />
   <Project Path="Unity.Services.Core.Internal.csproj" />
   <Project Path="Unity.Services.Core.Analytics.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.Services.Core.Scheduler.csproj" />
   <Project Path="Unity.Services.Core.Registration.csproj" />
   <Project Path="Unity.Services.Core.Device.csproj" />
