@@ -1724,7 +1724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802b6ce50eb25de4099806ba16bedf62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anomalyChance: 99
+  anomalyChance: 10
   riftEffectPrefab: {fileID: 0}
 --- !u!4 &1048309921
 Transform:
