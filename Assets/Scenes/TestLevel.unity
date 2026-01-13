@@ -156,7 +156,7 @@ RectTransform:
   m_Children:
   - {fileID: 812456309}
   m_Father: {fileID: 162214345}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1951,8 +1951,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6bd6790995b4fa42b4559775fa351e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 50
-  gridHeight: 50
+  gridWidth: 10
+  gridHeight: 10
 --- !u!4 &1717666062
 Transform:
   m_ObjectHideFlags: 0

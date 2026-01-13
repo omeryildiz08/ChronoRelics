@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -58,6 +59,13 @@ public class SaveManager : MonoBehaviour
     [ContextMenu("Save Game")]
     public void SaveGame()
     {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene != "BaseScene") 
+        {
+            SaveInventoryOnly();
+            return;
+        }
         GridManager gridManager = GridManager.Instance;
         if (gridManager == null)
         {
@@ -95,7 +103,7 @@ public class SaveManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);
-        Debug.Log($"Oyun Kaydedildi:  + {saveFilePath}");
+       Debug.Log($"Base Durumu Kaydedildi: {saveFilePath}");
     }
 
     [ContextMenu("Load Game")]
@@ -156,6 +164,15 @@ public class SaveManager : MonoBehaviour
         Debug.Log($"Oyun Yüklendi! Envanterde {CurrentInventory.Count} eşya var.");
 
     }
+    [ContextMenu("Delete Save File")]
+    public void DeleteSaveFile()
+    {
+        if (File.Exists(saveFilePath))
+        {
+            File.Delete(saveFilePath);
+            Debug.Log("Save dosyası silindi! Temiz başlangıç.");
+        }
+    }
 
     private void ClearCurrentScene(GridManager gridManager)
     {
@@ -176,8 +193,27 @@ public class SaveManager : MonoBehaviour
             }
         }
     }
+    private void SaveInventoryOnly()
+    {
+        GameSaveData data ; 
+        if (File.Exists(saveFilePath))
+        {
+            string existingJson = File.ReadAllText(saveFilePath);
+            data = JsonUtility.FromJson<GameSaveData>(existingJson);
+        }
+        else
+        {
+          
+            data = new GameSaveData();
+        }
+        data.InventoryItemIDs = new List<string>(CurrentInventory);
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(saveFilePath, json);
+        
+        Debug.Log("Sadece Envanter Güncellendi (Level Modu).");
+    }
 
-    private MergeableItemData GetItemDataByID(string id)
+    public MergeableItemData GetItemDataByID(string id)
     {
         foreach (var item in AllGameItems)
         {

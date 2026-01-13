@@ -116,6 +116,24 @@ public class GridManager : MonoBehaviour
             }
         }
     }
+    public Vector2Int? GetFirstEmptyPosition()
+{
+    for (int y = 0; y < gridHeight; y++)
+    {
+        for (int x = 0; x < gridWidth; x++)
+        {
+            
+            if (IsValidPosition(new Vector2Int(x, y)) && 
+                grid[x, y].TileView != null && 
+                grid[x, y].IsEmpty && 
+                !grid[x, y].isLocked)
+            {
+                return new Vector2Int(x, y);
+            }
+        }
+    }
+    return null; 
+}
 
     private void PerformMerge(List<MergeableObject> mergeGroup, Vector2Int mergeCenterPos)
     {
