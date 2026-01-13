@@ -84,7 +84,7 @@ public class AnomalyManager : MonoBehaviour
           
             LockTileAt(targetPos);
             
-            Debug.LogWarning($"ZAMAN YARIĞI OLUŞTU! Konum: {targetPos}");
+            Debug.Log($"ZAMAN YARIĞI OLUŞTU! Konum: {targetPos}");
         }
     }
 
