@@ -45,6 +45,7 @@ public class MergeableObject : MonoBehaviour
         if (gridManager.IsTileLocked(CurrentGridPosition))
         {
             Debug.Log("Bu obje kilitli sürüklenemez");
+            gridManager.PlayErrorSound();
             return;
             //buraya animasyon veya ses gelebilir
         }

@@ -15,6 +15,7 @@ public class GridManager : MonoBehaviour
     [Header("Görsel ve Ses Efektleri")]
     public GameObject mergeVFXPrefab;
     public AudioClip mergeSoundClip;
+    public AudioClip errorSoundClip;
     public AudioSource audioSource;
 
     public GridTileData[,] grid;
@@ -61,6 +62,16 @@ public class GridManager : MonoBehaviour
 
         grid[position.x, position.y].ObjectOnTile = obj;
     }
+    public void PlayErrorSound()
+    {
+        if (audioSource != null && errorSoundClip != null)
+        {
+            
+            // audioSource.pitch = Random.Range(0.9f, 1.1f); 
+            
+            audioSource.PlayOneShot(errorSoundClip);
+        }
+    }
 
 
     public void TryMergeOrPlace(MergeableObject movingObject, Vector2Int fromPos, Vector2Int toPos)
@@ -74,6 +85,7 @@ public class GridManager : MonoBehaviour
         }
         if (IsTileLocked(toPos))
         {
+            PlayErrorSound();
             SnapObjectToPosition(movingObject, fromPos);
             return;
         }
