@@ -6360,9 +6360,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllGameItems:
-  - {fileID: 11400000, guid: fc6db83e2c48c1946875d5e0e6349e16, type: 2}
-  - {fileID: 11400000, guid: 0f4b17cc5b1d59f448bcde79f37b9528, type: 2}
-  - {fileID: 11400000, guid: 34f3284a1bdbba24c95ca6d9f6e758f2, type: 2}
+  - {fileID: 11400000, guid: 3c4ee50f7e6cf9f46a2e85dc116655d5, type: 2}
+  - {fileID: 11400000, guid: b2117c6a94fb7a244b95230dae7e6d72, type: 2}
+  - {fileID: 11400000, guid: c1300ac870f9ec642a7f2057a1a30bbc, type: 2}
+  - {fileID: 11400000, guid: d261a03fd6e1f6f45b1db162b4f9f880, type: 2}
+  - {fileID: 11400000, guid: 65f86aad809a0d24eac54304001c7fcb, type: 2}
+  - {fileID: 11400000, guid: 10fe76168a0881a43b0f0dad6cc85e6e, type: 2}
+  - {fileID: 11400000, guid: d689709d54bddfc4daffe83385134fae, type: 2}
   CurrentInventory: []
 --- !u!1 &2095035556
 GameObject:

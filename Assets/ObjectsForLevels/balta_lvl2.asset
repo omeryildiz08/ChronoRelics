@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
+  m_Name: balta_lvl2
+  m_EditorClassIdentifier: 
+  ItemID: baltalvl2
+  ItemName: balta
+  Level: 2
+  Prefab: {fileID: 5719722979317295919, guid: 855db46353882bd40a32165bfd90c756, type: 3}
+  NextLevelItem: {fileID: 11400000, guid: c1300ac870f9ec642a7f2057a1a30bbc, type: 2}
+  SellPrice: 0
+  BuyPrice: 0
+  FacilityPoint: 0

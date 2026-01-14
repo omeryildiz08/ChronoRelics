@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
+  m_Name: hancer_lvl1
+  m_EditorClassIdentifier: 
+  ItemID: hancerlvl1
+  ItemName: hancer
+  Level: 1
+  Prefab: {fileID: 8464904621304488414, guid: c73c67cc311538349958441ac04cba3a, type: 3}
+  NextLevelItem: {fileID: 11400000, guid: b2117c6a94fb7a244b95230dae7e6d72, type: 2}
+  SellPrice: 0
+  BuyPrice: 0
+  FacilityPoint: 0
