@@ -180,7 +180,7 @@ public class GridManager : MonoBehaviour
                 
                 audioSource.PlayOneShot(mergeSoundClip);
             }
-            GameObject newObj = Instantiate(nextLevelData.Prefab, spawnPos, Quaternion.identity);
+            GameObject newObj = Instantiate(nextLevelData.Prefab, spawnPos,nextLevelData.Prefab.transform.rotation);
 
             MergeableObject newMergeable = newObj.GetComponent<MergeableObject>();
             if (newMergeable != null)

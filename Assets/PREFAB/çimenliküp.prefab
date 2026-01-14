@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridPosition: {x: 6, y: 0}
-  objectYOffset: 0.8
+  objectYOffset: 1
   StartLocked: 0
   MyMeshRenderer: {fileID: 147013163973680960}
   LockedMaterial: {fileID: 2100000, guid: 120c2c184fa3a7e4fac538ee3d4316e7, type: 2}
