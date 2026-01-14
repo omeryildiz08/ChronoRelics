@@ -14,6 +14,10 @@ public class LevelManager : MonoBehaviour
 
    [Header("Sahne Ayarları")]
    public string BaseSceneName ="BaseScene";
+   [Header("Audio Settings")]
+    public AudioSource audioSource;       
+    public AudioClip levelCompleteSound;
+
 
    private bool isLevelCompleted = false;
 
@@ -45,9 +49,14 @@ public class LevelManager : MonoBehaviour
 
     private void CompleteLevel()
     {
+
         isLevelCompleted = true;
         Debug.Log("Seviye Tamamlandı!");
-
+        if (audioSource != null && levelCompleteSound != null)
+        {
+            audioSource.PlayOneShot(levelCompleteSound);
+        }
+        
         if(SaveManager.Instance != null && RewardItem != null)
         {
             SaveManager.Instance.AddRewardToInventory(RewardItem.ItemID);

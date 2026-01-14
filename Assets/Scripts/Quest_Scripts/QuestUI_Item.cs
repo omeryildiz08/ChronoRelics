@@ -15,6 +15,9 @@ public class QuestUI_Item : MonoBehaviour
     private LevelQuestData myQuestData;
     private int currentAmount;
     private bool isCompleted = false;
+    [Header("Sfx Referansları")]
+    public AudioClip QuestTabSound;
+    public AudioSource audioSource;
 
     public void Setup(LevelQuestData data)
     {
@@ -30,6 +33,10 @@ public class QuestUI_Item : MonoBehaviour
 
     public void ToggleDescription()
     {
+        if (audioSource != null && QuestTabSound != null)
+        {
+            audioSource.PlayOneShot(QuestTabSound);
+        }
         bool isActive = DescriptionPanel.activeSelf;
         DescriptionPanel.SetActive(!isActive);
         Debug.Log("görev tab açıldı");
