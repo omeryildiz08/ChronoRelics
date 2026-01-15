@@ -13,6 +13,7 @@ public class AnomalyManager : MonoBehaviour
     [Header("Görsel Efektler")]
     [Tooltip("Kilitlenen karenin üzerinde çıkacak efekt (Particle System vb.)")]
     public GameObject riftEffectPrefab;
+    public GameObject persistentRiftEffectPrefab;
 
     private GridManager gridManager;
     private void Awake()
@@ -103,6 +104,7 @@ public class AnomalyManager : MonoBehaviour
             {
                 Vector3 worldPos = gridManager.grid[pos.x, pos.y].TileView.GetWorldPosition();
                 Instantiate(riftEffectPrefab, worldPos, Quaternion.identity);
+                Instantiate(persistentRiftEffectPrefab, worldPos, Quaternion.identity);
             }
         }
     }

@@ -422,7 +422,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/1 Renk:Mavi
+  m_text: 0/1 cekic
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 552072f3ebe096f4b98cee2d6a503fe6, type: 2}
   m_sharedMaterial: {fileID: -3430635475279309163, guid: 552072f3ebe096f4b98cee2d6a503fe6, type: 2}
@@ -711,7 +711,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "1 adet mavi top \xFCret"
+  m_text: 1 adet cekic uret
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 552072f3ebe096f4b98cee2d6a503fe6, type: 2}
   m_sharedMaterial: {fileID: -3430635475279309163, guid: 552072f3ebe096f4b98cee2d6a503fe6, type: 2}
@@ -738,8 +738,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.24
-  m_fontSizeBase: 20.24
+  m_fontSize: 29
+  m_fontSizeBase: 29
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

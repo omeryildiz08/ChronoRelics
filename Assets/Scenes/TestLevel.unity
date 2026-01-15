@@ -2577,6 +2577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anomalyChance: 90
   riftEffectPrefab: {fileID: 193692, guid: 2aa1e7c21640d254492fa8035a6411e1, type: 3}
+  persistentRiftEffectPrefab: {fileID: 0}
 --- !u!4 &1048309921
 Transform:
   m_ObjectHideFlags: 0

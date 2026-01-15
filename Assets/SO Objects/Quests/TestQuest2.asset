@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d2391dc1ecdaba4284fd16d82acaf31, type: 3}
   m_Name: TestQuest2
   m_EditorClassIdentifier: 
-  Description: Produce 1 blue sphere
+  Description: 1 ADET GURZ URET
   Icon: {fileID: 21300000, guid: 5d00da692c997ae43b6eb546bb5b9283, type: 3}
   questType: 0
-  TargetItem: {fileID: 11400000, guid: 34f3284a1bdbba24c95ca6d9f6e758f2, type: 2}
+  TargetItem: {fileID: 11400000, guid: d689709d54bddfc4daffe83385134fae, type: 2}
   RequiredAmount: 1
