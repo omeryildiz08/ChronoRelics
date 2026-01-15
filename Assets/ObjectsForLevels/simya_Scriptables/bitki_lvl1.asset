@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
+  m_Name: bitki_lvl1
+  m_EditorClassIdentifier: 
+  ItemID: bitkilvl1
+  ItemName: bitki
+  Level: 1
+  Prefab: {fileID: 7999097898733773427, guid: 0dd7ccaaa8fd1c640870fea7c15a1412, type: 3}
+  NextLevelItem: {fileID: 11400000, guid: ede05ccae6e0817409abe15af8314881, type: 2}
+  SellPrice: 0
+  BuyPrice: 0
+  FacilityPoint: 0
