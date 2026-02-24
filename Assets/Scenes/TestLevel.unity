@@ -2576,8 +2576,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anomalyChance: 90
+  enableType1: 0
   riftEffectPrefab: {fileID: 193692, guid: 2aa1e7c21640d254492fa8035a6411e1, type: 3}
-  persistentRiftEffectPrefab: {fileID: 0}
+  persistentRiftEffectPrefab: {fileID: 1548498989132598, guid: beb57d582b696b645928b556533430b2, type: 3}
+  enableType2: 1
+  type2ActivationChance: 100
+  allowMultipleType2ActivationsPerMerge: 0
+  initialAnomalyOrbTiles:
+  - {fileID: 1370529186}
+  keepOrbsWithinConfiguredTiles: 1
+  anomalyOrbEffectPrefab: {fileID: 4362927759568543434, guid: 29ae23ae9e61bcb4e9f012385d032fc5, type: 3}
+  lockOpenTileWeight: 40
+  swapLockedItemWeight: 25
+  spawnForeignItemWeight: 20
+  teleportOrbWeight: 15
+  foreignEraItems:
+  - {fileID: 11400000, guid: 34f3284a1bdbba24c95ca6d9f6e758f2, type: 2}
+  verboseType2Logs: 1
+  forcedType2Effect: 4
 --- !u!4 &1048309921
 Transform:
   m_ObjectHideFlags: 0
@@ -3048,6 +3064,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
+--- !u!114 &1370529186 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1570593056532956098, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
+  m_PrefabInstance: {fileID: 1516873578}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44a543724a19de54c929e9b1984995dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1516873578
 PrefabInstance:
   m_ObjectHideFlags: 0

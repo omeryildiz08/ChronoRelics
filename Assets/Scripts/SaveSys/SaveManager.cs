@@ -131,12 +131,7 @@ public class SaveManager : MonoBehaviour
             
             if (tileData.IsLocked)
             {
-               
-                gridManager.grid[pos.x, pos.y].isLocked = true;
-                if(gridManager.grid[pos.x, pos.y].TileView != null)
-                {
-                    gridManager.grid[pos.x, pos.y].TileView.UpdateVisuals(true);
-                }   
+                gridManager.LockTile(pos);
             }
             else
             {

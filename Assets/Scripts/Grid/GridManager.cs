@@ -21,6 +21,7 @@ public class GridManager : MonoBehaviour
     public GridTileData[,] grid;
 
     public event Action<MergeableItemData> OnMergeCompleted;
+    public event Action<Vector2Int, bool> OnTileLockStateChanged;
     private void Awake()
     {
 
@@ -296,11 +297,45 @@ public class GridManager : MonoBehaviour
     public void UnlockTile(Vector2Int pos)
     {
         if (!IsValidPosition(pos)) return;
+        if (grid[pos.x, pos.y].TileView == null) return;
+
+        if (!grid[pos.x, pos.y].isLocked) return;
+
         grid[pos.x, pos.y].isLocked = false;
 
-        if (grid[pos.x, pos.y].TileView != null)
+        grid[pos.x, pos.y].TileView.UpdateVisuals(false);
+        OnTileLockStateChanged?.Invoke(pos, false);
+    }
+
+    public void LockTile(Vector2Int pos)
+    {
+        if (!IsValidPosition(pos)) return;
+        if (grid[pos.x, pos.y].TileView == null) return;
+
+        if (grid[pos.x, pos.y].isLocked) return;
+
+        grid[pos.x, pos.y].isLocked = true;
+        grid[pos.x, pos.y].TileView.UpdateVisuals(true);
+        OnTileLockStateChanged?.Invoke(pos, true);
+    }
+
+    public bool ForceMoveObject(MergeableObject obj, Vector2Int toPos)
+    {
+        if (obj == null) return false;
+        if (!IsValidPosition(toPos)) return false;
+        if (grid[toPos.x, toPos.y].TileView == null) return false;
+        if (grid[toPos.x, toPos.y].ObjectOnTile != null) return false;
+        if (grid[toPos.x, toPos.y].isLocked) return false;
+
+        Vector2Int fromPos = obj.CurrentGridPosition;
+        if (IsValidPosition(fromPos) && grid[fromPos.x, fromPos.y].ObjectOnTile == obj)
         {
-            grid[pos.x, pos.y].TileView.UpdateVisuals(false);
+            ClearCell(fromPos);
         }
+
+        RegisterObject(obj, toPos);
+        obj.CurrentGridPosition = toPos;
+        SnapObjectToPosition(obj, toPos);
+        return true;
     }
 }

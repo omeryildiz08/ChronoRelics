@@ -3,6 +3,7 @@
 public class MergeableObject : MonoBehaviour
 {
     public MergeableItemData ItemData;
+    public bool IsInactiveAnomalyItem = false;
 
     public Vector2Int CurrentGridPosition;
 
@@ -42,6 +43,12 @@ public class MergeableObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (IsInactiveAnomalyItem)
+        {
+            gridManager.PlayErrorSound();
+            return;
+        }
+
         if (gridManager.IsTileLocked(CurrentGridPosition))
         {
             Debug.Log("Bu obje kilitli sürüklenemez");

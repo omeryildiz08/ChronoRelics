@@ -38,8 +38,7 @@ public class GridTileView : MonoBehaviour
         gridManager.RegisterTile(this, GridPosition);
         if (StartLocked)
         {
-            gridManager.grid[GridPosition.x, GridPosition.y].isLocked = true;
-            UpdateVisuals(true);
+            gridManager.LockTile(GridPosition);
         }
         else
         {

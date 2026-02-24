@@ -15,5 +15,5 @@ MonoBehaviour:
   Description: 1 adet cekic uret
   Icon: {fileID: 21300000, guid: 5d00da692c997ae43b6eb546bb5b9283, type: 3}
   questType: 0
-  TargetItem: {fileID: 11400000, guid: 10fe76168a0881a43b0f0dad6cc85e6e, type: 2}
+  TargetItem: {fileID: 11400000, guid: d689709d54bddfc4daffe83385134fae, type: 2}
   RequiredAmount: 1
