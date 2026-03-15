@@ -15,7 +15,7 @@ GDD’de olup henüz uygulanmayan mekanikler (kod boşlukları):
 - Anomaly Market (fiyatlarla sat/al, erişim koşulları).
 - Facility Power (base genişleme eşikleri ve grid açma).
 - Kapalı Grid detayları (kilitli tile merge’e dahil olunca açılır, kısmen ele alındı).
-- Anomali Zaman Yarığı davranışı (merge sonrası 3x3 etki, rastgele olasılık).
+- Anomali Zaman Yarığı davranışı (merge sonrası 3x3 etki, rastgele olasılık). - yapıldı
 - Quest sistemi genişlemesi (diğer quest türleri, ödüller, zincirleme).
 - Zaman kırılması / merge sayısı limiti ve cezalar.
 - Research binası mantığı (item tüketimi, hikaye/teknoloji çıktısı).
