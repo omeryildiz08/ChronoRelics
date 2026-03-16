@@ -8,6 +8,8 @@ public class GameSaveData
     public List<TileSaveData> SavedTiles = new List<TileSaveData>();
 
     public List<string> InventoryItemIDs = new List<string>();
+
+    public int TimeCredits = 0;
 }
 
 [System.Serializable]

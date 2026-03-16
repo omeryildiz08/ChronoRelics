@@ -14,6 +14,7 @@ public class SaveManager : MonoBehaviour
     private string saveFilePath;
 
     public List<string> CurrentInventory = new List<string>();
+    public int CurrentTimeCredits = 0;
 
     private void Awake()
     {
@@ -55,6 +56,30 @@ public class SaveManager : MonoBehaviour
             Debug.Log($"Envantere eklendi: {itemID}");
             SaveGame();
         }
+    }
+    public void AddTimeCredits(int amount)
+    {
+        if(amount <=0) return;
+
+        CurrentTimeCredits += amount;
+        Debug.Log($"Zaman Kredisi eklendi: +{amount}. Toplam: {CurrentTimeCredits}");
+        SaveGame();
+    }
+
+    public bool CanAfford(int amount)
+    {
+        return amount > 0 && CurrentTimeCredits >= amount;
+    }
+
+    public bool SpendTimeCredits(int amount)
+    {
+        if(amount<= 0) return false ; 
+        if (!CanAfford(amount))return false ; 
+
+        CurrentTimeCredits -= amount;
+        Debug.Log($"Zaman Kredisi harcandı: {amount}");
+        SaveGame();
+        return true;
     }
     [ContextMenu("Save Game")]
     public void SaveGame()
@@ -100,6 +125,7 @@ public class SaveManager : MonoBehaviour
 
         }
         data.InventoryItemIDs = new List<string>(CurrentInventory);
+        data.TimeCredits = CurrentTimeCredits;
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);
@@ -124,6 +150,7 @@ public class SaveManager : MonoBehaviour
         GameSaveData data = JsonUtility.FromJson<GameSaveData>(json);
         
         CurrentInventory = new List<string>(data.InventoryItemIDs);
+        CurrentTimeCredits = data.TimeCredits;
         //gridi yeniden inşa
         foreach (TileSaveData tileData in data.SavedTiles)
         {
@@ -202,6 +229,8 @@ public class SaveManager : MonoBehaviour
             data = new GameSaveData();
         }
         data.InventoryItemIDs = new List<string>(CurrentInventory);
+        data.TimeCredits = CurrentTimeCredits;
+
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);
         
