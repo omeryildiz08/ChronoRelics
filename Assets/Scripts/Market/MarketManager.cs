@@ -11,6 +11,7 @@ public class MarketManager : MonoBehaviour
     public Transform itemListContainer;
     public GameObject marketItemUIPrefab;
     public TextMeshProUGUI feedbackText;
+    public GameObject marketPanel;
 
 
 
@@ -129,6 +130,15 @@ public class MarketManager : MonoBehaviour
         if (feedbackText != null)
         {
             feedbackText.text = message;
+        }
+    }
+
+    public void ToggleMarket()
+    {
+        if (marketPanel != null)
+        {
+            bool isActive = marketPanel.activeSelf;
+            marketPanel.SetActive(!isActive);
         }
     }
 
