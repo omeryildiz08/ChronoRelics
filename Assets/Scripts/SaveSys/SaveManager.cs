@@ -31,6 +31,7 @@ public class SaveManager : MonoBehaviour
         saveFilePath = Path.Combine(Application.persistentDataPath, "savegame.json");
 
         ValidateDatabase();
+        LoadRuntimeStateFromDisk();
 
     }
     private void ValidateDatabase()
@@ -235,6 +236,32 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText(saveFilePath, json);
         
         Debug.Log("Sadece Envanter Güncellendi (Level Modu).");
+    }
+
+    private void LoadRuntimeStateFromDisk()
+    {
+        if (!File.Exists(saveFilePath))
+        {
+            return;
+        }
+
+        string json = File.ReadAllText(saveFilePath);
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return;
+        }
+
+        GameSaveData data = JsonUtility.FromJson<GameSaveData>(json);
+        if (data == null)
+        {
+            Debug.LogWarning("Save dosyasi okunamadi. Runtime state yuklenemedi.");
+            return;
+        }
+
+        CurrentInventory = data.InventoryItemIDs != null
+            ? new List<string>(data.InventoryItemIDs)
+            : new List<string>();
+        CurrentTimeCredits = data.TimeCredits;
     }
 
     public MergeableItemData GetItemDataByID(string id)
