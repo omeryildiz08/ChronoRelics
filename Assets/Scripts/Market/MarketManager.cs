@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MarketManager : MonoBehaviour
 {
+    public static MarketManager Instance { get; private set; }
+
     [Header("Market Data")]
     public List<MergeableItemData> marketItems = new List<MergeableItemData>();
 
@@ -13,16 +15,32 @@ public class MarketManager : MonoBehaviour
     public TextMeshProUGUI feedbackText;
     public GameObject marketPanel;
 
+    [Header("Sell State")]
+    public MergeableObject selectedObject;
 
+    [Header("Drag & Drop Sell UI")]
+    public RectTransform sellZoneRect; 
+    public GameObject sellZoneVisual; 
 
-    void Start()
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
+    private void Start()
     {
         BuildMarketUI();
     }
 
     public void BuildMarketUI()
     {
-        if(itemListContainer == null ||  marketItemUIPrefab == null)
+        if (itemListContainer == null || marketItemUIPrefab == null)
         {
             Debug.LogWarning("Market UI references eksik!");
             return;
@@ -30,34 +48,36 @@ public class MarketManager : MonoBehaviour
 
         ClearMarketUI();
 
-        foreach (var item in marketItems)
+        foreach (MergeableItemData item in marketItems)
         {
-            if(item == null) continue;
-            if(item.Prefab == null) continue;
-            if(item.BuyPrice <= 0) continue;
+            if (item == null) continue;
+            if (item.Prefab == null) continue;
+            if (item.BuyPrice <= 0) continue;
 
             GameObject uiObj = Instantiate(marketItemUIPrefab, itemListContainer);
             MarketItemUI itemUI = uiObj.GetComponent<MarketItemUI>();
 
-             if (itemUI == null)
+            if (itemUI == null)
             {
                 Debug.LogError("Market item UI prefabinda MarketItemUI yok.");
                 continue;
             }
 
-             itemUI.Setup(item, this);
-
+            itemUI.Setup(item, this);
         }
     }
 
     private void ClearMarketUI()
     {
+        if (itemListContainer == null) return;
+
         for (int i = itemListContainer.childCount - 1; i >= 0; i--)
         {
             Destroy(itemListContainer.GetChild(i).gameObject);
         }
     }
-     public void TryBuyItem(MergeableItemData itemData)
+
+    public void TryBuyItem(MergeableItemData itemData)
     {
         if (itemData == null)
         {
@@ -103,7 +123,95 @@ public class MarketManager : MonoBehaviour
         SetFeedback($"{itemData.ItemName} satin alindi.");
     }
 
-     private void SpawnObjectAt(MergeableItemData itemData, Vector2Int pos, GridManager gm)
+    public void SelectObjectForSelling(MergeableObject targetObject)
+    {
+        if (targetObject == null)
+        {
+            selectedObject = null;
+            SetFeedback("Secili obje temizlendi.");
+            return;
+        }
+
+        selectedObject = targetObject;
+
+        string itemName = targetObject.ItemData != null
+            ? targetObject.ItemData.ItemName
+            : "Bilinmeyen Obje";
+
+        SetFeedback($"Secili obje: {itemName}");
+    }
+
+    public void TrySellSelectedItem()
+    {
+        if (selectedObject == null)
+        {
+            SetFeedback("Satmak icin base'den bir obje sec.");
+            return;
+        }
+
+        TrySellObject(selectedObject);
+    }
+
+    public void TrySellObject(MergeableObject targetObject)
+    {
+        if (targetObject == null)
+        {
+            SetFeedback("Satilacak obje bulunamadi.");
+            return;
+        }
+
+        MergeableItemData itemData = targetObject.ItemData;
+        if (itemData == null)
+        {
+            SetFeedback("Item verisi bulunamadi.");
+            return;
+        }
+
+        if (SaveManager.Instance == null)
+        {
+            SetFeedback("SaveManager bulunamadi.");
+            return;
+        }
+
+        if (itemData.SellPrice <= 0)
+        {
+            SetFeedback("Bu obje satilamaz.");
+            return;
+        }
+
+        if (targetObject.IsInactiveAnomalyItem)
+        {
+            SetFeedback("Anomali objeleri satilamaz.");
+            return;
+        }
+
+        GridManager gridManager = GridManager.Instance;
+        if (gridManager == null)
+        {
+            SetFeedback("GridManager bulunamadi.");
+            return;
+        }
+
+        Vector2Int targetPos = targetObject.CurrentGridPosition;
+        if (gridManager.IsTileLocked(targetPos))
+        {
+            SetFeedback("Kilitli tile uzerindeki obje satilamaz.");
+            return;
+        }
+
+        bool removed = gridManager.RemoveObject(targetObject);
+        if (!removed)
+        {
+            SetFeedback("Obje satilamadi.");
+            return;
+        }
+
+        SaveManager.Instance.AddTimeCredits(itemData.SellPrice);
+        selectedObject = null;
+        SetFeedback($"{itemData.ItemName} satildi. +{itemData.SellPrice} Time Credit");
+    }
+
+    private void SpawnObjectAt(MergeableItemData itemData, Vector2Int pos, GridManager gm)
     {
         if (gm.grid[pos.x, pos.y].TileView == null) return;
 
@@ -123,7 +231,7 @@ public class MarketManager : MonoBehaviour
         }
     }
 
-      private void SetFeedback(string message)
+    private void SetFeedback(string message)
     {
         Debug.Log($"[Market] {message}");
 
@@ -135,11 +243,17 @@ public class MarketManager : MonoBehaviour
 
     public void ToggleMarket()
     {
-        if (marketPanel != null)
-        {
-            bool isActive = marketPanel.activeSelf;
-            marketPanel.SetActive(!isActive);
-        }
+        if (marketPanel == null) return;
+
+        bool isActive = marketPanel.activeSelf;
+        marketPanel.SetActive(!isActive);
     }
 
+    public void SetSellZoneActive(bool isActive)
+    {
+        if(sellZoneVisual != null)
+        {
+            sellZoneVisual.SetActive(isActive);
+        }
+    }
 }

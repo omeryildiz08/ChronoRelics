@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class MergeableObject : MonoBehaviour
 {
@@ -56,6 +57,13 @@ public class MergeableObject : MonoBehaviour
             return;
             //buraya animasyon veya ses gelebilir
         }
+
+
+        if (MarketManager.Instance != null)
+        {
+            MarketManager.Instance.SetSellZoneActive(true);
+        }
+
         isDragging = true;
         
         transform.position += new Vector3(0, dragYOffset, 0);
@@ -83,6 +91,22 @@ public class MergeableObject : MonoBehaviour
         if (!isDragging) return;
         isDragging = false;
 
+        if(MarketManager.Instance != null)
+        {
+            MarketManager.Instance.SetSellZoneActive(false);
+
+            if(MarketManager.Instance.sellZoneRect!=null)
+            {
+                bool isDroppedInSellZone = RectTransformUtility.RectangleContainsScreenPoint(MarketManager.Instance.sellZoneRect, Input.mousePosition, null);
+
+                if (isDroppedInSellZone)
+                {
+                    MarketManager.Instance.TrySellObject(this);
+                    return; // Satıldıysa normal bırakma işlemi yapılmaz
+                }
+                
+            }
+        }
         
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         Vector3 worldPositionOnDrop = transform.position; // Default

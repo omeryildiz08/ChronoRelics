@@ -29,8 +29,7 @@ public class MarketItemUI : MonoBehaviour
             buyButton.onClick.AddListener(OnBuyClicked);
         }
 
-        // Elinde icon datasi yoksa bunu simdilik bos birak.
-        // Ileride MergeableItemData'ya sprite eklersen burayi baglarsin.
+       // Optionally set the icon image if you have one in your data
         if (iconImage != null)
         {
             iconImage.enabled = false;

@@ -338,4 +338,17 @@ public class GridManager : MonoBehaviour
         SnapObjectToPosition(obj, toPos);
         return true;
     }
+
+    public bool RemoveObject(MergeableObject obj)
+    {
+        if (obj == null) return false;
+
+        Vector2Int pos = obj.CurrentGridPosition;
+        if (!IsValidPosition(pos)) return false;
+        if (grid[pos.x, pos.y].ObjectOnTile != obj) return false;
+
+        ClearCell(pos);
+        Destroy(obj.gameObject);
+        return true;
+    }
 }
