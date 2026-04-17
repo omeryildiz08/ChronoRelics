@@ -111,7 +111,7 @@ public class MarketManager : MonoBehaviour
             return;
         }
 
-        bool spent = SaveManager.Instance.SpendTimeCredits(itemData.BuyPrice);
+        bool spent = SaveManager.Instance.SpendTimeCredits(itemData.BuyPrice, false);
         if (!spent)
         {
             SetFeedback("Satin alma basarisiz.");
@@ -206,7 +206,8 @@ public class MarketManager : MonoBehaviour
             return;
         }
 
-        SaveManager.Instance.AddTimeCredits(itemData.SellPrice);
+        SaveManager.Instance.AddTimeCredits(itemData.SellPrice, false);
+        SaveManager.Instance.SaveGame();
         selectedObject = null;
         SetFeedback($"{itemData.ItemName} satildi. +{itemData.SellPrice} Time Credit");
     }

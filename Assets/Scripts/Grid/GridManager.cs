@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GridManager : MonoBehaviour
 {
@@ -53,6 +54,24 @@ public class GridManager : MonoBehaviour
 
 
         grid[position.x, position.y].TileView = tileView;
+    }
+
+    public int CountRegisteredTiles()
+    {
+        int count = 0;
+
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y++)
+            {
+                if (grid[x, y].TileView != null)
+                {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
 
@@ -131,6 +150,7 @@ public class GridManager : MonoBehaviour
             {
 
                 SnapObjectToPosition(movingObject, toPos);
+                SaveBaseStateIfNeeded();
             }
         }
     }
@@ -190,6 +210,7 @@ public class GridManager : MonoBehaviour
                 RegisterObject(newMergeable, mergeCenterPos);
 
                 OnMergeCompleted?.Invoke(newMergeable.ItemData);
+                SaveBaseStateIfNeeded();
                 // İleride 
                 // buraya "CheckForCombo(newMergeable)" ekleyebiliriz.
             }
@@ -336,6 +357,7 @@ public class GridManager : MonoBehaviour
         RegisterObject(obj, toPos);
         obj.CurrentGridPosition = toPos;
         SnapObjectToPosition(obj, toPos);
+        SaveBaseStateIfNeeded();
         return true;
     }
 
@@ -349,6 +371,15 @@ public class GridManager : MonoBehaviour
 
         ClearCell(pos);
         Destroy(obj.gameObject);
+        SaveBaseStateIfNeeded();
         return true;
+    }
+
+    private void SaveBaseStateIfNeeded()
+    {
+        if (SaveManager.Instance == null) return;
+        if (SceneManager.GetActiveScene().name != "BaseScene") return;
+
+        SaveManager.Instance.SaveGame();
     }
 }

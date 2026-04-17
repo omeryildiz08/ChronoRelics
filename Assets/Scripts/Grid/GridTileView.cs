@@ -3,39 +3,50 @@ using UnityEngine;
 
 public class GridTileView : MonoBehaviour
 {
-    
     public Vector2Int GridPosition;
     public float objectYOffset = 0.8f;
-    [Header("Kilit Ayarları")]
-    public bool StartLocked = false;//bunu işaretlersen kilitli başlar
-    public MeshRenderer MyMeshRenderer; //renk burdan değişecek
+
+    [Header("Kilit Ayarlari")]
+    public bool StartLocked = false;
+
+    public MeshRenderer MyMeshRenderer;
     public Material LockedMaterial;
     public Material NormalMaterial;
 
+    private bool isRegistered;
 
-    void Start()
+    private void Awake()
     {
-        GridManager gridManager = GridManager.Instance;
+        TryRegisterTile();
+    }
 
-        if (gridManager == null)
+    private void Start()
+    {
+        TryRegisterTile();
+    }
+
+    private void TryRegisterTile()
+    {
+        if (isRegistered)
         {
-            Debug.LogError("Sahnede GridManager bulunamadı!");
             return;
         }
+
+        GridManager gridManager = GridManager.Instance;
+        if (gridManager == null)
+        {
+            return;
+        }
+
         if (!gridManager.IsValidPosition(GridPosition))
         {
             Debug.LogError($"GridPosition gecersiz: {GridPosition}");
             return;
         }
 
-      
-        //GridPosition = new Vector2Int(
-        //    Mathf.RoundToInt(transform.position.x),
-        //    Mathf.RoundToInt(transform.position.z)
-        //);
-
-       
         gridManager.RegisterTile(this, GridPosition);
+        isRegistered = true;
+
         if (StartLocked)
         {
             gridManager.LockTile(GridPosition);
@@ -46,19 +57,18 @@ public class GridTileView : MonoBehaviour
         }
     }
 
-   
     public Vector3 GetWorldPosition()
     {
         return new Vector3(
             transform.position.x,
-            transform.position.y + objectYOffset, // Tile'ın Y'sine offset ekle
+            transform.position.y + objectYOffset,
             transform.position.z
         );
     }
 
     public void UpdateVisuals(bool isLocked)
     {
-        if(MyMeshRenderer != null && LockedMaterial != null && NormalMaterial != null)
+        if (MyMeshRenderer != null && LockedMaterial != null && NormalMaterial != null)
         {
             MyMeshRenderer.material = isLocked ? LockedMaterial : NormalMaterial;
         }

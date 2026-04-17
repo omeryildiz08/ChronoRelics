@@ -4,12 +4,26 @@ using UnityEngine;
 [System.Serializable]
 public class GameSaveData
 {
-  
+    // Legacy field kept for backward compatibility with existing save files.
     public List<TileSaveData> SavedTiles = new List<TileSaveData>();
 
+    public List<SavedObjectData> SavedObjects = new List<SavedObjectData>();
+    public List<LockedTileSaveData> LockedTiles = new List<LockedTileSaveData>();
     public List<string> InventoryItemIDs = new List<string>();
-
     public int TimeCredits = 0;
+}
+
+[System.Serializable]
+public class SavedObjectData
+{
+    public Vector2Int GridPos;
+    public string ItemID;
+}
+
+[System.Serializable]
+public class LockedTileSaveData
+{
+    public Vector2Int GridPos;
 }
 
 [System.Serializable]

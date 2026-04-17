@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -7,13 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
-    public static SaveManager Instance { get; private set; } //singleton 
+    public static SaveManager Instance { get; private set; }
 
-    [Header("Veri Tabanı (Referanslar)")]
+    [Header("Veri Tabani (Referanslar)")]
     public List<MergeableItemData> AllGameItems;
+
+    private readonly Dictionary<string, MergeableItemData> itemLookup = new Dictionary<string, MergeableItemData>();
     private string saveFilePath;
 
     public List<string> CurrentInventory = new List<string>();
+    public List<SavedObjectData> CurrentSavedObjects = new List<SavedObjectData>();
+    public List<LockedTileSaveData> CurrentLockedTiles = new List<LockedTileSaveData>();
     public int CurrentTimeCredits = 0;
 
     private void Awake()
@@ -23,48 +25,80 @@ public class SaveManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        else
-        {
-            Instance = this;
-        }
 
+        Instance = this;
         saveFilePath = Path.Combine(Application.persistentDataPath, "savegame.json");
 
         ValidateDatabase();
+        RefreshItemLookup();
         LoadRuntimeStateFromDisk();
-
     }
+
+    private void OnApplicationQuit()
+    {
+        SaveGame();
+    }
+
     private void ValidateDatabase()
     {
-        HashSet<string> ids = new HashSet<string>();
-        foreach (var item in AllGameItems)
+        if (AllGameItems == null)
         {
-            if(item == null) continue;
-           
-            if(string.IsNullOrEmpty(item.ItemID)) 
-                Debug.LogError($"KRİTİK: {item.name} objesinin ItemID'si boş!");
-            else if(ids.Contains(item.ItemID))
-                Debug.LogError($"KRİTİK: Çakışan ID tespit edildi: {item.ItemID}");
-            
-            ids.Add(item.ItemID);
+            return;
+        }
+
+        HashSet<string> ids = new HashSet<string>();
+        for (int i = 0; i < AllGameItems.Count; i++)
+        {
+            MergeableItemData item = AllGameItems[i];
+            if (item == null)
+            {
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(item.ItemID))
+            {
+                Debug.LogError($"KRITIK: {item.name} objesinin ItemID'si bos.");
+                continue;
+            }
+
+            if (!ids.Add(item.ItemID))
+            {
+                Debug.LogError($"KRITIK: Cakisan ID tespit edildi: {item.ItemID}");
+            }
         }
     }
+
     public void AddRewardToInventory(string itemID)
     {
-        if(!string.IsNullOrEmpty(itemID))
+        if (string.IsNullOrEmpty(itemID))
         {
-            CurrentInventory.Add(itemID);
-            Debug.Log($"Envantere eklendi: {itemID}");
-            SaveGame();
+            return;
         }
+
+        CurrentInventory.Add(itemID);
+        Debug.Log($"Envantere eklendi: {itemID}");
+        SaveGame();
     }
+
     public void AddTimeCredits(int amount)
     {
-        if(amount <=0) return;
+        AddTimeCredits(amount, true);
+    }
+
+    public void AddTimeCredits(int amount, bool saveImmediately)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
 
         CurrentTimeCredits += amount;
         Debug.Log($"Zaman Kredisi eklendi: +{amount}. Toplam: {CurrentTimeCredits}");
-        SaveGame();
+
+        if (saveImmediately)
+        {
+            SaveGame();
+        }
     }
 
     public bool CanAfford(int amount)
@@ -74,236 +108,531 @@ public class SaveManager : MonoBehaviour
 
     public bool SpendTimeCredits(int amount)
     {
-        if(amount<= 0) return false ; 
-        if (!CanAfford(amount))return false ; 
+        return SpendTimeCredits(amount, true);
+    }
+
+    public bool SpendTimeCredits(int amount, bool saveImmediately)
+    {
+        if (amount <= 0 || !CanAfford(amount))
+        {
+            return false;
+        }
 
         CurrentTimeCredits -= amount;
-        Debug.Log($"Zaman Kredisi harcandı: {amount}");
-        SaveGame();
+        Debug.Log($"Zaman Kredisi harcandi: {amount}");
+
+        if (saveImmediately)
+        {
+            SaveGame();
+        }
+
         return true;
     }
+
     [ContextMenu("Save Game")]
     public void SaveGame()
     {
-        string currentScene = SceneManager.GetActiveScene().name;
-
-        if (currentScene != "BaseScene") 
+        if (!IsBaseSceneActive())
         {
             SaveInventoryOnly();
             return;
         }
+
         GridManager gridManager = GridManager.Instance;
         if (gridManager == null)
         {
-            Debug.LogError("GridManager bulunamadı, kaydetme işlemi iptal edildi.");
+            Debug.LogError("GridManager bulunamadi, kaydetme islemi iptal edildi.");
             return;
         }
 
-        GameSaveData data = new GameSaveData();
+        RefreshItemLookup();
 
-        for (int x = 0; x < gridManager.gridWidth; x++)
+        GameSaveData data = new GameSaveData
         {
-            for (int y = 0; y < gridManager.gridHeight; y++)
-            {
-                GridTileData tile = gridManager.grid[x, y];
-                if (tile.IsEmpty && !tile.isLocked) continue;
-                TileSaveData tileData = new TileSaveData();
-                tileData.GridPos = new Vector2Int(x, y);
-                tileData.IsLocked = tile.isLocked;
-                if (tile.ObjectOnTile != null)
-                {
-                    // Objenin adını (ID) kaydet
-                    tileData.ItemID = tile.ObjectOnTile.ItemData.ItemID;
-                }
+            InventoryItemIDs = new List<string>(CurrentInventory),
+            TimeCredits = CurrentTimeCredits,
+            SavedObjects = CollectSavedObjects(gridManager),
+            LockedTiles = CollectLockedTiles(gridManager)
+        };
 
-                else
-                {
-                    tileData.ItemID = ""; 
-                }
-
-                data.SavedTiles.Add(tileData);
-            }
-
-        }
-        data.InventoryItemIDs = new List<string>(CurrentInventory);
-        data.TimeCredits = CurrentTimeCredits;
-
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(saveFilePath, json);
-       Debug.Log($"Base Durumu Kaydedildi: {saveFilePath}");
+        CurrentSavedObjects = new List<SavedObjectData>(data.SavedObjects);
+        CurrentLockedTiles = new List<LockedTileSaveData>(data.LockedTiles);
+        WriteSaveData(data);
+        DebugSavedObjects("SAVE", data.SavedObjects);
+        Debug.Log($"Base durumu kaydedildi: {saveFilePath}");
     }
 
     [ContextMenu("Load Game")]
     public void LoadGame()
     {
-        if (!File.Exists(saveFilePath))
+        if (!TryReadSaveData(out GameSaveData data))
         {
             Debug.LogWarning("Kayit dosyasi bulunamadi: " + saveFilePath);
             return;
         }
 
         GridManager gridManager = GridManager.Instance;
-        if(gridManager == null) return; 
-
-        ClearCurrentScene(gridManager);
-
-        string json = File.ReadAllText(saveFilePath);
-        GameSaveData data = JsonUtility.FromJson<GameSaveData>(json);
-        
-        CurrentInventory = new List<string>(data.InventoryItemIDs);
-        CurrentTimeCredits = data.TimeCredits;
-        //gridi yeniden inşa
-        foreach (TileSaveData tileData in data.SavedTiles)
+        if (gridManager == null)
         {
-            Vector2Int pos = tileData.GridPos;
-            
-            if (tileData.IsLocked)
-            {
-                gridManager.LockTile(pos);
-            }
-            else
-            {
-                
-                gridManager.UnlockTile(pos);
-            }
-
-            if (!string.IsNullOrEmpty(tileData.ItemID))
-            {
-              
-                MergeableItemData itemData = GetItemDataByID(tileData.ItemID);
-                
-                if (itemData != null)
-                {
-                    // Yarat ve Grid'e Kaydet
-                    SpawnObjectAt(itemData, pos, gridManager);
-                }
-                else
-                {
-                    Debug.LogWarning($"Kayıtlı obje veritabanında bulunamadı: {tileData.ItemID}");
-                }
-            }
+            return;
         }
-        Debug.Log("Oyun Yuklendi: " + saveFilePath);
-        Debug.Log($"Oyun Yüklendi! Envanterde {CurrentInventory.Count} eşya var.");
 
+        RefreshItemLookup();
+        CurrentInventory = data.InventoryItemIDs != null
+            ? new List<string>(data.InventoryItemIDs)
+            : new List<string>();
+        CurrentTimeCredits = data.TimeCredits;
+        CurrentLockedTiles = GetLockedTilesForLoad(data);
+        CurrentSavedObjects = GetSavedObjectsForLoad(data);
+        DebugSavedObjects("LOAD", CurrentSavedObjects);
+
+        Debug.Log("Oyun yüklendi: " + saveFilePath);
+        Debug.Log($"Oyun yuklendi. Envanterde {CurrentInventory.Count} esya var.");
     }
+
     [ContextMenu("Delete Save File")]
     public void DeleteSaveFile()
     {
         if (File.Exists(saveFilePath))
         {
             File.Delete(saveFilePath);
-            Debug.Log("Save dosyası silindi! Temiz başlangıç.");
         }
+
+        CurrentInventory.Clear();
+        CurrentSavedObjects.Clear();
+        CurrentLockedTiles.Clear();
+        CurrentTimeCredits = 0;
+
+        if (IsBaseSceneActive() && GridManager.Instance != null)
+        {
+            ClearCurrentScene(GridManager.Instance);
+        }
+
+        Debug.Log("Save dosyasi silindi. Temiz baslangic.");
+    }
+
+    private bool IsBaseSceneActive()
+    {
+        return SceneManager.GetActiveScene().name == "BaseScene";
     }
 
     private void ClearCurrentScene(GridManager gridManager)
     {
+        MergeableObject[] sceneObjects = FindObjectsOfType<MergeableObject>();
+        for (int i = 0; i < sceneObjects.Length; i++)
+        {
+            if (sceneObjects[i] != null)
+            {
+                sceneObjects[i].gameObject.SetActive(false);
+                Destroy(sceneObjects[i].gameObject);
+            }
+        }
+
         for (int x = 0; x < gridManager.gridWidth; x++)
         {
             for (int y = 0; y < gridManager.gridHeight; y++)
             {
-                if (gridManager.grid[x, y].ObjectOnTile != null)
-                {
-                    Destroy(gridManager.grid[x, y].ObjectOnTile.gameObject);
-                    gridManager.grid[x, y].ObjectOnTile = null;
-                }
-
-                
-                
-             
-                gridManager.UnlockTile(new Vector2Int(x,y));
+                gridManager.grid[x, y].ObjectOnTile = null;
+                gridManager.UnlockTile(new Vector2Int(x, y));
             }
         }
     }
+
     private void SaveInventoryOnly()
     {
-        GameSaveData data ; 
-        if (File.Exists(saveFilePath))
-        {
-            string existingJson = File.ReadAllText(saveFilePath);
-            data = JsonUtility.FromJson<GameSaveData>(existingJson);
-        }
-        else
-        {
-          
-            data = new GameSaveData();
-        }
+        GameSaveData data = ReadExistingOrNewSaveData();
         data.InventoryItemIDs = new List<string>(CurrentInventory);
         data.TimeCredits = CurrentTimeCredits;
+        WriteSaveData(data);
 
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(saveFilePath, json);
-        
-        Debug.Log("Sadece Envanter Güncellendi (Level Modu).");
+        Debug.Log($"Sadece envanter guncellendi (level modu). SavedObjects korunuyor: {data.SavedObjects.Count}");
     }
 
     private void LoadRuntimeStateFromDisk()
     {
-        if (!File.Exists(saveFilePath))
+        if (!TryReadSaveData(out GameSaveData data))
         {
-            return;
-        }
-
-        string json = File.ReadAllText(saveFilePath);
-        if (string.IsNullOrWhiteSpace(json))
-        {
-            return;
-        }
-
-        GameSaveData data = JsonUtility.FromJson<GameSaveData>(json);
-        if (data == null)
-        {
-            Debug.LogWarning("Save dosyasi okunamadi. Runtime state yuklenemedi.");
             return;
         }
 
         CurrentInventory = data.InventoryItemIDs != null
             ? new List<string>(data.InventoryItemIDs)
             : new List<string>();
+        CurrentSavedObjects = GetSavedObjectsForLoad(data);
+        CurrentLockedTiles = GetLockedTilesForLoad(data);
         CurrentTimeCredits = data.TimeCredits;
+    }
+
+    public void RebuildBaseScene()
+    {
+        GridManager gridManager = GridManager.Instance;
+        if (gridManager == null)
+        {
+            return;
+        }
+
+        RefreshItemLookup();
+        ClearCurrentScene(gridManager);
+
+        for (int i = 0; i < CurrentLockedTiles.Count; i++)
+        {
+            gridManager.LockTile(CurrentLockedTiles[i].GridPos);
+        }
+
+        DebugSavedObjects("REBUILD", CurrentSavedObjects);
+        for (int i = 0; i < CurrentSavedObjects.Count; i++)
+        {
+            SavedObjectData objectData = CurrentSavedObjects[i];
+            MergeableItemData itemData = GetItemDataByID(objectData.ItemID);
+
+            if (itemData == null)
+            {
+                Debug.LogWarning($"Kayitli obje veritabaninda bulunamadi: {objectData.ItemID}");
+                continue;
+            }
+
+            Debug.Log($"[SaveManager:REBUILD-SPAWN] Item={objectData.ItemID} Pos={objectData.GridPos}");
+            SpawnObjectAt(itemData, objectData.GridPos, gridManager);
+        }
+    }
+
+    private List<SavedObjectData> CollectSavedObjects(GridManager gridManager)
+    {
+        Dictionary<Vector2Int, SavedObjectData> objectsByPosition = new Dictionary<Vector2Int, SavedObjectData>();
+
+        for (int x = 0; x < gridManager.gridWidth; x++)
+        {
+            for (int y = 0; y < gridManager.gridHeight; y++)
+            {
+                GridTileData tile = gridManager.grid[x, y];
+                if (tile.TileView == null || tile.ObjectOnTile == null || tile.ObjectOnTile.ItemData == null)
+                {
+                    continue;
+                }
+
+                Vector2Int position = new Vector2Int(x, y);
+                objectsByPosition[position] = new SavedObjectData
+                {
+                    GridPos = position,
+                    ItemID = tile.ObjectOnTile.ItemData.ItemID
+                };
+            }
+        }
+
+        MergeableObject[] sceneObjects = FindObjectsOfType<MergeableObject>();
+
+        for (int i = 0; i < sceneObjects.Length; i++)
+        {
+            MergeableObject mergeableObject = sceneObjects[i];
+            if (mergeableObject == null || mergeableObject.ItemData == null)
+            {
+                continue;
+            }
+
+            Vector2Int position = ResolveObjectGridPosition(mergeableObject, gridManager);
+            if (!gridManager.IsValidPosition(position))
+            {
+                continue;
+            }
+
+            if (gridManager.grid[position.x, position.y].TileView == null)
+            {
+                continue;
+            }
+
+            if (objectsByPosition.ContainsKey(position))
+            {
+                continue;
+            }
+
+            objectsByPosition[position] = new SavedObjectData
+            {
+                GridPos = position,
+                ItemID = mergeableObject.ItemData.ItemID
+            };
+        }
+
+        return new List<SavedObjectData>(objectsByPosition.Values);
+    }
+
+    private void DebugSavedObjects(string phase, List<SavedObjectData> savedObjects)
+    {
+        if (savedObjects == null)
+        {
+            Debug.Log($"[SaveManager:{phase}] SavedObjects null");
+            return;
+        }
+
+        Debug.Log($"[SaveManager:{phase}] SavedObjects count={savedObjects.Count}");
+        for (int i = 0; i < savedObjects.Count; i++)
+        {
+            SavedObjectData objectData = savedObjects[i];
+            Debug.Log($"[SaveManager:{phase}] Item={objectData.ItemID} Pos={objectData.GridPos}");
+        }
+    }
+
+    private Vector2Int ResolveObjectGridPosition(MergeableObject mergeableObject, GridManager gridManager)
+    {
+        Vector2Int currentGridPosition = mergeableObject.CurrentGridPosition;
+        if (gridManager.IsValidPosition(currentGridPosition) &&
+            gridManager.grid[currentGridPosition.x, currentGridPosition.y].TileView != null)
+        {
+            return currentGridPosition;
+        }
+
+        return gridManager.WorldToGridPosition(mergeableObject.transform.position);
+    }
+
+    private List<LockedTileSaveData> CollectLockedTiles(GridManager gridManager)
+    {
+        List<LockedTileSaveData> lockedTiles = new List<LockedTileSaveData>();
+
+        for (int x = 0; x < gridManager.gridWidth; x++)
+        {
+            for (int y = 0; y < gridManager.gridHeight; y++)
+            {
+                GridTileData tile = gridManager.grid[x, y];
+                if (tile.TileView == null || !tile.isLocked)
+                {
+                    continue;
+                }
+
+                lockedTiles.Add(new LockedTileSaveData
+                {
+                    GridPos = new Vector2Int(x, y)
+                });
+            }
+        }
+
+        return lockedTiles;
+    }
+
+    private List<SavedObjectData> GetSavedObjectsForLoad(GameSaveData data)
+    {
+        if (data.SavedObjects != null && data.SavedObjects.Count > 0)
+        {
+            return data.SavedObjects;
+        }
+
+        List<SavedObjectData> legacyObjects = new List<SavedObjectData>();
+        if (data.SavedTiles == null)
+        {
+            return legacyObjects;
+        }
+
+        for (int i = 0; i < data.SavedTiles.Count; i++)
+        {
+            TileSaveData tileData = data.SavedTiles[i];
+            if (string.IsNullOrEmpty(tileData.ItemID))
+            {
+                continue;
+            }
+
+            legacyObjects.Add(new SavedObjectData
+            {
+                GridPos = tileData.GridPos,
+                ItemID = tileData.ItemID
+            });
+        }
+
+        return legacyObjects;
+    }
+
+    private List<LockedTileSaveData> GetLockedTilesForLoad(GameSaveData data)
+    {
+        if (data.LockedTiles != null && data.LockedTiles.Count > 0)
+        {
+            return data.LockedTiles;
+        }
+
+        List<LockedTileSaveData> legacyLockedTiles = new List<LockedTileSaveData>();
+        if (data.SavedTiles == null)
+        {
+            return legacyLockedTiles;
+        }
+
+        for (int i = 0; i < data.SavedTiles.Count; i++)
+        {
+            TileSaveData tileData = data.SavedTiles[i];
+            if (!tileData.IsLocked)
+            {
+                continue;
+            }
+
+            legacyLockedTiles.Add(new LockedTileSaveData
+            {
+                GridPos = tileData.GridPos
+            });
+        }
+
+        return legacyLockedTiles;
+    }
+
+    private bool TryReadSaveData(out GameSaveData data)
+    {
+        data = null;
+
+        if (!File.Exists(saveFilePath))
+        {
+            return false;
+        }
+
+        string json = File.ReadAllText(saveFilePath);
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return false;
+        }
+
+        data = JsonUtility.FromJson<GameSaveData>(json);
+        return data != null;
+    }
+
+    private GameSaveData ReadExistingOrNewSaveData()
+    {
+        if (TryReadSaveData(out GameSaveData data))
+        {
+            return data;
+        }
+
+        return new GameSaveData();
+    }
+
+    private void WriteSaveData(GameSaveData data)
+    {
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(saveFilePath, json);
+    }
+
+    private void RefreshItemLookup()
+    {
+        itemLookup.Clear();
+
+        if (AllGameItems == null)
+        {
+            AllGameItems = new List<MergeableItemData>();
+        }
+
+        for (int i = 0; i < AllGameItems.Count; i++)
+        {
+            RegisterItemData(AllGameItems[i], "SaveManager.AllGameItems");
+        }
+
+        MarketManager[] marketManagers = FindObjectsOfType<MarketManager>();
+        for (int i = 0; i < marketManagers.Length; i++)
+        {
+            MarketManager marketManager = marketManagers[i];
+            if (marketManager == null || marketManager.marketItems == null)
+            {
+                continue;
+            }
+
+            for (int j = 0; j < marketManager.marketItems.Count; j++)
+            {
+                RegisterItemData(marketManager.marketItems[j], "MarketManager.marketItems");
+            }
+        }
+
+        LevelManager[] levelManagers = FindObjectsOfType<LevelManager>();
+        for (int i = 0; i < levelManagers.Length; i++)
+        {
+            LevelManager levelManager = levelManagers[i];
+            if (levelManager == null)
+            {
+                continue;
+            }
+
+            RegisterItemData(levelManager.TargetItem, "LevelManager.TargetItem");
+            RegisterItemData(levelManager.RewardItem, "LevelManager.RewardItem");
+        }
+    }
+
+    private void RegisterItemData(MergeableItemData itemData, string source)
+    {
+        if (itemData == null)
+        {
+            return;
+        }
+
+        if (string.IsNullOrEmpty(itemData.ItemID))
+        {
+            Debug.LogError($"KRITIK: {source} icindeki {itemData.name} objesinin ItemID'si bos.");
+            return;
+        }
+
+        if (itemLookup.TryGetValue(itemData.ItemID, out MergeableItemData existingItem) && existingItem != itemData)
+        {
+            Debug.LogError($"KRITIK: Cakisan ID tespit edildi: {itemData.ItemID} ({existingItem.name} / {itemData.name})");
+            return;
+        }
+
+        itemLookup[itemData.ItemID] = itemData;
     }
 
     public MergeableItemData GetItemDataByID(string id)
     {
-        foreach (var item in AllGameItems)
+        if (string.IsNullOrEmpty(id))
         {
-            if (item!=null && item.ItemID == id) return item;
+            return null;
         }
-        Debug.LogWarning($"Kayıtlı obje veritabanında bulunamadı: {id}");
+
+        if (itemLookup.TryGetValue(id, out MergeableItemData itemData))
+        {
+            return itemData;
+        }
+
+        RefreshItemLookup();
+
+        if (itemLookup.TryGetValue(id, out itemData))
+        {
+            return itemData;
+        }
+
+        for (int i = 0; i < AllGameItems.Count; i++)
+        {
+            MergeableItemData item = AllGameItems[i];
+            if (item != null && item.ItemID == id)
+            {
+                return item;
+            }
+        }
+
+        Debug.LogWarning($"Kayitli obje veritabaninda bulunamadi: {id}");
         return null;
     }
 
-    private void SpawnObjectAt(MergeableItemData itemData, Vector2Int pos, GridManager gm)
+    private void SpawnObjectAt(MergeableItemData itemData, Vector2Int pos, GridManager gridManager)
     {
-        if (gm.grid[pos.x, pos.y].TileView == null) return;
-        Vector3 worldPos = gm.grid[pos.x, pos.y].TileView.GetWorldPosition();
-        
-        if(itemData.Prefab == null)
+        if (!gridManager.IsValidPosition(pos))
         {
-             Debug.LogError($"ItemData ({itemData.ItemID}) prefabı boş!");
-             return;
+            Debug.LogWarning($"[SaveManager:SPAWN] Gecersiz pozisyon. Item={itemData?.ItemID} Pos={pos}");
+            return;
         }
-        
-       
+
+        if (gridManager.grid[pos.x, pos.y].TileView == null)
+        {
+            Debug.LogWarning($"[SaveManager:SPAWN] TileView yok. Item={itemData?.ItemID} Pos={pos}");
+            return;
+        }
+
+        Vector3 worldPos = gridManager.grid[pos.x, pos.y].TileView.GetWorldPosition();
+        if (itemData.Prefab == null)
+        {
+            Debug.LogError($"ItemData ({itemData.ItemID}) prefabi bos.");
+            return;
+        }
+
         GameObject newObj = Instantiate(itemData.Prefab, worldPos, Quaternion.identity);
         MergeableObject mergeable = newObj.GetComponent<MergeableObject>();
-        
-        if(mergeable != null)
+
+        if (mergeable == null)
         {
-            mergeable.CurrentGridPosition = pos;
-            
-           
-            mergeable.InitializeObject(); 
+            Debug.LogError($"Prefab ({itemData.ItemID}) uzerinde MergeableObject yok.");
+            Destroy(newObj);
+            return;
         }
-        else
-        {
-             Debug.LogError($"Prefab ({itemData.ItemID}) üzerinde MergeableObject scripti yok!");
-             Destroy(newObj);
-        }
-        
-        
+
+        mergeable.CurrentGridPosition = pos;
+        mergeable.InitializeObject();
+        Debug.Log($"[SaveManager:SPAWN] Basarili. Item={itemData.ItemID} Pos={pos}");
     }
 }
-
-

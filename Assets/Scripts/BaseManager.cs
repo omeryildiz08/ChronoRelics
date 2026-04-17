@@ -4,11 +4,30 @@ using UnityEngine;
 
 public class BaseManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private IEnumerator Start()
     {
+        yield return StartCoroutine(WaitForGridInitialization());
+
         SaveManager.Instance.LoadGame();
+        SaveManager.Instance.RebuildBaseScene();
         CheckInventoryAndSpawn();
+    }
+
+    private IEnumerator WaitForGridInitialization()
+    {
+        while (GridManager.Instance == null)
+        {
+            yield return null;
+        }
+
+        GridManager gridManager = GridManager.Instance;
+        GridTileView[] tileViews = FindObjectsOfType<GridTileView>();
+        int expectedTileCount = tileViews.Length;
+
+        while (gridManager.CountRegisteredTiles() < expectedTileCount)
+        {
+            yield return null;
+        }
     }
 
     private void CheckInventoryAndSpawn()
@@ -20,30 +39,23 @@ public class BaseManager : MonoBehaviour
 
         foreach (string itemID in SaveManager.Instance.CurrentInventory)
         {
-            // ID'den Data'yı bul
             MergeableItemData itemData = SaveManager.Instance.GetItemDataByID(itemID);
             if (itemData == null) continue;
 
-            
             Vector2Int? emptyPos = gridManager.GetFirstEmptyPosition();
-
             if (emptyPos.HasValue)
             {
-                
+                Debug.Log($"[BaseManager:INVENTORY-SPAWN] Item={itemID} Pos={emptyPos.Value}");
                 SpawnObjectAt(itemData, emptyPos.Value, gridManager);
-
-               
                 itemsToRemove.Add(itemID);
             }
             else
             {
-                Debug.LogWarning("Base Grid dolu! Ödül yerleştirilemedi.");
-               
+                Debug.LogWarning("Base Grid dolu! Odul yerlestirilemedi.");
                 break;
             }
         }
 
-        
         foreach (var item in itemsToRemove)
         {
             SaveManager.Instance.CurrentInventory.Remove(item);
@@ -52,14 +64,15 @@ public class BaseManager : MonoBehaviour
         if (itemsToRemove.Count > 0)
         {
             SaveManager.Instance.SaveGame();
-            Debug.Log($"{itemsToRemove.Count} adet ödül Base'e yerleştirildi.");
+            Debug.Log($"{itemsToRemove.Count} adet odul Base'e yerlestirildi.");
         }
     }
+
     private void SpawnObjectAt(MergeableItemData itemData, Vector2Int pos, GridManager gm)
     {
         if (gm.grid[pos.x, pos.y].TileView == null) return;
-        Vector3 worldPos = gm.grid[pos.x, pos.y].TileView.GetWorldPosition();
 
+        Vector3 worldPos = gm.grid[pos.x, pos.y].TileView.GetWorldPosition();
         GameObject newObj = Instantiate(itemData.Prefab, worldPos, Quaternion.identity);
         MergeableObject mergeable = newObj.GetComponent<MergeableObject>();
 
@@ -67,8 +80,7 @@ public class BaseManager : MonoBehaviour
         {
             mergeable.CurrentGridPosition = pos;
             mergeable.InitializeObject();
+            Debug.Log($"[BaseManager:INVENTORY-SPAWN] Basarili. Item={itemData.ItemID} Pos={pos}");
         }
     }
-
-
 }
