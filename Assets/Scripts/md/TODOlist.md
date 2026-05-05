@@ -35,20 +35,20 @@ Ana prensipler:
 GDD referansi: Chrono Charge, oyuncunun zaman/level degistirmek icin kullandigi kaynak.
 
 ### Kod
-- [ ] `GameSaveData` icine `ChronoCharge` alani ekle.
-- [ ] `SaveManager` icine `CurrentChronoCharge` runtime state'i ekle.
-- [ ] `SaveManager` icine su API'leri ekle:
-  - [ ] `AddChronoCharge(int amount, bool saveImmediately = true)`
-  - [ ] `CanSpendChronoCharge(int amount)`
-  - [ ] `SpendChronoCharge(int amount, bool saveImmediately = true)`
-- [ ] Level gecis maliyeti icin `LevelSelector` icinde inspector'dan ayarlanabilir cost yapisi ekle.
-- [ ] Basit ilk implementasyonda her level butonu veya scene entry icin `ChronoCost` kullan.
-- [ ] Yetersiz Chrono Charge durumunda sahne yuklenmesin, feedback verilsin.
-- [ ] Level tamamlaninca opsiyonel Chrono Charge odulu verilebilsin.
-- [ ] Time Credit ile Chrono Charge'i karistirmamak icin economy API isimlerini net tut.
+- [x] `GameSaveData` icine `ChronoCharge` alani ekle.
+- [x] `SaveManager` icine `CurrentChronoCharge` runtime state'i ekle.
+- [x] `SaveManager` icine su API'leri ekle:
+  - [x] `AddChronoCharge(int amount, bool saveImmediately = true)`
+  - [x] `CanSpendChronoCharge(int amount)`
+  - [x] `SpendChronoCharge(int amount, bool saveImmediately = true)`
+- [x] Level gecis maliyeti icin `LevelSelector` icinde inspector'dan ayarlanabilir cost yapisi ekle.
+- [x] Basit ilk implementasyonda her level butonu veya scene entry icin `ChronoCost` kullan.
+- [x] Yetersiz Chrono Charge durumunda sahne yuklenmesin, feedback verilsin.
+- [x] Level tamamlaninca opsiyonel Chrono Charge odulu verilebilsin.
+- [x] Time Credit ile Chrono Charge'i karistirmamak icin economy API isimlerini net tut.
 
 ### Unity Editor / UI
-- [ ] BaseScene'e `ChronoChargeUI` TextMeshPro label ekle.
+- [ ] BaseScene'e `ChronoChargeUI` TextMeshPro label ekle. Kod script'i hazir: `Assets/Scripts/ChronoChargeUI.cs`.
 - [ ] Level selection panelinde her level icin Chrono cost goster.
 - [ ] Yetersiz Chrono durumunda placeholder feedback text'i veya toast kullan.
 - [ ] Chrono icon gelene kadar basit saat/enerji placeholder sprite'i kullan.
@@ -346,4 +346,3 @@ Her buyuk tasktan sonra calistirilacak temel testler:
 - [ ] Locked tile merge'e katilinca aciliyor.
 - [ ] Anomaly tetiklenince oyun soft-lock/crash yaratmiyor.
 - [ ] Save silinince temiz baslangic yapiliyor.
-

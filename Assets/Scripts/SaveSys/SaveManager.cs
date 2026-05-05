@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
+    private const int CurrentSaveVersion = 1;
 
     [Header("Veri Tabani (Referanslar)")]
     public List<MergeableItemData> AllGameItems;
@@ -17,6 +18,7 @@ public class SaveManager : MonoBehaviour
     public List<SavedObjectData> CurrentSavedObjects = new List<SavedObjectData>();
     public List<LockedTileSaveData> CurrentLockedTiles = new List<LockedTileSaveData>();
     public int CurrentTimeCredits = 0;
+    public int CurrentChronoCharge = 0;
 
     private void Awake()
     {
@@ -129,6 +131,60 @@ public class SaveManager : MonoBehaviour
         return true;
     }
 
+    public void AddChronoCharge(int amount)
+    {
+        AddChronoCharge(amount, true);
+    }
+
+    public void AddChronoCharge(int amount, bool saveImmediately)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        CurrentChronoCharge += amount;
+        Debug.Log($"Chrono Charge eklendi: +{amount}. Toplam: {CurrentChronoCharge}");
+
+        if (saveImmediately)
+        {
+            SaveGame();
+        }
+    }
+
+    public bool CanSpendChronoCharge(int amount)
+    {
+        return amount <= 0 || CurrentChronoCharge >= amount;
+    }
+
+    public bool SpendChronoCharge(int amount)
+    {
+        return SpendChronoCharge(amount, true);
+    }
+
+    public bool SpendChronoCharge(int amount, bool saveImmediately)
+    {
+        if (amount <= 0)
+        {
+            return true;
+        }
+
+        if (!CanSpendChronoCharge(amount))
+        {
+            return false;
+        }
+
+        CurrentChronoCharge -= amount;
+        Debug.Log($"Chrono Charge harcandi: {amount}. Kalan: {CurrentChronoCharge}");
+
+        if (saveImmediately)
+        {
+            SaveGame();
+        }
+
+        return true;
+    }
+
     [ContextMenu("Save Game")]
     public void SaveGame()
     {
@@ -149,8 +205,10 @@ public class SaveManager : MonoBehaviour
 
         GameSaveData data = new GameSaveData
         {
+            SaveVersion = CurrentSaveVersion,
             InventoryItemIDs = new List<string>(CurrentInventory),
             TimeCredits = CurrentTimeCredits,
+            ChronoCharge = CurrentChronoCharge,
             SavedObjects = CollectSavedObjects(gridManager),
             LockedTiles = CollectLockedTiles(gridManager)
         };
@@ -182,6 +240,7 @@ public class SaveManager : MonoBehaviour
             ? new List<string>(data.InventoryItemIDs)
             : new List<string>();
         CurrentTimeCredits = data.TimeCredits;
+        CurrentChronoCharge = GetChronoChargeForLoad(data);
         CurrentLockedTiles = GetLockedTilesForLoad(data);
         CurrentSavedObjects = GetSavedObjectsForLoad(data);
         DebugSavedObjects("LOAD", CurrentSavedObjects);
@@ -202,6 +261,7 @@ public class SaveManager : MonoBehaviour
         CurrentSavedObjects.Clear();
         CurrentLockedTiles.Clear();
         CurrentTimeCredits = 0;
+        CurrentChronoCharge = 0;
 
         if (IsBaseSceneActive() && GridManager.Instance != null)
         {
@@ -243,6 +303,7 @@ public class SaveManager : MonoBehaviour
         GameSaveData data = ReadExistingOrNewSaveData();
         data.InventoryItemIDs = new List<string>(CurrentInventory);
         data.TimeCredits = CurrentTimeCredits;
+        data.ChronoCharge = CurrentChronoCharge;
         WriteSaveData(data);
 
         Debug.Log($"Sadece envanter guncellendi (level modu). SavedObjects korunuyor: {data.SavedObjects.Count}");
@@ -261,6 +322,7 @@ public class SaveManager : MonoBehaviour
         CurrentSavedObjects = GetSavedObjectsForLoad(data);
         CurrentLockedTiles = GetLockedTilesForLoad(data);
         CurrentTimeCredits = data.TimeCredits;
+        CurrentChronoCharge = GetChronoChargeForLoad(data);
     }
 
     public void RebuildBaseScene()
@@ -499,8 +561,24 @@ public class SaveManager : MonoBehaviour
 
     private void WriteSaveData(GameSaveData data)
     {
+        data.SaveVersion = CurrentSaveVersion;
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);
+    }
+
+    private int GetChronoChargeForLoad(GameSaveData data)
+    {
+        if (data == null)
+        {
+            return CurrentChronoCharge;
+        }
+
+        if (data.SaveVersion <= 0)
+        {
+            return data.ChronoCharge > 0 ? data.ChronoCharge : CurrentChronoCharge;
+        }
+
+        return data.ChronoCharge;
     }
 
     private void RefreshItemLookup()

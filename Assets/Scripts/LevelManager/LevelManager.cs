@@ -1,27 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-   [Header("Level Hedefleri")]
-   public MergeableItemData TargetItem;
-   public MergeableItemData RewardItem; //kazanılacak(base'e gidecek)ödül
+    [Header("Level Hedefleri")]
+    public MergeableItemData TargetItem;
+    public MergeableItemData RewardItem;
+    [Min(0)] public int ChronoChargeReward = 0;
 
-   [Header("UI Referansları")]
-   public GameObject WinPanel; 
+    [Header("UI Referanslari")]
+    public GameObject WinPanel;
 
-   [Header("Sahne Ayarları")]
-   public string BaseSceneName ="BaseScene";
-   [Header("Audio Settings")]
-    public AudioSource audioSource;       
+    [Header("Sahne Ayarlari")]
+    public string BaseSceneName = "BaseScene";
+
+    [Header("Audio Settings")]
+    public AudioSource audioSource;
     public AudioClip levelCompleteSound;
 
+    private bool isLevelCompleted = false;
 
-   private bool isLevelCompleted = false;
-
-    void Start()
+    private void Start()
     {
         if (GridManager.Instance != null)
         {
@@ -29,7 +28,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         if (GridManager.Instance != null)
         {
@@ -39,9 +38,12 @@ public class LevelManager : MonoBehaviour
 
     private void OnMergeHappened(MergeableItemData producedItem)
     {
-        if(isLevelCompleted) return; 
+        if (isLevelCompleted)
+        {
+            return;
+        }
 
-        if(producedItem == TargetItem)
+        if (producedItem == TargetItem)
         {
             CompleteLevel();
         }
@@ -49,33 +51,35 @@ public class LevelManager : MonoBehaviour
 
     private void CompleteLevel()
     {
-
         isLevelCompleted = true;
-        Debug.Log("Seviye Tamamlandı!");
+        Debug.Log("Seviye tamamlandi.");
+
         if (audioSource != null && levelCompleteSound != null)
         {
             audioSource.PlayOneShot(levelCompleteSound);
         }
-        
-        if(SaveManager.Instance != null && RewardItem != null)
+
+        if (SaveManager.Instance != null && RewardItem != null)
         {
             SaveManager.Instance.AddRewardToInventory(RewardItem.ItemID);
-        } 
+        }
+
+        if (SaveManager.Instance != null && ChronoChargeReward > 0)
+        {
+            SaveManager.Instance.AddChronoCharge(ChronoChargeReward);
+        }
 
         if (WinPanel != null)
         {
             WinPanel.SetActive(true);
-            //efektler gelebilir(konfeti vb ses)
         }
     }
 
     public void LoadBaseScene()
     {
-        if(SaveManager.Instance != null)
+        if (SaveManager.Instance != null)
         {
             SceneManager.LoadScene(BaseSceneName);
         }
     }
-
-
 }

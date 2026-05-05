@@ -4,6 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class GameSaveData
 {
+    public int SaveVersion = 0;
+
     // Legacy field kept for backward compatibility with existing save files.
     public List<TileSaveData> SavedTiles = new List<TileSaveData>();
 
@@ -11,6 +13,7 @@ public class GameSaveData
     public List<LockedTileSaveData> LockedTiles = new List<LockedTileSaveData>();
     public List<string> InventoryItemIDs = new List<string>();
     public int TimeCredits = 0;
+    public int ChronoCharge = 0;
 }
 
 [System.Serializable]
