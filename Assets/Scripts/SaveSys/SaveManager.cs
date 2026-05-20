@@ -17,6 +17,7 @@ public class SaveManager : MonoBehaviour
     public List<string> CurrentInventory = new List<string>();
     public List<SavedObjectData> CurrentSavedObjects = new List<SavedObjectData>();
     public List<LockedTileSaveData> CurrentLockedTiles = new List<LockedTileSaveData>();
+    public List<UnlockedSceneLockedTileSaveData> CurrentUnlockedSceneLockedTiles = new List<UnlockedSceneLockedTileSaveData>();
     public int CurrentTimeCredits = 0;
     public int CurrentChronoCharge = 0;
 
@@ -210,11 +211,13 @@ public class SaveManager : MonoBehaviour
             TimeCredits = CurrentTimeCredits,
             ChronoCharge = CurrentChronoCharge,
             SavedObjects = CollectSavedObjects(gridManager),
-            LockedTiles = CollectLockedTiles(gridManager)
+            LockedTiles = CollectLockedTiles(gridManager),
+            UnlockedSceneLockedTiles = CollectUnlockedSceneLockedTiles(gridManager)
         };
 
         CurrentSavedObjects = new List<SavedObjectData>(data.SavedObjects);
         CurrentLockedTiles = new List<LockedTileSaveData>(data.LockedTiles);
+        CurrentUnlockedSceneLockedTiles = new List<UnlockedSceneLockedTileSaveData>(data.UnlockedSceneLockedTiles);
         WriteSaveData(data);
         DebugSavedObjects("SAVE", data.SavedObjects);
         Debug.Log($"Base durumu kaydedildi: {saveFilePath}");
@@ -242,6 +245,7 @@ public class SaveManager : MonoBehaviour
         CurrentTimeCredits = data.TimeCredits;
         CurrentChronoCharge = GetChronoChargeForLoad(data);
         CurrentLockedTiles = GetLockedTilesForLoad(data);
+        CurrentUnlockedSceneLockedTiles = GetUnlockedSceneLockedTilesForLoad(data);
         CurrentSavedObjects = GetSavedObjectsForLoad(data);
         DebugSavedObjects("LOAD", CurrentSavedObjects);
 
@@ -260,6 +264,7 @@ public class SaveManager : MonoBehaviour
         CurrentInventory.Clear();
         CurrentSavedObjects.Clear();
         CurrentLockedTiles.Clear();
+        CurrentUnlockedSceneLockedTiles.Clear();
         CurrentTimeCredits = 0;
         CurrentChronoCharge = 0;
 
@@ -292,10 +297,39 @@ public class SaveManager : MonoBehaviour
         {
             for (int y = 0; y < gridManager.gridHeight; y++)
             {
-                gridManager.grid[x, y].ObjectOnTile = null;
-                gridManager.UnlockTile(new Vector2Int(x, y));
+                ResetTileToSceneDefault(gridManager, new Vector2Int(x, y));
             }
         }
+    }
+
+    private void ResetTileToSceneDefault(GridManager gridManager, Vector2Int pos)
+    {
+        if (!gridManager.IsValidPosition(pos))
+        {
+            return;
+        }
+
+        GridTileData tileData = gridManager.grid[pos.x, pos.y];
+        tileData.ObjectOnTile = null;
+
+        GridTileView tileView = tileData.TileView;
+        if (tileView == null)
+        {
+            tileData.isLocked = false;
+            return;
+        }
+
+        bool shouldBeLocked = tileView.StartLocked;
+        if (shouldBeLocked)
+        {
+            gridManager.LockTile(pos);
+        }
+        else
+        {
+            gridManager.UnlockTile(pos);
+        }
+
+        tileView.UpdateVisuals(shouldBeLocked);
     }
 
     private void SaveInventoryOnly()
@@ -321,6 +355,7 @@ public class SaveManager : MonoBehaviour
             : new List<string>();
         CurrentSavedObjects = GetSavedObjectsForLoad(data);
         CurrentLockedTiles = GetLockedTilesForLoad(data);
+        CurrentUnlockedSceneLockedTiles = GetUnlockedSceneLockedTilesForLoad(data);
         CurrentTimeCredits = data.TimeCredits;
         CurrentChronoCharge = GetChronoChargeForLoad(data);
     }
@@ -335,6 +370,11 @@ public class SaveManager : MonoBehaviour
 
         RefreshItemLookup();
         ClearCurrentScene(gridManager);
+
+        for (int i = 0; i < CurrentUnlockedSceneLockedTiles.Count; i++)
+        {
+            gridManager.UnlockTile(CurrentUnlockedSceneLockedTiles[i].GridPos);
+        }
 
         for (int i = 0; i < CurrentLockedTiles.Count; i++)
         {
@@ -469,6 +509,30 @@ public class SaveManager : MonoBehaviour
         return lockedTiles;
     }
 
+    private List<UnlockedSceneLockedTileSaveData> CollectUnlockedSceneLockedTiles(GridManager gridManager)
+    {
+        List<UnlockedSceneLockedTileSaveData> unlockedTiles = new List<UnlockedSceneLockedTileSaveData>();
+
+        for (int x = 0; x < gridManager.gridWidth; x++)
+        {
+            for (int y = 0; y < gridManager.gridHeight; y++)
+            {
+                GridTileData tile = gridManager.grid[x, y];
+                if (tile.TileView == null || !tile.TileView.StartLocked || tile.isLocked)
+                {
+                    continue;
+                }
+
+                unlockedTiles.Add(new UnlockedSceneLockedTileSaveData
+                {
+                    GridPos = new Vector2Int(x, y)
+                });
+            }
+        }
+
+        return unlockedTiles;
+    }
+
     private List<SavedObjectData> GetSavedObjectsForLoad(GameSaveData data)
     {
         if (data.SavedObjects != null && data.SavedObjects.Count > 0)
@@ -528,6 +592,16 @@ public class SaveManager : MonoBehaviour
         }
 
         return legacyLockedTiles;
+    }
+
+    private List<UnlockedSceneLockedTileSaveData> GetUnlockedSceneLockedTilesForLoad(GameSaveData data)
+    {
+        if (data.UnlockedSceneLockedTiles != null)
+        {
+            return data.UnlockedSceneLockedTiles;
+        }
+
+        return new List<UnlockedSceneLockedTileSaveData>();
     }
 
     private bool TryReadSaveData(out GameSaveData data)

@@ -11,6 +11,7 @@ public class GameSaveData
 
     public List<SavedObjectData> SavedObjects = new List<SavedObjectData>();
     public List<LockedTileSaveData> LockedTiles = new List<LockedTileSaveData>();
+    public List<UnlockedSceneLockedTileSaveData> UnlockedSceneLockedTiles = new List<UnlockedSceneLockedTileSaveData>();
     public List<string> InventoryItemIDs = new List<string>();
     public int TimeCredits = 0;
     public int ChronoCharge = 0;
@@ -25,6 +26,12 @@ public class SavedObjectData
 
 [System.Serializable]
 public class LockedTileSaveData
+{
+    public Vector2Int GridPos;
+}
+
+[System.Serializable]
+public class UnlockedSceneLockedTileSaveData
 {
     public Vector2Int GridPos;
 }

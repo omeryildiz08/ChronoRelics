@@ -2192,8 +2192,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anomalyChance: 10
+  enableType1: 1
   riftEffectPrefab: {fileID: 193692, guid: 2aa1e7c21640d254492fa8035a6411e1, type: 3}
   persistentRiftEffectPrefab: {fileID: 1548498989132598, guid: beb57d582b696b645928b556533430b2, type: 3}
+  enableType2: 1
+  type2ActivationChance: 20
+  allowMultipleType2ActivationsPerMerge: 1
+  initialAnomalyOrbTiles: []
+  keepOrbsWithinConfiguredTiles: 1
+  anomalyOrbEffectPrefab: {fileID: 0}
+  lockOpenTileWeight: 40
+  swapLockedItemWeight: 25
+  spawnForeignItemWeight: 20
+  teleportOrbWeight: 15
+  foreignEraItems: []
+  verboseType2Logs: 1
+  forcedType2Effect: 0
 --- !u!4 &1048309921
 Transform:
   m_ObjectHideFlags: 0
@@ -3527,6 +3541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetItem: {fileID: 11400000, guid: 65f86aad809a0d24eac54304001c7fcb, type: 2}
   RewardItem: {fileID: 11400000, guid: 10fe76168a0881a43b0f0dad6cc85e6e, type: 2}
+  ChronoChargeReward: 5
   WinPanel: {fileID: 1125402543}
   BaseSceneName: BaseScene
   audioSource: {fileID: 1716809950}
@@ -4095,6 +4110,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 10fe76168a0881a43b0f0dad6cc85e6e, type: 2}
   - {fileID: 11400000, guid: d689709d54bddfc4daffe83385134fae, type: 2}
   CurrentInventory: []
+  CurrentSavedObjects: []
+  CurrentLockedTiles: []
+  CurrentTimeCredits: 0
+  CurrentChronoCharge: 0
 --- !u!1001 &2084423742
 PrefabInstance:
   m_ObjectHideFlags: 0
