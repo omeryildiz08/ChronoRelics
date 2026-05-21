@@ -64,6 +64,7 @@ public class BaseManager : MonoBehaviour
         if (itemsToRemove.Count > 0)
         {
             SaveManager.Instance.SaveGame();
+            gridManager.NotifyBaseStateChanged();
             Debug.Log($"{itemsToRemove.Count} adet odul Base'e yerlestirildi.");
         }
     }

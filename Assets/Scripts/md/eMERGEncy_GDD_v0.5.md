@@ -260,3 +260,36 @@ Görsel tarz referansları
 
 ### Schedule
 - https://miro.com/app/board/uXjVGe6CpMg=/
+
+## Mevcut Implementasyon Durumu (21/05/2026)
+
+Bu bölüm, GDD v0.5 tasarım hedeflerini değiştirmez; mevcut Unity projesinde görülen üretim durumunu özetler.
+
+### Kurulu Çekirdek Sistemler
+- Grid ve Merge: `GridManager`, `GridTileView`, `GridTileData` ve `MergeableObject` ile 4 yönlü komşuluk üzerinden en az 3 aynı objeyi birleştiren temel merge akışı çalışır durumda.
+- Kapalı Grid: Tile kilitleme/açma mantığı var. Kilitli tile üzerindeki obje sürüklenemiyor; merge grubu kilitli tile'a dokunduğunda tile açılıyor.
+- Save/Load: `SaveManager` JSON save dosyasıyla base objelerini, locked tile listesini, inventory item ID'lerini, Time Credit'i ve Chrono Charge'ı saklıyor. Base sahnesi ile level sahnesi ayrımı yapılmış; level sahnesinde base snapshot'ı ezilmeden yalnızca inventory/economy verileri güncelleniyor.
+- Base Akışı: `BaseManager`, base sahnesi açılırken grid kayıtlarının tamamlanmasını bekliyor, kayıtlı base state'ini yeniden kuruyor ve level ödüllerini ilk boş uygun tile'a yerleştiriyor.
+- Level Akışı: `LevelManager`, hedef item üretildiğinde level tamamlanmasını, reward item'ın inventory'ye eklenmesini, opsiyonel Chrono Charge ödülünü ve win panelini yönetiyor.
+- Market ve Time Credit: `MarketManager`, Time Credit ile item satın alma ve obje satma akışını yönetiyor. `TimeCreditUI` sahnede bağlı görünüyor.
+- Chrono Charge: `GameSaveData`, `SaveManager`, `LevelSelector`, `LevelManager` ve `ChronoChargeUI` tarafında runtime/save/UI temeli var. BaseScene içinde Level_1 için Chrono cost yapılandırması görülüyor.
+- Quest: `LevelQuestData`, `LevelQuestManager` ve `QuestUI_Item` ile `ProduceItem` tipi görev ilerlemesi var. `MergeCountLimit` enum'da tanımlı fakat davranış olarak uygulanmamış.
+- Anomaly: `AnomalyManager` Type 1 random tile lock ve Type 2 orb tabanlı etkileri kod tarafında destekliyor. Level sahnelerinde `AnomalyManager` mevcut; en az Level_1'de Type 2 orb listesi ve foreign item havuzu boş olduğu için sistemin sahne konfigürasyonu tamamlanmamış.
+
+### Aktif Sahne ve İçerik Durumu
+- Build Settings içinde `MainMenuScene`, `BaseScene`, `Level_1`, `Level_2`, `Level_3` aktif.
+- BaseScene içinde `BaseManager`, `SaveManager`, `LevelSelector`, `MarketManager`, `TimeCreditUI` ve `ChronoChargeUI` referansları var.
+- Level_1, Level_2 ve Level_3 sahnelerinde `LevelManager`, `SaveManager` ve `AnomalyManager` bulunuyor.
+- ScriptableObject tarafında test merge zinciri (`Tomurcuk_L1`, `CicekL2`, `BuyukCicek_L3`) ve quest assetleri var. Bu itemların `FacilityPoint`, `BuyPrice`, `SellPrice` değerleri şu an çoğunlukla 0 görünüyor.
+
+### Eksik veya Yarım Kalan GDD Sistemleri
+- Level progression/unlock sistemi henüz data-driven değil. `LevelData` ScriptableObject, completed level listesi ve save/load sonrası unlock korunumu yok.
+- Facility Power ve base genişletme sistemi henüz manager/UI/threshold olarak uygulanmamış. Item data içinde `FacilityPoint` alanı var ama toplam hesaplama ve grid expansion yok.
+- Quest sistemi level completion ile tam entegre değil; quest reward, zorunlu/opsiyonel quest ayrımı ve `MergeCountLimit` davranışı eksik.
+- Anomaly sisteminde Type 2 sahne kurulumları, foreign item yaşam döngüsü ve save/load kapsam kararı netleşmemiş.
+- Market unlock koşulları, item validation, icon polish ve yetersiz kaynak UI durumları ürün seviyesinde tamamlanmamış.
+- Save şeması `SaveVersion` içeriyor; ancak completed level, unlocked expansion, quest progress ve anomaly state henüz save modelinde yok.
+- Debug/QA paneli, soft-lock uyarısı ve base dolu durumda reward UI geri bildirimi henüz yok.
+
+### Yakın Hedef
+Bir sonraki mantıklı üretim adımı, Chrono Charge akışını sahnede manuel test edip kapatmak ve ardından `LevelData + CompletedLevelIds` ile level unlock/progression omurgasını kurmaktır. Bundan sonra Facility Power sistemi item data'daki mevcut `FacilityPoint` alanını kullanarak eklenebilir.

@@ -120,6 +120,7 @@ public class MarketManager : MonoBehaviour
 
         SpawnObjectAt(itemData, emptyPos.Value, gridManager);
         SaveManager.Instance.SaveGame();
+        gridManager.NotifyBaseStateChanged();
         SetFeedback($"{itemData.ItemName} satin alindi.");
     }
 

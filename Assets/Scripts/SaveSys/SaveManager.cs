@@ -396,6 +396,8 @@ public class SaveManager : MonoBehaviour
             Debug.Log($"[SaveManager:REBUILD-SPAWN] Item={objectData.ItemID} Pos={objectData.GridPos}");
             SpawnObjectAt(itemData, objectData.GridPos, gridManager);
         }
+
+        gridManager.NotifyBaseStateChanged();
     }
 
     private List<SavedObjectData> CollectSavedObjects(GridManager gridManager)

@@ -23,6 +23,7 @@ public class GridManager : MonoBehaviour
 
     public event Action<MergeableItemData> OnMergeCompleted;
     public event Action<Vector2Int, bool> OnTileLockStateChanged;
+    public event Action OnBaseStateChanged;
     private void Awake()
     {
 
@@ -381,5 +382,13 @@ public class GridManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "BaseScene") return;
 
         SaveManager.Instance.SaveGame();
+        NotifyBaseStateChanged();
+    }
+
+    public void NotifyBaseStateChanged()
+    {
+        if (SceneManager.GetActiveScene().name != "BaseScene") return;
+
+        OnBaseStateChanged?.Invoke();
     }
 }

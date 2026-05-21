@@ -48,10 +48,10 @@ GDD referansi: Chrono Charge, oyuncunun zaman/level degistirmek icin kullandigi 
 - [x] Time Credit ile Chrono Charge'i karistirmamak icin economy API isimlerini net tut.
 
 ### Unity Editor / UI
-- [ ] BaseScene'e `ChronoChargeUI` TextMeshPro label ekle. Kod script'i hazir: `Assets/Scripts/ChronoChargeUI.cs`.
+- [x] BaseScene'e `ChronoChargeUI` TextMeshPro label ekle. Kod script'i hazir: `Assets/Scripts/ChronoChargeUI.cs`.
 - [ ] Level selection panelinde her level icin Chrono cost goster.
-- [ ] Yetersiz Chrono durumunda placeholder feedback text'i veya toast kullan.
-- [ ] Chrono icon gelene kadar basit saat/enerji placeholder sprite'i kullan.
+- [x] Yetersiz Chrono durumunda placeholder feedback text'i veya toast kullan.
+- [x] Chrono icon gelene kadar basit saat/enerji placeholder sprite'i kullan.
 - [ ] Test icin inspector'dan baslangic Chrono degeri verilebilecek debug alan veya buton ekle.
 
 ### Kabul Kriterleri
@@ -89,17 +89,17 @@ GDD referansi: oyuncu farkli zaman dilimlerine gider, level tamamlayarak ilerler
 GDD referansi: base'e yerlestirilen objeler Facility Power uretir; threshold gecilince daha fazla grid alani acilir.
 
 ### Kod
-- [ ] `MergeableItemData.FacilityPoint` mevcut alanini kullanarak toplam base power hesaplayan `FacilityPowerManager` ekle.
-- [ ] `GridManager` icine power hesaplama koyma; grid sadece tile/object bilgisini saglamali.
-- [ ] `FacilityPowerManager` base sahnesinde grid snapshot'ini okuyup toplam power hesaplasin.
-- [ ] Threshold data yapisi ekle: `RequiredPower`, `UnlockedTileGroupId` veya `ExpansionLevel`.
-- [ ] Ilk asamada fiziksel grid instantiate etmek yerine var olan tile'lari locked/hidden durumdan ac.
-- [ ] `GameSaveData` icine `UnlockedExpansionLevel` veya unlocked tile grup bilgisi ekle.
-- [ ] Base'te item al, sat, merge, move sonrasi Facility Power recalculation tetiklensin.
-- [ ] Hesaplama event tabanli olsun; gerekirse `GridManager.OnBaseStateChanged` gibi genel bir event ekle.
+- [x] `MergeableItemData.FacilityPoint` mevcut alanini kullanarak toplam base power hesaplayan `FacilityPowerManager` ekle.
+- [x] `GridManager` icine power hesaplama koyma; grid sadece tile/object bilgisini saglamali.
+- [x] `FacilityPowerManager` base sahnesinde grid snapshot'ini okuyup toplam power hesaplasin.
+- [x] Threshold data yapisi ekle: `RequiredPower`, `UnlockedTileGroupId` veya `ExpansionLevel`.
+- [x] Ilk asamada fiziksel grid instantiate etmek yerine var olan tile'lari locked/hidden durumdan ac. Tile otomatik acilmaz; yeterli FP varsa oyuncu tile'a tiklayinca animasyonla acilir.
+- [x] `GameSaveData` icine `UnlockedExpansionLevel` veya unlocked tile grup bilgisi ekle. Mevcut uygulama tile bazli `UnlockedSceneLockedTiles` kullanir.
+- [x] Base'te item al, sat, merge, move sonrasi Facility Power recalculation tetiklensin.
+- [x] Hesaplama event tabanli olsun; gerekirse `GridManager.OnBaseStateChanged` gibi genel bir event ekle.
 
 ### Unity Editor / UI
-- [ ] BaseScene'e `FacilityPowerUI` ekle: `43 / 45 FP` gibi.
+- [ ] BaseScene'e `FacilityPowerUI` ekle: `43 / 45 FP` gibi. Kod script'i hazir: `Assets/Scripts/FacilityPowerUI.cs`.
 - [ ] Acilacak grid bolgelerini sahnede placeholder locked material ile goster.
 - [ ] Expansion threshold gecilince tile material veya visibility degisimi gorunur olsun.
 - [ ] Facility icon gelene kadar basit enerji/binacik placeholder icon kullan.
@@ -198,15 +198,15 @@ GDD referansi: oyuncu istemedigi objeleri Time Credit karsiliginda satar, market
 Mevcut save sistemi son commitlerde duzeltildi; genisletirken ayni ayrimi koru: base snapshot level sahnesinden ezilmemeli.
 
 ### Kod
-- [ ] `GameSaveData` icin sema versiyonu ekle: `SaveVersion`.
+- [x] `GameSaveData` icin sema versiyonu ekle: `SaveVersion`.
 - [ ] Yeni alanlar:
-  - [ ] `ChronoCharge`
+  - [x] `ChronoCharge`
   - [ ] `CompletedLevelIds`
   - [ ] `UnlockedExpansionLevel`
   - [ ] `QuestProgress`, gerekiyorsa
   - [ ] `AnomalyState`, karara bagli
 - [ ] Legacy save dosyalari icin default degerler belirle.
-- [ ] `SaveInventoryOnly` yeni economy/progression alanlarini da koruyarak yazsin.
+- [x] `SaveInventoryOnly` yeni economy/progression alanlarini da koruyarak yazsin.
 - [ ] Save loglarini debug flag'e bagla; su anki detay loglar development icin faydali ama release'de gurultu yaratir.
 - [ ] Save batching/debounce dusun: base'te cok sik move yapilinca her hareket dosyaya yaziyor.
 
@@ -225,8 +225,8 @@ Mevcut save sistemi son commitlerde duzeltildi; genisletirken ayni ayrimi koru: 
 GDD referansi: level sonunda kazanilan objeler base'e gelir, base'te merge ve hikaye ilerlemesi surer.
 
 ### Kod
-- [ ] Reward inventory sistemi korunacak; base rebuild sonrasi inventory spawn akisi devam edecek.
-- [ ] Inventory spawn grid doluysa item kaybolmasin; inventory'de kalsin ve UI feedback versin.
+- [x] Reward inventory sistemi korunacak; base rebuild sonrasi inventory spawn akisi devam edecek.
+- [ ] Inventory spawn grid doluysa item kaybolmasin; inventory'de kalsin ve UI feedback versin. Kod item'i inventory'de tutuyor; oyuncu UI feedback'i eksik.
 - [ ] Base grid doluluk kontrolu icin helper ekle: `HasEmptyUnlockedTile`.
 - [ ] Soft-lock'e yakin durumda uyarici sistem ekle.
 - [ ] Base'te merge olan itemlarin story/progression tetiklemesi icin event hook ekle.
@@ -253,9 +253,9 @@ Artist assetleri son urun olarak gelmese bile sistemler sahnede okunabilir olmal
 - [ ] Debug panel: development build icin toggle edilebilir.
 
 ### Placeholder Asset
-- [ ] Chrono Charge icon: basit saat/enerji sprite.
-- [ ] Time Credit icon: coin/credit placeholder.
-- [ ] Facility Power icon: lightning/building placeholder.
+- [x] Chrono Charge icon: basit saat/enerji sprite.
+- [x] Time Credit icon: coin/credit placeholder.
+- [x] Facility Power icon: lightning/building placeholder.
 - [ ] Locked tile material: koyu/kapali renk.
 - [ ] Unlockable tile material: yari saydam veya outline.
 - [ ] Anomaly orb: emissive sphere.
