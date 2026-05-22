@@ -116,3 +116,6 @@ MonoBehaviour:
   MyMeshRenderer: {fileID: 147013163973680960}
   LockedMaterial: {fileID: 2100000, guid: 120c2c184fa3a7e4fac538ee3d4316e7, type: 2}
   NormalMaterial: {fileID: 2100000, guid: 849630239f2a48746920859232753a11, type: 2}
+  UnlockableMaterial: {fileID: 2100000, guid: 0e18b254037c9d44582cbc59b839a444, type: 2}
+  unlockAnimationSeconds: 0.25
+  unlockScaleMultiplier: 1.08

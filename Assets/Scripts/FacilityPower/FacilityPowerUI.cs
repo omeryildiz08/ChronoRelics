@@ -1,26 +1,32 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class FacilityPowerUI : MonoBehaviour
 {
     public TextMeshProUGUI facilityPowerText;
-    public string prefix = "Facility Power: ";
-    public string readySuffix = " | Unlock Ready";
+    public string prefix = "FP: ";
+    public bool showUnlockReadyCount = false;
+    public string readySuffix = " | Ready: ";
 
     private FacilityPowerManager facilityPowerManager;
 
-    private void Start()
+    private IEnumerator Start()
     {
-        facilityPowerManager = FacilityPowerManager.Instance;
-        if (facilityPowerManager != null)
+        while (FacilityPowerManager.Instance == null)
         {
-            facilityPowerManager.OnFacilityPowerChanged += UpdateText;
-            UpdateText(
-                facilityPowerManager.CurrentFacilityPower,
-                0,
-                false,
-                0);
+            yield return null;
         }
+
+        facilityPowerManager = FacilityPowerManager.Instance;
+        facilityPowerManager.OnFacilityPowerChanged += UpdateText;
+        UpdateText(
+            facilityPowerManager.CurrentFacilityPower,
+            facilityPowerManager.UsedFacilityPower,
+            facilityPowerManager.AvailableFacilityPower,
+            0,
+            false,
+            0);
     }
 
     private void OnDestroy()
@@ -31,7 +37,13 @@ public class FacilityPowerUI : MonoBehaviour
         }
     }
 
-    private void UpdateText(int currentPower, int nextRequiredPower, bool hasNextThreshold, int unlockableTileCount)
+    private void UpdateText(
+        int currentPower,
+        int usedPower,
+        int availablePower,
+        int nextRequiredPower,
+        bool hasNextThreshold,
+        int unlockableTileCount)
     {
         if (facilityPowerText == null)
         {
@@ -40,16 +52,12 @@ public class FacilityPowerUI : MonoBehaviour
 
         if (unlockableTileCount > 0)
         {
-            facilityPowerText.text = $"{prefix}{currentPower}{readySuffix}: {unlockableTileCount}";
+            facilityPowerText.text = showUnlockReadyCount
+                ? $"{prefix}{availablePower}{readySuffix}{unlockableTileCount}"
+                : $"{prefix}{availablePower}";
             return;
         }
 
-        if (hasNextThreshold)
-        {
-            facilityPowerText.text = $"{prefix}{currentPower}/{nextRequiredPower}";
-            return;
-        }
-
-        facilityPowerText.text = $"{prefix}{currentPower}";
+        facilityPowerText.text = $"{prefix}{availablePower}";
     }
 }

@@ -92,17 +92,21 @@ GDD referansi: base'e yerlestirilen objeler Facility Power uretir; threshold gec
 - [x] `MergeableItemData.FacilityPoint` mevcut alanini kullanarak toplam base power hesaplayan `FacilityPowerManager` ekle.
 - [x] `GridManager` icine power hesaplama koyma; grid sadece tile/object bilgisini saglamali.
 - [x] `FacilityPowerManager` base sahnesinde grid snapshot'ini okuyup toplam power hesaplasin.
-- [x] Threshold data yapisi ekle: `RequiredPower`, `UnlockedTileGroupId` veya `ExpansionLevel`.
+- [x] Threshold/data yapisi ekle: `RequiredPower`, `UnlockedTileGroupId` veya `ExpansionLevel`. Mevcut MVP'de `RequiredPower`, gruptaki her tile'in unlock cost'u olarak kullanilir.
 - [x] Ilk asamada fiziksel grid instantiate etmek yerine var olan tile'lari locked/hidden durumdan ac. Tile otomatik acilmaz; yeterli FP varsa oyuncu tile'a tiklayinca animasyonla acilir.
 - [x] `GameSaveData` icine `UnlockedExpansionLevel` veya unlocked tile grup bilgisi ekle. Mevcut uygulama tile bazli `UnlockedSceneLockedTiles` kullanir.
 - [x] Base'te item al, sat, merge, move sonrasi Facility Power recalculation tetiklensin.
 - [x] Hesaplama event tabanli olsun; gerekirse `GridManager.OnBaseStateChanged` gibi genel bir event ekle.
+- [x] Ayni FP ile sonsuz tile acilmasin; acilmis expansion tile'lar Used FP olarak toplam kapasiteden dussun.
 
 ### Unity Editor / UI
 - [ ] BaseScene'e `FacilityPowerUI` ekle: `43 / 45 FP` gibi. Kod script'i hazir: `Assets/Scripts/FacilityPowerUI.cs`.
+- [x] Facility Power ana UI oyuncuya sadece kullanilabilir FP'yi gosterecek kadar sade olsun; maliyet/eksik bilgi feedback text'te verilsin.
 - [ ] Acilacak grid bolgelerini sahnede placeholder locked material ile goster.
-- [ ] Expansion threshold gecilince tile material veya visibility degisimi gorunur olsun.
+- [ ] Expansion threshold gecilince tile material veya visibility degisimi gorunur olsun. Kod `UnlockableMaterial` destekliyor; materyal sahnede baglanacak.
 - [ ] Facility icon gelene kadar basit enerji/binacik placeholder icon kullan.
+- [x] Facility feedback text'i kisa mesaj gosterip otomatik temizleyebilsin.
+- [x] Tile unlock icin opsiyonel placeholder VFX hook'u hazir olsun.
 
 ### Kabul Kriterleri
 - [ ] Base'teki objelerden toplam Facility Power dogru hesaplaniyor.

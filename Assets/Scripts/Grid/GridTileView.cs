@@ -17,8 +17,8 @@ public class GridTileView : MonoBehaviour
     public Material UnlockableMaterial;
 
     [Header("Unlock Animation")]
-    [Min(0.01f)] public float unlockAnimationSeconds = 0.25f;
-    [Min(1f)] public float unlockScaleMultiplier = 1.08f;
+    [Min(0.01f)] public float unlockAnimationSeconds = 0.45f;
+    [Range(0.5f, 1f)] public float unlockShrinkScaleMultiplier = 0.72f;
 
     private bool isRegistered;
     private Coroutine unlockAnimationRoutine;
@@ -111,7 +111,7 @@ public class GridTileView : MonoBehaviour
     private IEnumerator UnlockAnimationRoutine(Action onComplete)
     {
         Vector3 originalScale = transform.localScale;
-        Vector3 targetScale = originalScale * unlockScaleMultiplier;
+        Vector3 targetScale = originalScale * unlockShrinkScaleMultiplier;
         float halfDuration = Mathf.Max(0.01f, unlockAnimationSeconds * 0.5f);
 
         float elapsed = 0f;

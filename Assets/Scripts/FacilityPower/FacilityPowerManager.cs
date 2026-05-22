@@ -13,6 +13,7 @@ public class FacilityPowerManager : MonoBehaviour
     public class FacilityExpansionGroup
     {
         public string GroupId;
+        [Tooltip("Bu gruptaki her tile'i acmak icin gereken kullanilabilir Facility Power.")]
         [Min(0)] public int RequiredPower;
         public List<GridTileView> TilesToUnlock = new List<GridTileView>();
     }
@@ -23,12 +24,21 @@ public class FacilityPowerManager : MonoBehaviour
     [Header("Feedback")]
     public TextMeshProUGUI feedbackText;
     public bool playErrorSoundOnFailedUnlock = true;
+    [Min(0f)] public float feedbackVisibleSeconds = 1.5f;
+    public string unlockSuccessMessage = "Yeni tile acildi.";
+
+    [Header("Unlock VFX")]
+    public GameObject unlockVFXPrefab;
+    [Min(0.1f)] public float unlockVFXLifetime = 2f;
 
     public int CurrentFacilityPower { get; private set; }
-    public event Action<int, int, bool, int> OnFacilityPowerChanged;
+    public int UsedFacilityPower { get; private set; }
+    public int AvailableFacilityPower { get; private set; }
+    public event Action<int, int, int, int, bool, int> OnFacilityPowerChanged;
 
     private GridManager gridManager;
     private bool recalculateQueued;
+    private Coroutine feedbackRoutine;
     private readonly HashSet<GridTileView> unlocksInProgress = new HashSet<GridTileView>();
 
     private void Awake()
@@ -102,9 +112,11 @@ public class FacilityPowerManager : MonoBehaviour
             return false;
         }
 
-        if (CurrentFacilityPower < group.RequiredPower)
+        int unlockCost = GetUnlockCost(group);
+        if (AvailableFacilityPower < unlockCost)
         {
-            SetFeedback($"Facility Power gerekli: {CurrentFacilityPower}/{group.RequiredPower}");
+            int missingPower = unlockCost - AvailableFacilityPower;
+            SetFeedback($"Tile acmak icin {unlockCost} FP gerekli. Kullanilabilir: {AvailableFacilityPower} ({missingPower} FP eksik)");
             PlayFailedUnlockFeedback();
             return true;
         }
@@ -147,6 +159,8 @@ public class FacilityPowerManager : MonoBehaviour
         }
 
         CurrentFacilityPower = totalPower;
+        UsedFacilityPower = CalculateUsedFacilityPower();
+        AvailableFacilityPower = Mathf.Max(0, CurrentFacilityPower - UsedFacilityPower);
         RefreshExpansionVisuals();
         NotifyPowerChanged();
     }
@@ -154,7 +168,7 @@ public class FacilityPowerManager : MonoBehaviour
     private IEnumerator UnlockTileRoutine(GridTileView tileView, Vector2Int pos)
     {
         unlocksInProgress.Add(tileView);
-        SetFeedback("");
+        ClearFeedback();
 
         bool animationComplete = false;
         tileView.PlayUnlockAnimation(() => animationComplete = true);
@@ -166,6 +180,7 @@ public class FacilityPowerManager : MonoBehaviour
 
         gridManager.UnlockTile(pos);
         tileView.SetUnlockableVisual(false);
+        SpawnUnlockVFX(tileView);
 
         if (SaveManager.Instance != null)
         {
@@ -175,6 +190,7 @@ public class FacilityPowerManager : MonoBehaviour
         gridManager.NotifyBaseStateChanged();
         unlocksInProgress.Remove(tileView);
         RecalculateFacilityPower();
+        SetFeedback(unlockSuccessMessage);
     }
 
     private void QueueRecalculate()
@@ -210,7 +226,7 @@ public class FacilityPowerManager : MonoBehaviour
                 continue;
             }
 
-            bool isUnlockable = CurrentFacilityPower >= group.RequiredPower;
+            bool isUnlockable = AvailableFacilityPower >= GetUnlockCost(group);
             for (int j = 0; j < group.TilesToUnlock.Count; j++)
             {
                 GridTileView tileView = group.TilesToUnlock[j];
@@ -234,8 +250,14 @@ public class FacilityPowerManager : MonoBehaviour
     private void NotifyPowerChanged()
     {
         int unlockableTileCount = CountUnlockableTiles();
-        int nextRequiredPower = GetNextRequiredPower(out bool hasNextThreshold);
-        OnFacilityPowerChanged?.Invoke(CurrentFacilityPower, nextRequiredPower, hasNextThreshold, unlockableTileCount);
+        int nextRequiredPower = GetNextUnlockCost(out bool hasNextThreshold);
+        OnFacilityPowerChanged?.Invoke(
+            CurrentFacilityPower,
+            UsedFacilityPower,
+            AvailableFacilityPower,
+            nextRequiredPower,
+            hasNextThreshold,
+            unlockableTileCount);
     }
 
     private int CountUnlockableTiles()
@@ -244,7 +266,7 @@ public class FacilityPowerManager : MonoBehaviour
         for (int i = 0; i < expansionGroups.Count; i++)
         {
             FacilityExpansionGroup group = expansionGroups[i];
-            if (group == null || CurrentFacilityPower < group.RequiredPower || group.TilesToUnlock == null)
+            if (group == null || AvailableFacilityPower < GetUnlockCost(group) || group.TilesToUnlock == null)
             {
                 continue;
             }
@@ -262,10 +284,10 @@ public class FacilityPowerManager : MonoBehaviour
         return count;
     }
 
-    private int GetNextRequiredPower(out bool hasNextThreshold)
+    private int GetNextUnlockCost(out bool hasNextThreshold)
     {
         hasNextThreshold = false;
-        int nextRequired = int.MaxValue;
+        int nextCost = int.MaxValue;
 
         for (int i = 0; i < expansionGroups.Count; i++)
         {
@@ -275,19 +297,69 @@ public class FacilityPowerManager : MonoBehaviour
                 continue;
             }
 
-            if (CurrentFacilityPower >= group.RequiredPower)
+            int unlockCost = GetUnlockCost(group);
+            if (AvailableFacilityPower >= unlockCost)
             {
                 continue;
             }
 
-            if (group.RequiredPower < nextRequired)
+            if (unlockCost < nextCost)
             {
-                nextRequired = group.RequiredPower;
+                nextCost = unlockCost;
                 hasNextThreshold = true;
             }
         }
 
-        return hasNextThreshold ? nextRequired : 0;
+        return hasNextThreshold ? nextCost : 0;
+    }
+
+    private int CalculateUsedFacilityPower()
+    {
+        int usedPower = 0;
+        HashSet<GridTileView> countedTiles = new HashSet<GridTileView>();
+
+        for (int i = 0; i < expansionGroups.Count; i++)
+        {
+            FacilityExpansionGroup group = expansionGroups[i];
+            if (group == null || group.TilesToUnlock == null)
+            {
+                continue;
+            }
+
+            int unlockCost = GetUnlockCost(group);
+            for (int j = 0; j < group.TilesToUnlock.Count; j++)
+            {
+                GridTileView tileView = group.TilesToUnlock[j];
+                if (tileView == null || countedTiles.Contains(tileView))
+                {
+                    continue;
+                }
+
+                if (IsExpansionTileUnlocked(tileView))
+                {
+                    usedPower += unlockCost;
+                    countedTiles.Add(tileView);
+                }
+            }
+        }
+
+        return usedPower;
+    }
+
+    private bool IsExpansionTileUnlocked(GridTileView tileView)
+    {
+        if (tileView == null || gridManager == null || !tileView.StartLocked)
+        {
+            return false;
+        }
+
+        Vector2Int pos = tileView.GridPosition;
+        return gridManager.IsValidPosition(pos) && !gridManager.grid[pos.x, pos.y].isLocked;
+    }
+
+    private int GetUnlockCost(FacilityExpansionGroup group)
+    {
+        return group != null ? Mathf.Max(0, group.RequiredPower) : 0;
     }
 
     private bool GroupHasLockedTile(FacilityExpansionGroup group)
@@ -339,6 +411,48 @@ public class FacilityPowerManager : MonoBehaviour
         {
             feedbackText.text = message;
         }
+
+        if (feedbackRoutine != null)
+        {
+            StopCoroutine(feedbackRoutine);
+            feedbackRoutine = null;
+        }
+
+        if (feedbackText != null && feedbackVisibleSeconds > 0f && !string.IsNullOrEmpty(message))
+        {
+            feedbackRoutine = StartCoroutine(ClearFeedbackAfterDelay());
+        }
+    }
+
+    private void ClearFeedback()
+    {
+        if (feedbackRoutine != null)
+        {
+            StopCoroutine(feedbackRoutine);
+            feedbackRoutine = null;
+        }
+
+        if (feedbackText != null)
+        {
+            feedbackText.text = "";
+        }
+    }
+
+    private IEnumerator ClearFeedbackAfterDelay()
+    {
+        yield return new WaitForSeconds(feedbackVisibleSeconds);
+        ClearFeedback();
+    }
+
+    private void SpawnUnlockVFX(GridTileView tileView)
+    {
+        if (unlockVFXPrefab == null || tileView == null)
+        {
+            return;
+        }
+
+        GameObject vfx = Instantiate(unlockVFXPrefab, tileView.GetWorldPosition(), Quaternion.identity);
+        Destroy(vfx, unlockVFXLifetime);
     }
 
     private void PlayFailedUnlockFeedback()
