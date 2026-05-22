@@ -17,6 +17,6 @@ MonoBehaviour:
   Level: 3
   Prefab: {fileID: 5339684384217518243, guid: 96c2a0f9efbe09b419216ed744d0c935, type: 3}
   NextLevelItem: {fileID: 11400000, guid: 4a12ad6934628274baaf799eb643d0fe, type: 2}
-  SellPrice: 0
-  BuyPrice: 0
-  FacilityPoint: 0
+  SellPrice: 3
+  BuyPrice: 3
+  FacilityPoint: 3

@@ -19,4 +19,4 @@ MonoBehaviour:
   NextLevelItem: {fileID: 11400000, guid: 10fe76168a0881a43b0f0dad6cc85e6e, type: 2}
   SellPrice: 2
   BuyPrice: 5
-  FacilityPoint: 0
+  FacilityPoint: 8
