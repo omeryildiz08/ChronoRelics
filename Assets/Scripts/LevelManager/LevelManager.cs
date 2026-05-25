@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance { get; private set; }
+
     [Header("Level Hedefleri")]
     public MergeableItemData TargetItem;
     public MergeableItemData RewardItem;
@@ -10,6 +12,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("UI Referanslari")]
     public GameObject WinPanel;
+    [SerializeField] private LevelCompleteUI levelCompleteUI;
 
     [Header("Sahne Ayarlari")]
     public string BaseSceneName = "BaseScene";
@@ -19,6 +22,17 @@ public class LevelManager : MonoBehaviour
     public AudioClip levelCompleteSound;
 
     private bool isLevelCompleted = false;
+    public bool IsLevelCompleted => isLevelCompleted;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("Birden fazla LevelManager Instance bulundu. Aktif Instance son Awake olan LevelManager olarak guncellendi.");
+        }
+
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -30,6 +44,11 @@ public class LevelManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+
         if (GridManager.Instance != null)
         {
             GridManager.Instance.OnMergeCompleted -= OnMergeHappened;
@@ -69,10 +88,29 @@ public class LevelManager : MonoBehaviour
             SaveManager.Instance.AddChronoCharge(ChronoChargeReward);
         }
 
-        if (WinPanel != null)
+        LevelCompleteUI activeLevelCompleteUI = ResolveLevelCompleteUI();
+        if (activeLevelCompleteUI != null)
+        {
+            activeLevelCompleteUI.Show(TargetItem, RewardItem, ChronoChargeReward, LoadBaseScene);
+        }
+        else if (WinPanel != null)
         {
             WinPanel.SetActive(true);
         }
+        else
+        {
+            Debug.LogWarning("Level tamamlandi ancak LevelCompleteUI veya WinPanel atanmamis.");
+        }
+    }
+
+    private LevelCompleteUI ResolveLevelCompleteUI()
+    {
+        if (levelCompleteUI != null)
+        {
+            return levelCompleteUI;
+        }
+
+        return WinPanel != null ? WinPanel.GetComponent<LevelCompleteUI>() : null;
     }
 
     public void LoadBaseScene()

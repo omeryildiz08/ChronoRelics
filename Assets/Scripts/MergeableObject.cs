@@ -44,6 +44,11 @@ public class MergeableObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (LevelManager.Instance != null && LevelManager.Instance.IsLevelCompleted)
+        {
+            return;
+        }
+
         if (IsInactiveAnomalyItem)
         {
             gridManager.PlayErrorSound();
