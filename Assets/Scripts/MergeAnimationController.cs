@@ -40,6 +40,7 @@ public class MergeAnimationController : MonoBehaviour
         }
 
         Sequence sequence = DOTween.Sequence();
+        bool hasTween = false;
 
         for (int i = 0; i < mergeObjects.Count; i++)
         {
@@ -52,11 +53,18 @@ public class MergeAnimationController : MonoBehaviour
 
             Transform objTransform = obj.transform;
 
+            objTransform.DOKill();
+
             Vector3 targetScale = objTransform.localScale * mergeShrinkScale;
 
             sequence.Join(
                 objTransform.DOMove(mergeCenterWorldPos, mergeMoveDuration)
                 .SetEase(mergeMoveEase)
+            );
+
+            sequence.Join(
+                objTransform.DOScale(targetScale, mergeMoveDuration)
+                .SetEase(mergeScaleEase)
             );
 
             if (rotateDuringMerge)
@@ -70,14 +78,39 @@ public class MergeAnimationController : MonoBehaviour
                         .SetEase(Ease.InOutSine)
                 );
             }
+
+            hasTween = true;
         }
+
+        if (!hasTween)
+        {
+            sequence.Kill();
+            onComplete?.Invoke();
+            return null;
+        }
+
+        bool callbackInvoked = false;
+
         sequence.OnComplete(() =>
-      {
-          PlayMergeFeedback(mergeCenterWorldPos);
-          onComplete?.Invoke();
-      });
+        {
+            PlayMergeFeedback(mergeCenterWorldPos);
+            InvokeOnce();
+        });
+
+        sequence.OnKill(InvokeOnce);
 
         return sequence;
+
+        void InvokeOnce()
+        {
+            if (callbackInvoked)
+            {
+                return;
+            }
+
+            callbackInvoked = true;
+            onComplete?.Invoke();
+        }
     }
 
     public Tween PlayNewObjectPopAnimation(Transform newObjectTransform, Action onComplete)
@@ -105,12 +138,23 @@ public class MergeAnimationController : MonoBehaviour
                .SetEase(settleEase)
        );
 
-        sequence.OnComplete(() =>
-        {
-            onComplete?.Invoke();
-        });
+        bool callbackInvoked = false;
+
+        sequence.OnComplete(InvokeOnce);
+        sequence.OnKill(InvokeOnce);
 
         return sequence;
+
+        void InvokeOnce()
+        {
+            if (callbackInvoked)
+            {
+                return;
+            }
+
+            callbackInvoked = true;
+            onComplete?.Invoke();
+        }
     }
 
     private void PlayMergeFeedback(Vector3 position)
@@ -121,7 +165,7 @@ public class MergeAnimationController : MonoBehaviour
 
     private void SpawnMergeVFX(Vector3 position)
     {
-        if (mergeVFXPrefab = null)
+        if (mergeVFXPrefab == null)
         {
             return;
         }

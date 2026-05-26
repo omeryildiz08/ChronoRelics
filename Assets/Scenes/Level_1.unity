@@ -1630,6 +1630,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &755851168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 755851170}
+  - component: {fileID: 755851169}
+  m_Layer: 0
+  m_Name: _MergeAnimController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &755851169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755851168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c156e3716ec0a749a7636ea2ef3cea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mergeMoveDuration: 0.22
+  mergeShrinkScale: 0.05
+  mergeMoveEase: 26
+  mergeScaleEase: 26
+  rotateDuringMerge: 1
+  mergeRotationAmount: 180
+  newObjectPopDuration: 0.16
+  newObjectSettleDuration: 0.08
+  popOvershootScale: 1.15
+  popEase: 27
+  settleEase: 6
+  mergeVFXPrefab: {fileID: 133642, guid: 721ed883392764d42a3957861e7752c0, type: 3}
+  mergeVFXLifetime: 2
+  audioSource: {fileID: 1717666063}
+  mergeSoundClip: {fileID: 8300000, guid: 453ae3ea543811b48807138bca83f3ad, type: 3}
+  randomizePitch: 1
+  pitchRange: {x: 0.95, y: 1.08}
+--- !u!4 &755851170
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755851168}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 992.61, y: 418.27, z: -216.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 53
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &801682744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2376,7 +2437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1125402544
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3976,6 +4037,7 @@ MonoBehaviour:
   mergeSoundClip: {fileID: 0}
   errorSoundClip: {fileID: 8300000, guid: 453ae3ea543811b48807138bca83f3ad, type: 3}
   audioSource: {fileID: 1717666063}
+  mergeAnimationController: {fileID: 755851169}
 --- !u!4 &1717666062
 Transform:
   m_ObjectHideFlags: 0

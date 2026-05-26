@@ -44,6 +44,11 @@ public class MergeableObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+       if(GridManager.Instance != null && GridManager.Instance.IsProcessingMerge)
+       {
+           return;
+       }
+
         if (LevelManager.Instance != null && LevelManager.Instance.IsLevelCompleted)
         {
             return;

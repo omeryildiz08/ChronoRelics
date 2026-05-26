@@ -24,6 +24,11 @@ public class GridManager : MonoBehaviour
     public event Action<MergeableItemData> OnMergeCompleted;
     public event Action<Vector2Int, bool> OnTileLockStateChanged;
     public event Action OnBaseStateChanged;
+    [Header("Merge Animation")]
+    [SerializeField] private MergeAnimationController mergeAnimationController;
+
+    private bool isProcessingMerge;
+    public bool IsProcessingMerge => isProcessingMerge;
     private void Awake()
     {
 
@@ -45,6 +50,16 @@ public class GridManager : MonoBehaviour
 
                 grid[x, y] = new GridTileData();
             }
+        }
+
+        if (mergeAnimationController == null)
+        {
+            mergeAnimationController = GetComponent<MergeAnimationController>();
+        }
+
+        if (mergeAnimationController == null)
+        {
+            mergeAnimationController = FindObjectOfType<MergeAnimationController>();
         }
     }
 
@@ -87,9 +102,9 @@ public class GridManager : MonoBehaviour
     {
         if (audioSource != null && errorSoundClip != null)
         {
-            
+
             // audioSource.pitch = Random.Range(0.9f, 1.1f); 
-            
+
             audioSource.PlayOneShot(errorSoundClip);
         }
     }
@@ -97,7 +112,14 @@ public class GridManager : MonoBehaviour
 
     public void TryMergeOrPlace(MergeableObject movingObject, Vector2Int fromPos, Vector2Int toPos)
     {
+
         if (movingObject == null) return;
+
+        if (isProcessingMerge)
+        {
+            SnapObjectToPosition(movingObject, fromPos);
+            return;
+        }
 
         if (!IsValidPosition(toPos) || grid[toPos.x, toPos.y].TileView == null)
         {
@@ -176,51 +198,9 @@ public class GridManager : MonoBehaviour
 
     private void PerformMerge(List<MergeableObject> mergeGroup, Vector2Int mergeCenterPos)
     {
-        if (mergeGroup == null || mergeGroup.Count == 0) return;
-        MergeableItemData nextLevelData = mergeGroup[0].ItemData.NextLevelItem;
-        if (nextLevelData == null) return;
-
-        foreach (var obj in mergeGroup)
-        {
-            if (obj == null) continue;
-            UnlockTile(obj.CurrentGridPosition);
-            ClearCell(obj.CurrentGridPosition);
-            Destroy(obj.gameObject);
-        }
-
-
-        if (grid[mergeCenterPos.x, mergeCenterPos.y].TileView != null)
-        {
-            Vector3 spawnPos = grid[mergeCenterPos.x, mergeCenterPos.y].TileView.GetWorldPosition();
-            if (mergeVFXPrefab != null)
-            {
-                GameObject vfx = Instantiate(mergeVFXPrefab, spawnPos, Quaternion.identity);
-                Destroy(vfx, 2.0f);
-            }
-            if (audioSource != null && mergeSoundClip != null)
-            {
-                
-                audioSource.PlayOneShot(mergeSoundClip);
-            }
-            GameObject newObj = Instantiate(nextLevelData.Prefab, spawnPos,nextLevelData.Prefab.transform.rotation);
-
-            MergeableObject newMergeable = newObj.GetComponent<MergeableObject>();
-            if (newMergeable != null)
-            {
-                newMergeable.CurrentGridPosition = mergeCenterPos;
-                RegisterObject(newMergeable, mergeCenterPos);
-
-                OnMergeCompleted?.Invoke(newMergeable.ItemData);
-                SaveBaseStateIfNeeded();
-                // İleride 
-                // buraya "CheckForCombo(newMergeable)" ekleyebiliriz.
-            }
-            else
-            {
-                Debug.LogError("Yeni oluşturulan obje üzerinde MergeableObject bileşeni bulunamadı!");
-            }
-
-        }
+        if (isProcessingMerge) return;
+        isProcessingMerge = true;
+        StartCoroutine(PerformMergeRoutine(mergeGroup, mergeCenterPos));
     }
 
     private void MoveObject(MergeableObject obj, Vector2Int fromPos, Vector2Int toPos)
@@ -390,5 +370,161 @@ public class GridManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "BaseScene") return;
 
         OnBaseStateChanged?.Invoke();
+    }
+    private System.Collections.IEnumerator PerformMergeRoutine(
+        List<MergeableObject> mergeGroup,
+        Vector2Int mergeCenterPos)
+    {
+        if (mergeGroup == null || mergeGroup.Count == 0)
+        {
+            EndMergeProcessing();
+            yield break;
+        }
+
+        if (!IsValidPosition(mergeCenterPos) || grid[mergeCenterPos.x, mergeCenterPos.y].TileView == null)
+        {
+            EndMergeProcessing();
+            yield break;
+        }
+
+        MergeableObject firstObject = mergeGroup[0];
+
+        if (firstObject == null || firstObject.ItemData == null)
+        {
+            EndMergeProcessing();
+            yield break;
+        }
+
+        MergeableItemData nextLevelData = firstObject.ItemData.NextLevelItem;
+
+        if (nextLevelData == null || nextLevelData.Prefab == null)
+        {
+            EndMergeProcessing();
+            yield break;
+        }
+
+        GridTileView centerTile = grid[mergeCenterPos.x, mergeCenterPos.y].TileView;
+        Vector3 mergeCenterWorldPos = centerTile.GetWorldPosition();
+
+        List<MergeableObject> validMergeObjects = new List<MergeableObject>();
+
+        for (int i = 0; i < mergeGroup.Count; i++)
+        {
+            MergeableObject obj = mergeGroup[i];
+
+            if (obj == null)
+            {
+                continue;
+            }
+
+            validMergeObjects.Add(obj);
+
+            DisableObjectInteraction(obj);
+
+            UnlockTile(obj.CurrentGridPosition);
+            ClearCell(obj.CurrentGridPosition);
+        }
+
+        if (validMergeObjects.Count == 0)
+        {
+            EndMergeProcessing();
+            yield break;
+        }
+
+        bool gatherAnimationCompleted = false;
+
+        if (mergeAnimationController != null)
+        {
+            mergeAnimationController.PlayGatherAnimation(
+                validMergeObjects,
+                mergeCenterWorldPos,
+                () => gatherAnimationCompleted = true
+            );
+
+            yield return new WaitUntil(() => gatherAnimationCompleted);
+        }
+        else
+        {
+            Debug.LogWarning("MergeAnimationController atanmadı. Merge animasyonsuz çalışacak.");
+            PlayMergeFeedback(mergeCenterWorldPos);
+        }
+
+        for (int i = 0; i < validMergeObjects.Count; i++)
+        {
+            if (validMergeObjects[i] != null)
+            {
+                Destroy(validMergeObjects[i].gameObject);
+            }
+        }
+
+        GameObject newObj = Instantiate(
+            nextLevelData.Prefab,
+            mergeCenterWorldPos,
+            nextLevelData.Prefab.transform.rotation
+        );
+
+        MergeableObject newMergeable = newObj.GetComponent<MergeableObject>();
+
+        if (newMergeable == null)
+        {
+            Debug.LogError("Yeni oluşturulan obje üzerinde MergeableObject bileşeni bulunamadı!");
+            Destroy(newObj);
+            EndMergeProcessing();
+            yield break;
+        }
+
+        newMergeable.CurrentGridPosition = mergeCenterPos;
+        RegisterObject(newMergeable, mergeCenterPos);
+
+        bool popAnimationCompleted = false;
+
+        if (mergeAnimationController != null)
+        {
+            mergeAnimationController.PlayNewObjectPopAnimation(
+                newObj.transform,
+                () => popAnimationCompleted = true
+            );
+
+            yield return new WaitUntil(() => popAnimationCompleted);
+        }
+
+        OnMergeCompleted?.Invoke(newMergeable.ItemData);
+        SaveBaseStateIfNeeded();
+
+        EndMergeProcessing();
+    }
+
+    private void DisableObjectInteraction(MergeableObject obj)
+    {
+        if (obj == null)
+        {
+            return;
+        }
+
+        Collider objCollider = obj.GetComponent<Collider>();
+
+        if (objCollider != null)
+        {
+            objCollider.enabled = false;
+        }
+    }
+
+    private void EndMergeProcessing()
+    {
+        isProcessingMerge = false;
+    }
+
+    private void PlayMergeFeedback(Vector3 position)
+    {
+        if (mergeVFXPrefab != null)
+        {
+            GameObject vfx = Instantiate(mergeVFXPrefab, position, Quaternion.identity);
+            Destroy(vfx, 2.0f);
+        }
+
+        if (audioSource != null && mergeSoundClip != null)
+        {
+            audioSource.PlayOneShot(mergeSoundClip);
+        }
     }
 }
