@@ -20,10 +20,12 @@ public class MergeableObject : MonoBehaviour
 
     private bool isInitialized = false;
 
+    private GridTileView originHighlightedTile;
+    private GridTileView currentHoveredTile;
     void Start()
     {
-        if(isInitialized) return;
-     
+        if (isInitialized) return;
+
         InitializeObject();
 
         gridManager = GridManager.Instance;
@@ -35,19 +37,19 @@ public class MergeableObject : MonoBehaviour
             return;
         }
 
-        
+
         CurrentGridPosition = gridManager.WorldToGridPosition(transform.position);
 
-        
+
         gridManager.RegisterObject(this, CurrentGridPosition);
     }
 
     private void OnMouseDown()
     {
-       if(GridManager.Instance != null && GridManager.Instance.IsProcessingMerge)
-       {
-           return;
-       }
+        if (GridManager.Instance != null && GridManager.Instance.IsProcessingMerge)
+        {
+            return;
+        }
 
         if (LevelManager.Instance != null && LevelManager.Instance.IsLevelCompleted)
         {
@@ -75,7 +77,9 @@ public class MergeableObject : MonoBehaviour
         }
 
         isDragging = true;
-        
+
+        ShowOriginTileHighlight();
+
         transform.position += new Vector3(0, dragYOffset, 0);
     }
 
@@ -83,16 +87,61 @@ public class MergeableObject : MonoBehaviour
     {
         if (!isDragging) return;
 
-        
+
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        
+
         if (groundPlane.Raycast(ray, out float distance))
         {
             Vector3 worldPosition = ray.GetPoint(distance);
 
-            
+
             transform.position = new Vector3(worldPosition.x, dragYOffset, worldPosition.z);
+
+            UpdateHoveredTileHighlight(worldPosition);
+        }
+    }
+    private void UpdateHoveredTileHighlight(Vector3 worldPosition)
+    {
+        if (gridManager == null)
+        {
+            return;
+        }
+
+        Vector2Int hoverGridPosition = gridManager.WorldToGridPosition(worldPosition);
+        GridTileView hoveredTile = gridManager.GetTileView(hoverGridPosition);
+
+        if (hoveredTile == currentHoveredTile)
+        {
+            return;
+        }
+
+        ClearCurrentHoveredTileHighlight();
+
+        currentHoveredTile = hoveredTile;
+
+        if (currentHoveredTile == null)
+        {
+            return;
+        }
+
+        TileHighlightState highlightState = gridManager.GetDropHighlightState(
+            this,
+            CurrentGridPosition,
+            hoverGridPosition
+        );
+
+        currentHoveredTile.SetHighlight(highlightState);
+    }
+    private void ShowOriginTileHighlight()
+    {
+        if (gridManager == null) return;
+
+        originHighlightedTile = gridManager.GetTileView(CurrentGridPosition);
+
+        if (originHighlightedTile != null)
+        {
+            originHighlightedTile.SetHighlight(TileHighlightState.Origin);
         }
     }
 
@@ -101,11 +150,13 @@ public class MergeableObject : MonoBehaviour
         if (!isDragging) return;
         isDragging = false;
 
-        if(MarketManager.Instance != null)
+        ClearDragHighlights();
+
+        if (MarketManager.Instance != null)
         {
             MarketManager.Instance.SetSellZoneActive(false);
 
-            if(MarketManager.Instance.sellZoneRect!=null)
+            if (MarketManager.Instance.sellZoneRect != null)
             {
                 bool isDroppedInSellZone = RectTransformUtility.RectangleContainsScreenPoint(MarketManager.Instance.sellZoneRect, Input.mousePosition, null);
 
@@ -114,10 +165,10 @@ public class MergeableObject : MonoBehaviour
                     MarketManager.Instance.TrySellObject(this);
                     return; // Satıldıysa normal bırakma işlemi yapılmaz
                 }
-                
+
             }
         }
-        
+
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         Vector3 worldPositionOnDrop = transform.position; // Default
         if (groundPlane.Raycast(ray, out float distance))
@@ -125,30 +176,51 @@ public class MergeableObject : MonoBehaviour
             worldPositionOnDrop = ray.GetPoint(distance);
         }
 
-        
+
         Vector2Int toPos = gridManager.WorldToGridPosition(worldPositionOnDrop);
 
         //GridManager'a "Ben bu objeyi 'CurrentGridPosition'dan
         // 'toPos'a bırakıyorum, birleşme mi olacak, taşıma mı, karar ver" de.
         gridManager.TryMergeOrPlace(this, CurrentGridPosition, toPos);
     }
-    
-    public void InitializeObject() 
+
+    public void InitializeObject()
     {
         if (isInitialized) return;
-        
+
         gridManager = GridManager.Instance;
         mainCamera = Camera.main;
-        
+
         // Guard Clauses...
-        
+
         // Grid pozisyonunu bul ve kaydet
         if (CurrentGridPosition == Vector2Int.zero) // SaveManager set etmediyse hesapla
         {
-             CurrentGridPosition = gridManager.WorldToGridPosition(transform.position);
+            CurrentGridPosition = gridManager.WorldToGridPosition(transform.position);
         }
 
         gridManager.RegisterObject(this, CurrentGridPosition);
         isInitialized = true;
+    }
+
+    private void ClearDragHighlights()
+    {
+        if (originHighlightedTile != null)
+        {
+            originHighlightedTile.ClearHighlight();
+            originHighlightedTile = null;
+        }
+
+        ClearCurrentHoveredTileHighlight();
+    }
+
+    private void ClearCurrentHoveredTileHighlight()
+    {
+        if (currentHoveredTile != null && currentHoveredTile != originHighlightedTile)
+        {
+            currentHoveredTile.ClearHighlight();
+        }
+
+        currentHoveredTile = null;
     }
 }

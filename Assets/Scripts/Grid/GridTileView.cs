@@ -19,6 +19,13 @@ public class GridTileView : MonoBehaviour
     [Header("Unlock Animation")]
     [Min(0.01f)] public float unlockAnimationSeconds = 0.45f;
     [Range(0.5f, 1f)] public float unlockShrinkScaleMultiplier = 0.72f;
+    [Header("Drag Highlight")]
+    [SerializeField] private GameObject highlightOverlay;
+    [SerializeField] private MeshRenderer highlightRenderer;
+    [SerializeField] private Material originHighlightMaterial;
+    [SerializeField] private Material validHighlightMaterial;
+    [SerializeField] private Material mergeCandidateHighlightMaterial;
+    [SerializeField] private Material invalidHighlightMaterial;
 
     private bool isRegistered;
     private Coroutine unlockAnimationRoutine;
@@ -142,4 +149,67 @@ public class GridTileView : MonoBehaviour
             FacilityPowerManager.Instance.TryUnlockTile(this);
         }
     }
+
+    public void SetHighlight(TileHighlightState state)
+    {
+        if (highlightOverlay == null)
+        {
+            return;
+        }
+
+        if (state == TileHighlightState.None)
+        {
+            highlightOverlay.SetActive(false);
+            return;
+        }
+
+        highlightOverlay.SetActive(true);
+
+        if (highlightRenderer == null)
+        {
+            return;
+        }
+
+        Material targetMaterial = GetHighlightMaterial(state);
+
+        if (targetMaterial != null)
+        {
+            highlightRenderer.material = targetMaterial;
+        }
+    }
+
+    private Material GetHighlightMaterial(TileHighlightState state)
+    {
+        switch (state)
+        {
+            case TileHighlightState.Origin:
+                return originHighlightMaterial;
+
+            case TileHighlightState.Valid:
+                return validHighlightMaterial;
+
+            case TileHighlightState.MergeCandidate:
+                return mergeCandidateHighlightMaterial;
+
+            case TileHighlightState.Invalid:
+                return invalidHighlightMaterial;
+
+            default:
+                return null;
+        }
+    }
+
+    public void ClearHighlight()
+    {
+        SetHighlight(TileHighlightState.None);
+    }
+}
+
+public enum TileHighlightState
+{
+    None,
+    Origin,
+    Valid,
+    MergeCandidate,
+    Invalid
 }

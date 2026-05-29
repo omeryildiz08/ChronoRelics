@@ -8743,6 +8743,7 @@ MonoBehaviour:
   mergeSoundClip: {fileID: 0}
   errorSoundClip: {fileID: 8300000, guid: 7736f72277b79704f88a901117151fa0, type: 3}
   audioSource: {fileID: 1717666063}
+  mergeAnimationController: {fileID: 0}
 --- !u!4 &1717666062
 Transform:
   m_ObjectHideFlags: 0

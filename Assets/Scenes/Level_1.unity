@@ -1673,7 +1673,7 @@ MonoBehaviour:
   mergeVFXPrefab: {fileID: 133642, guid: 721ed883392764d42a3957861e7752c0, type: 3}
   mergeVFXLifetime: 2
   audioSource: {fileID: 1717666063}
-  mergeSoundClip: {fileID: 8300000, guid: 453ae3ea543811b48807138bca83f3ad, type: 3}
+  mergeSoundClip: {fileID: 8300000, guid: cc605098df7ba3747a941a58819a2b0c, type: 3}
   randomizePitch: 1
   pitchRange: {x: 0.95, y: 1.08}
 --- !u!4 &755851170

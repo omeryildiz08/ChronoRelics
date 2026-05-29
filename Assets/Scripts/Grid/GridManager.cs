@@ -195,6 +195,67 @@ public class GridManager : MonoBehaviour
         }
         return null;
     }
+    public GridTileView GetTileView(Vector2Int position)
+    {
+        if (!IsValidPosition(position))
+        {
+            return null;
+        }
+
+        return grid[position.x, position.y].TileView;
+    }
+
+    public TileHighlightState GetDropHighlightState(
+    MergeableObject movingObject,
+    Vector2Int fromPos,
+    Vector2Int targetPos)
+    {
+        if (movingObject == null)
+        {
+            return TileHighlightState.Invalid;
+        }
+
+        if (!IsValidPosition(targetPos))
+        {
+            return TileHighlightState.Invalid;
+        }
+
+        GridTileData targetTile = grid[targetPos.x, targetPos.y];
+
+        if (targetTile.TileView == null)
+        {
+            return TileHighlightState.Invalid;
+        }
+
+        if (targetTile.isLocked)
+        {
+            return TileHighlightState.Invalid;
+        }
+
+        if (targetPos == fromPos)
+        {
+            return TileHighlightState.Origin;
+        }
+
+        MergeableObject targetObject = targetTile.ObjectOnTile;
+
+        if (targetObject == null)
+        {
+            return TileHighlightState.Valid;
+        }
+
+        if (targetObject == movingObject)
+        {
+            return TileHighlightState.Origin;
+        }
+
+        if (targetObject.ItemData == movingObject.ItemData)
+        {
+            return TileHighlightState.MergeCandidate;
+        }
+
+        return TileHighlightState.Invalid;
+    }
 
     private void PerformMerge(List<MergeableObject> mergeGroup, Vector2Int mergeCenterPos)
     {
