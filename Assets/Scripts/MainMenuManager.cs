@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class MainMenuManager : MonoBehaviour
 {
     [Header("Scene")]
-    public string baseSceneName = "BaseScene";
+    [SerializeField] private string baseSceneName = "BaseScene";
 
     [Header("Panels")]
     [SerializeField] private GameObject mainPanel;
@@ -14,15 +14,7 @@ public class MainMenuManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        if (mainPanel != null)
-        {
-            mainPanel.SetActive(true);
-        }
-
-        if (settingsPanel != null)
-        {
-            settingsPanel.SetActive(false);
-        }
+        ShowMainPanel();
     }
 
     public void OnStartButtonClicked()
@@ -45,15 +37,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnSettingsBackButtonClicked()
     {
-        if (settingsPanel != null)
-        {
-            settingsPanel.SetActive(false);
-        }
-
-        if (mainPanel != null)
-        {
-            mainPanel.SetActive(true);
-        }
+        ShowMainPanel();
     }
 
     public void OnExitButtonClicked()
@@ -65,5 +49,18 @@ public class MainMenuManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    private void ShowMainPanel()
+    {
+        if (mainPanel != null)
+        {
+            mainPanel.SetActive(true);
+        }
+
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(false);
+        }
     }
 }
