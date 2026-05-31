@@ -46,6 +46,10 @@ public class MergeableObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if(PauseMenuManager.IsPaused)
+        {
+            return;
+        }
         if (GridManager.Instance != null && GridManager.Instance.IsProcessingMerge)
         {
             return;
@@ -81,10 +85,17 @@ public class MergeableObject : MonoBehaviour
         ShowOriginTileHighlight();
 
         transform.position += new Vector3(0, dragYOffset, 0);
+
+
+        
     }
 
     private void OnMouseDrag()
     {
+        if(PauseMenuManager.IsPaused)
+        {
+            return;
+        }
         if (!isDragging) return;
 
 
