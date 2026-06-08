@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
+  m_Name: scrab_LVL4
+  m_EditorClassIdentifier: 
+  ItemID: scrab_lvl4
+  ItemName: scrab
+  Level: 4
+  Prefab: {fileID: 7744836865316544628, guid: e5afec01bf4203744bd90a20253c68f3, type: 3}
+  NextLevelItem: {fileID: 11400000, guid: c0ac3c682c49dc446ae595cd085add1b, type: 2}
+  SellPrice: 13
+  BuyPrice: 15
+  FacilityPoint: 10

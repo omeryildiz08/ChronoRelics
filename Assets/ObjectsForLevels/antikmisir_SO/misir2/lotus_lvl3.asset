@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
+  m_Name: lotus_lvl3
+  m_EditorClassIdentifier: 
+  ItemID: lotus_lvl3
+  ItemName: lotus1
+  Level: 3
+  Prefab: {fileID: 7821180563356103512, guid: d2758ebf8c6917543908db54c4addd48, type: 3}
+  NextLevelItem: {fileID: 11400000, guid: 690861d5303ac0149815e6d290c5c516, type: 2}
+  SellPrice: 14
+  BuyPrice: 16
+  FacilityPoint: 10
