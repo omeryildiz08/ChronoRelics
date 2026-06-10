@@ -19,7 +19,14 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnStartButtonClicked()
     {
-        SceneManager.LoadScene(baseSceneName);
+      
+        if (CinematicPlayer.Instance != null)
+        {
+            CinematicPlayer.Instance.PlayIntroThenLoadScene(baseSceneName);
+            return;
+        }
+
+          SceneManager.LoadScene(baseSceneName);
     }
 
     public void OnSettingsButtonClicked()
@@ -33,6 +40,7 @@ public class MainMenuManager : MonoBehaviour
         {
             settingsPanel.SetActive(true);
         }
+
     }
 
     public void OnSettingsBackButtonClicked()
