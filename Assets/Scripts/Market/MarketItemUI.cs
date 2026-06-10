@@ -29,10 +29,19 @@ public class MarketItemUI : MonoBehaviour
             buyButton.onClick.AddListener(OnBuyClicked);
         }
 
-       // Optionally set the icon image if you have one in your data
         if (iconImage != null)
         {
-            iconImage.enabled = false;
+            if (data.MarketIcon != null)
+            {
+                iconImage.sprite = data.MarketIcon;
+                iconImage.preserveAspect = true;
+                iconImage.enabled = true;
+            }
+            else
+            {
+                iconImage.sprite = null;
+                iconImage.enabled = false;
+            }
         }
     }
 

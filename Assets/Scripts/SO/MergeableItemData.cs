@@ -11,6 +11,7 @@ public class MergeableItemData : ScriptableObject
 
     [Header ("Temel Bilgiler")]
     public string ItemName;
+    public Sprite MarketIcon;
 
     
     public int Level;

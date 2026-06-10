@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1456053603770368275}
   - component: {fileID: 3733490963721090521}
   - component: {fileID: 3553591660985067066}
+  - component: {fileID: 4030825180876843514}
   m_Layer: 0
   m_Name: "kumk\xFCp1 1"
   m_TagString: Untagged
@@ -112,6 +113,19 @@ MonoBehaviour:
   validHighlightMaterial: {fileID: 2100000, guid: 21b9e36ffd64ac54ebee3f095b625298, type: 2}
   mergeCandidateHighlightMaterial: {fileID: 2100000, guid: df8703b47a4fded4887f0b0498e5be9a, type: 2}
   invalidHighlightMaterial: {fileID: 2100000, guid: 30dab83ca6ade3d40ae5a814abc5330a, type: 2}
+--- !u!65 &4030825180876843514
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2941125641243087884}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6533033399009064437
 GameObject:
   m_ObjectHideFlags: 0
