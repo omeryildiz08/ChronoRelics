@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: cekiclvl7
   ItemName: cekic
+  MarketIcon: {fileID: 21300000, guid: 9be9053b128e92643a52b2e9291d2676, type: 3}
   Level: 7
   Prefab: {fileID: 2678890752495709909, guid: 7ce9807d765923b47a236482576eb09d, type: 3}
   NextLevelItem: {fileID: 0}

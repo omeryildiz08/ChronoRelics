@@ -8651,9 +8651,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marketItems:
-  - {fileID: 11400000, guid: 65f86aad809a0d24eac54304001c7fcb, type: 2}
-  - {fileID: 11400000, guid: 10fe76168a0881a43b0f0dad6cc85e6e, type: 2}
   - {fileID: 11400000, guid: 3c4ee50f7e6cf9f46a2e85dc116655d5, type: 2}
+  - {fileID: 11400000, guid: b2117c6a94fb7a244b95230dae7e6d72, type: 2}
+  - {fileID: 11400000, guid: ede05ccae6e0817409abe15af8314881, type: 2}
+  - {fileID: 11400000, guid: d689709d54bddfc4daffe83385134fae, type: 2}
   itemListContainer: {fileID: 1284935870}
   marketItemUIPrefab: {fileID: 3262975391418618887, guid: 19cf3294888420843b42055333b9c6d8, type: 3}
   feedbackText: {fileID: 1975564093}

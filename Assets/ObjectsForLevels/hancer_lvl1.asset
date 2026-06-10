@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: hancerlvl1
   ItemName: hancer
+  MarketIcon: {fileID: 21300000, guid: 8ece756821132244b8290f415c686cc1, type: 3}
   Level: 1
   Prefab: {fileID: 8464904621304488414, guid: c73c67cc311538349958441ac04cba3a, type: 3}
   NextLevelItem: {fileID: 11400000, guid: b2117c6a94fb7a244b95230dae7e6d72, type: 2}

@@ -34,6 +34,7 @@ public class MarketItemUI : MonoBehaviour
             if (data.MarketIcon != null)
             {
                 iconImage.sprite = data.MarketIcon;
+                iconImage.color = Color.white;
                 iconImage.preserveAspect = true;
                 iconImage.enabled = true;
             }

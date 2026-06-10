@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: dikenliblvl2
   ItemName: dikenlibitki
+  MarketIcon: {fileID: 21300000, guid: 2e40a8f6e31d70a41b2ad6a16a0cbfb8, type: 3}
   Level: 2
   Prefab: {fileID: 8464554268409411272, guid: 365e008044db9be4bbc13fc4025b8552, type: 3}
   NextLevelItem: {fileID: 11400000, guid: 044a0b74a28408944a487b7706645120, type: 2}

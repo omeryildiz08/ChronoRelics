@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: baltalvl2
   ItemName: balta
+  MarketIcon: {fileID: 21300000, guid: 9f2262036c284d64b9dc6a67df0ac50a, type: 3}
   Level: 2
   Prefab: {fileID: 4652929325499428250, guid: 3e0274d0a7a54dc4990bc0e8947f6b9a, type: 3}
   NextLevelItem: {fileID: 11400000, guid: c1300ac870f9ec642a7f2057a1a30bbc, type: 2}
