@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
-  m_Name: battery_LVL1
+  m_Name: tablet_lvl3
   m_EditorClassIdentifier: 
-  ItemID: battery_lvl1
-  ItemName: battery
+  ItemID: tablet_lvl3
+  ItemName: tablet
   MarketIcon: {fileID: 0}
-  Level: 1
-  Prefab: {fileID: 6315553589666614807, guid: 98f2cc90f964c994f93be7e7efc5daf3, type: 3}
-  NextLevelItem: {fileID: 11400000, guid: ed42ccd3438eaa046b0c6655af069f7e, type: 2}
+  Level: 3
+  Prefab: {fileID: 5103939976252344926, guid: 6686995a1bb246b4a9abc5a458b4f449, type: 3}
+  NextLevelItem: {fileID: 11400000, guid: ecc664366f8bf6240b6a33efa1360955, type: 2}
   SellPrice: 15
   BuyPrice: 20
   FacilityPoint: 15

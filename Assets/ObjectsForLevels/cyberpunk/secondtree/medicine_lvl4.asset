@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
-  m_Name: battery_LVL1
+  m_Name: medicine_lvl4
   m_EditorClassIdentifier: 
-  ItemID: battery_lvl1
-  ItemName: battery
+  ItemID: medicine_lvl4
+  ItemName: medicine
   MarketIcon: {fileID: 0}
-  Level: 1
-  Prefab: {fileID: 6315553589666614807, guid: 98f2cc90f964c994f93be7e7efc5daf3, type: 3}
-  NextLevelItem: {fileID: 11400000, guid: ed42ccd3438eaa046b0c6655af069f7e, type: 2}
+  Level: 4
+  Prefab: {fileID: 2483287449510130777, guid: b3848fcf13b5a594d95dd54581c5b1b0, type: 3}
+  NextLevelItem: {fileID: 0}
   SellPrice: 15
   BuyPrice: 20
   FacilityPoint: 15
