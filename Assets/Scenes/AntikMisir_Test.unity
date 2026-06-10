@@ -2693,6 +2693,67 @@ MonoBehaviour:
   CurrentUnlockedSceneLockedTiles: []
   CurrentTimeCredits: 0
   CurrentChronoCharge: 0
+--- !u!1001 &2110802694
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 992.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 418.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -216.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617284, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617286, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: m_Name
+      value: _MergeAnimController
+      objectReference: {fileID: 0}
+    - target: {fileID: 159523532286617287, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 249e171af26f93740a76000a822c0fef, type: 3}
 --- !u!1001 &588678828298501940
 PrefabInstance:
   m_ObjectHideFlags: 0

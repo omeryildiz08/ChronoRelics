@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
-  m_Name: medicine_lvl4
+  m_Name: drink_lvl5
   m_EditorClassIdentifier: 
-  ItemID: medicine_lvl4
-  ItemName: medicine
+  ItemID: drink_lvl5
+  ItemName: drink
   MarketIcon: {fileID: 0}
-  Level: 4
-  Prefab: {fileID: 2483287449510130777, guid: b3848fcf13b5a594d95dd54581c5b1b0, type: 3}
-  NextLevelItem: {fileID: 11400000, guid: 8c9bb9cb8de2f194085a9c74f4147dbe, type: 2}
-  SellPrice: 15
-  BuyPrice: 20
-  FacilityPoint: 15
+  Level: 5
+  Prefab: {fileID: 7299688594223753610, guid: 4d530877edd97f043b60148c3330730e, type: 3}
+  NextLevelItem: {fileID: 0}
+  SellPrice: 0
+  BuyPrice: 0
+  FacilityPoint: 0
