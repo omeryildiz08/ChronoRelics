@@ -20317,7 +20317,7 @@ MonoBehaviour:
   CurrentLockedTiles: []
   CurrentUnlockedSceneLockedTiles: []
   CurrentTimeCredits: 0
-  CurrentChronoCharge: 0
+  CurrentChronoCharge: 20
 --- !u!4 &2079014815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1315446285023241263, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
