@@ -17,6 +17,7 @@ public class GridManager : MonoBehaviour
     public GameObject mergeVFXPrefab;
     public AudioClip mergeSoundClip;
     public AudioClip errorSoundClip;
+    public AudioClip objectGrabSoundClip;
     public AudioSource audioSource;
 
     public GridTileData[,] grid;
@@ -106,6 +107,14 @@ public class GridManager : MonoBehaviour
             // audioSource.pitch = Random.Range(0.9f, 1.1f); 
 
             audioSource.PlayOneShot(errorSoundClip);
+        }
+    }
+
+    public void PlayObjectGrabSound()
+    {
+        if (audioSource != null && objectGrabSoundClip != null)
+        {
+            audioSource.PlayOneShot(objectGrabSoundClip);
         }
     }
 

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
   m_Name: wheel_lvl5
   m_EditorClassIdentifier: 
-  ItemID: 
-  ItemName: 
+  ItemID: wheel_lvl5
+  ItemName: wheel
   MarketIcon: {fileID: 0}
-  Level: 0
-  Prefab: {fileID: 0}
+  Level: 5
+  Prefab: {fileID: 564016116250082623, guid: b4bf55426b81e2241869a96d71b34085, type: 3}
   NextLevelItem: {fileID: 0}
-  SellPrice: 0
-  BuyPrice: 0
-  FacilityPoint: 0
+  SellPrice: 20
+  BuyPrice: 25
+  FacilityPoint: 20

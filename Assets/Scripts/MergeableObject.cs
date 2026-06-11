@@ -86,6 +86,7 @@ public class MergeableObject : MonoBehaviour
         }
 
         isDragging = true;
+        gridManager.PlayObjectGrabSound();
 
         ShowOriginTileHighlight();
 

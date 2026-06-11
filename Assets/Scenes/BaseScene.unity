@@ -7832,6 +7832,7 @@ GameObject:
   - component: {fileID: 893615859}
   - component: {fileID: 893615858}
   - component: {fileID: 893615857}
+  - component: {fileID: 893615861}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -7937,6 +7938,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &893615861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893615856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2ee26b93d3cd4409f28f864ef37246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bindingRoot: {fileID: 893615860}
+  audioSource: {fileID: 0}
+  clickClip: {fileID: 8300000, guid: 81b6b2fc2e67e2244bffabd2d82594dc, type: 3}
+  includeInactiveButtons: 1
+  rescanInterval: 0.5
+  volume: 1
+  randomizePitch: 0
+  pitchRange: {x: 0.95, y: 1.05}
 --- !u!4 &894994639 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1315446285023241263, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
@@ -10967,6 +10988,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1315446285023241263, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570593056532956098, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
+      propertyPath: StartLocked
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1570593056532956098, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
@@ -16361,6 +16386,7 @@ MonoBehaviour:
   mergeVFXPrefab: {fileID: 133642, guid: 721ed883392764d42a3957861e7752c0, type: 3}
   mergeSoundClip: {fileID: 0}
   errorSoundClip: {fileID: 8300000, guid: 7736f72277b79704f88a901117151fa0, type: 3}
+  objectGrabSoundClip: {fileID: 0}
   audioSource: {fileID: 1717666063}
   mergeAnimationController: {fileID: 0}
 --- !u!4 &1717666062

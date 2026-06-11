@@ -101,7 +101,7 @@ MonoBehaviour:
   objectYOffset: 0.8
   StartLocked: 0
   MyMeshRenderer: {fileID: 0}
-  LockedMaterial: {fileID: 0}
+  LockedMaterial: {fileID: 2100000, guid: f0602ebe1c6d62948b7851906ae6dd4f, type: 2}
   NormalMaterial: {fileID: 0}
   UnlockableMaterial: {fileID: 0}
   unlockAnimationSeconds: 0.45

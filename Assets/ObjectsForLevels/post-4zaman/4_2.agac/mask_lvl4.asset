@@ -17,7 +17,7 @@ MonoBehaviour:
   MarketIcon: {fileID: 21300000, guid: e71cfcebfefed02429cba6384bd1280e, type: 3}
   Level: 4
   Prefab: {fileID: 8033635163002297170, guid: d403ce19df5774a4c89dfb4e6060f082, type: 3}
-  NextLevelItem: {fileID: 0}
+  NextLevelItem: {fileID: 11400000, guid: bbab679c46c283a48a368a126149d7d3, type: 2}
   SellPrice: 20
   BuyPrice: 25
   FacilityPoint: 20
