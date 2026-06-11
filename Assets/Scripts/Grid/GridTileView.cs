@@ -144,6 +144,11 @@ public class GridTileView : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (UIInputBlocker.IsPointerOverUI())
+        {
+            return;
+        }
+
         if (FacilityPowerManager.Instance != null)
         {
             FacilityPowerManager.Instance.TryUnlockTile(this);

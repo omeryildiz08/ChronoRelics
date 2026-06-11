@@ -46,6 +46,11 @@ public class MergeableObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (UIInputBlocker.IsPointerOverUI())
+        {
+            return;
+        }
+
         if(PauseMenuManager.IsPaused)
         {
             return;

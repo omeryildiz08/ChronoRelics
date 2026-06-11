@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
-  m_Name: fuelcannister_lvl4
+  m_Name: fener_lvl5
   m_EditorClassIdentifier: 
-  ItemID: fuel_cannister_lvl4
-  ItemName: fuel
+  ItemID: fener_lvl5
+  ItemName: fener
   MarketIcon: {fileID: 0}
-  Level: 4
-  Prefab: {fileID: 6436151904881461223, guid: d3720b62f8cad704183be73e4e7f5d41, type: 3}
-  NextLevelItem: {fileID: 11400000, guid: 451f1869bcbc2ca4c9f5a6322c15bb17, type: 2}
+  Level: 5
+  Prefab: {fileID: 3044427821481127453, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+  NextLevelItem: {fileID: 0}
   SellPrice: 20
   BuyPrice: 25
   FacilityPoint: 20

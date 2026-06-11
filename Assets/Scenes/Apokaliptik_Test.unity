@@ -5736,6 +5736,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3239754418274389087, guid: e1e4f4bd1513118458e25e489e0a6566, type: 3}
   m_PrefabInstance: {fileID: 5522406667835771028}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6996154005389162372
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_RootOrder
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.037
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.07161982
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.997432
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 171.786
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410598247811953831, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3044427821481127453, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
+      propertyPath: m_Name
+      value: fenerrevizee
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5412b63c8635be74ea687eb92924f794, type: 3}
 --- !u!1001 &7081926416536375004
 PrefabInstance:
   m_ObjectHideFlags: 0

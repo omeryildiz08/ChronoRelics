@@ -6,6 +6,7 @@
   <Project Path="Unity.Services.Core.Telemetry.csproj" />
   <Project Path="Unity.VisualScripting.State.csproj" />
   <Project Path="Unity.VisualScripting.Core.csproj" />
+  <Project Path="Unity.Postprocessing.Runtime.csproj" />
   <Project Path="Unity.Services.Core.Environments.Internal.csproj" />
   <Project Path="Unity.TextMeshPro.csproj" />
   <Project Path="Unity.Timeline.csproj" />
@@ -20,7 +21,6 @@
   <Project Path="Unity.Services.Core.Threading.csproj" />
   <Project Path="Unity.Services.Core.Networking.csproj" />
   <Project Path="Unity.Services.Core.Configuration.csproj" />
-  <Project Path="Unity.Postprocessing.Runtime.csproj" />
   <Project Path="Unity.PlasticSCM.Editor.csproj" />
   <Project Path="Unity.VisualScripting.Core.Editor.csproj" />
   <Project Path="Unity.VisualScripting.Flow.Editor.csproj" />
@@ -30,6 +30,7 @@
   <Project Path="Unity.TextMeshPro.Editor.csproj" />
   <Project Path="Unity.VisualScripting.SettingsProvider.Editor.csproj" />
   <Project Path="Unity.CollabProxy.Editor.csproj" />
+  <Project Path="Unity.Postprocessing.Editor.csproj" />
   <Project Path="UnityEditor.TestRunner.csproj" />
   <Project Path="Unity.Services.Core.Editor.csproj" />
   <Project Path="Unity.TestTools.CodeCoverage.Editor.csproj" />
@@ -44,5 +45,4 @@
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.csproj" />
   <Project Path="Unity.VisualScripting.Shared.Editor.csproj" />
-  <Project Path="Unity.Postprocessing.Editor.csproj" />
 </Solution>
