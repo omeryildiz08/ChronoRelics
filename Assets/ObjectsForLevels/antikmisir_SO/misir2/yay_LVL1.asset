@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: yay_lvl1
   ItemName: yay
+  MarketIcon: {fileID: 0}
   Level: 1
-  Prefab: {fileID: 354097272504553242, guid: 1f58ce2adfe313443abd6ba7e8f5a176, type: 3}
+  Prefab: {fileID: 9156946456821528645, guid: 82edd3a3dc73b2641a3c9b63eaaf135d, type: 3}
   NextLevelItem: {fileID: 11400000, guid: 698f10b0bff49274aac306381acfc399, type: 2}
   SellPrice: 10
   BuyPrice: 12

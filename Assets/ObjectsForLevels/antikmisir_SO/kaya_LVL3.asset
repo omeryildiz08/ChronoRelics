@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
   m_Name: kaya_LVL3
   m_EditorClassIdentifier: 
-  ItemID: kaya_lvl3
-  ItemName: antikkaya
+  ItemID: piramit_lvl3
+  ItemName: piramit
+  MarketIcon: {fileID: 0}
   Level: 3
-  Prefab: {fileID: 4663770371418116445, guid: a86c65aab1b174643b7355287058c047, type: 3}
+  Prefab: {fileID: 6438846501608920426, guid: fd734fb766c449f449fe3a76a686fc2d, type: 3}
   NextLevelItem: {fileID: 11400000, guid: 746f6bdfaed5574408b8374efba55916, type: 2}
   SellPrice: 10
   BuyPrice: 11

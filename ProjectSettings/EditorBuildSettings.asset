@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_3.unity
     guid: dfcc8a7812ab97947a8b804223d50096
+  - enabled: 1
+    path: Assets/Scenes/AntikMisir_Test.unity
+    guid: 11e8cad26437dc149ac781b855f8f26c
   m_configObjects: {}

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: kalkan_lvl2
   ItemName: antikkalkan
+  MarketIcon: {fileID: 0}
   Level: 2
-  Prefab: {fileID: 5108404370307368651, guid: 5ae5d99c39338f74985f8ac1c8372a37, type: 3}
+  Prefab: {fileID: 4543461160716599258, guid: ec42e877140cf2c48aeb52ddee63c417, type: 3}
   NextLevelItem: {fileID: 11400000, guid: 5058777f61936b84890df4a70380c8ff, type: 2}
   SellPrice: 9
   BuyPrice: 11
