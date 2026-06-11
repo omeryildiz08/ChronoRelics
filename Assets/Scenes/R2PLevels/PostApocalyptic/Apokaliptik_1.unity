@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelQuests:
-  - {fileID: 11400000, guid: ed358f13a1666bc4fb73b956dd26140a, type: 2}
+  - {fileID: 11400000, guid: d718bf047bd12864bbf920d5b54b9ffa, type: 2}
   QuestContainer: {fileID: 785741067}
   QuestUIPrefab: {fileID: 5847604854457411753, guid: 345db2cc1b4e8074b8b4a8e1623bd4d6, type: 3}
 --- !u!4 &212168024
