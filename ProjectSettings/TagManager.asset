@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - PostProcess
   - 
   - 
   - 
@@ -40,10 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: "\xF6n"
-    uniqueID: 1532475019
-    locked: 0
-  - name: ark
-    uniqueID: 837087505
     locked: 0
