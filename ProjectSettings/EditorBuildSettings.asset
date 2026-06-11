@@ -12,15 +12,27 @@ EditorBuildSettings:
     path: Assets/Scenes/BaseScene.unity
     guid: a3376d60428c7f741a0455c8ae77161f
   - enabled: 1
-    path: Assets/Scenes/RefLevels/Medieval_Test.unity
-    guid: ca383a6cdf25b3341a5fc209e284df56
+    path: Assets/Scenes/R2PLevels/Medieval/MedLvl1.unity
+    guid: ca0f92c6170bd18468540244a4187fe2
   - enabled: 1
-    path: Assets/Scenes/MedLevel_2.unity
-    guid: 793836bd34d29b249a480df4e9a84bca
+    path: Assets/Scenes/R2PLevels/Medieval/MedLvl2.unity
+    guid: 10cc670a1c9766e4f89b292b5a5833c1
   - enabled: 1
-    path: Assets/Scenes/MedLevel_3.unity
-    guid: dfcc8a7812ab97947a8b804223d50096
+    path: Assets/Scenes/R2PLevels/Medieval/MedLvl3.unity
+    guid: 21c3bac5145f80843829f9cc41126d7d
   - enabled: 1
-    path: Assets/Scenes/RefLevels/AntikMisir_Test.unity
-    guid: 11e8cad26437dc149ac781b855f8f26c
+    path: Assets/Scenes/R2PLevels/Egypt/Egylvl1.unity
+    guid: 1cbf73c4298813c44857b3368e58e051
+  - enabled: 1
+    path: Assets/Scenes/R2PLevels/Egypt/Egylvl2.unity
+    guid: 4748a91850099fb4d9aa08f2c489a0eb
+  - enabled: 1
+    path: Assets/Scenes/R2PLevels/Cyberpunk/Cyberpunk 1.unity
+    guid: 5a3626157ce3eff4cb775745b7c8a348
+  - enabled: 1
+    path: Assets/Scenes/R2PLevels/Cyberpunk/Cyberpunk 2.unity
+    guid: deacfb9dd91513842acb3d563aba4718
+  - enabled: 1
+    path: Assets/Scenes/R2PLevels/Cyberpunk/Cyberpunk 3.unity
+    guid: 9dc3e62dbbcc4044687c7eedd9ff367c
   m_configObjects: {}

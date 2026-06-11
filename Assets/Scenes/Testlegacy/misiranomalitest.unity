@@ -184,7 +184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3553591660985067066, guid: 4154c9af3081527418b8de13e3a9214b, type: 3}
       propertyPath: GridPosition.y
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4154c9af3081527418b8de13e3a9214b, type: 3}
@@ -826,7 +826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3553591660985067066, guid: 4154c9af3081527418b8de13e3a9214b, type: 3}
       propertyPath: StartLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3553591660985067066, guid: 4154c9af3081527418b8de13e3a9214b, type: 3}
       propertyPath: GridPosition.x
@@ -1163,7 +1163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3553591660985067066, guid: 4154c9af3081527418b8de13e3a9214b, type: 3}
       propertyPath: GridPosition.y
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4154c9af3081527418b8de13e3a9214b, type: 3}
@@ -2435,7 +2435,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51ce5c0b82dd789408a1b0795004dec8, type: 3}
   m_Name: 
