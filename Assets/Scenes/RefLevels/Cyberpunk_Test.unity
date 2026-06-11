@@ -3968,6 +3968,7 @@ MonoBehaviour:
   mergeVFXPrefab: {fileID: 133642, guid: 721ed883392764d42a3957861e7752c0, type: 3}
   mergeSoundClip: {fileID: 0}
   errorSoundClip: {fileID: 8300000, guid: 453ae3ea543811b48807138bca83f3ad, type: 3}
+  objectGrabSoundClip: {fileID: 8300000, guid: f8bee20ba4c73aa49bcd11b28c9c8c34, type: 3}
   audioSource: {fileID: 1717666063}
   mergeAnimationController: {fileID: 0}
 --- !u!4 &1717666062

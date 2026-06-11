@@ -2444,8 +2444,9 @@ MonoBehaviour:
   mergeVFXPrefab: {fileID: 133642, guid: 721ed883392764d42a3957861e7752c0, type: 3}
   mergeSoundClip: {fileID: 0}
   errorSoundClip: {fileID: 8300000, guid: 453ae3ea543811b48807138bca83f3ad, type: 3}
+  objectGrabSoundClip: {fileID: 8300000, guid: f8bee20ba4c73aa49bcd11b28c9c8c34, type: 3}
   audioSource: {fileID: 1717666063}
-  mergeAnimationController: {fileID: 0}
+  mergeAnimationController: {fileID: 2110802695}
 --- !u!4 &1717666062
 Transform:
   m_ObjectHideFlags: 0
@@ -2848,6 +2849,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+--- !u!114 &2110802695 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 159523532286617287, guid: 249e171af26f93740a76000a822c0fef, type: 3}
+  m_PrefabInstance: {fileID: 2110802694}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c156e3716ec0a749a7636ea2ef3cea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &815674620633667809
 PrefabInstance:
   m_ObjectHideFlags: 0
