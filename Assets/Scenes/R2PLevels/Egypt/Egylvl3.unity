@@ -4324,7 +4324,7 @@ MonoBehaviour:
   TargetItem: {fileID: 11400000, guid: d689709d54bddfc4daffe83385134fae, type: 2}
   RewardItem: {fileID: 11400000, guid: d689709d54bddfc4daffe83385134fae, type: 2}
   ChronoChargeReward: 0
-  WinPanel: {fileID: 0}
+  WinPanel: {fileID: 1364487689}
   levelCompleteUI: {fileID: 0}
   BaseSceneName: BaseScene
   audioSource: {fileID: 1716809950}

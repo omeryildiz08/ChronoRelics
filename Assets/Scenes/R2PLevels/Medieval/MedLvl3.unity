@@ -1033,7 +1033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelQuests:
   - {fileID: 11400000, guid: 6c1f65feda28e544f870db57096514e2, type: 2}
-  QuestContainer: {fileID: 0}
+  QuestContainer: {fileID: 1791263791}
   QuestUIPrefab: {fileID: 5847604854457411753, guid: 345db2cc1b4e8074b8b4a8e1623bd4d6, type: 3}
 --- !u!4 &212168024
 Transform:
@@ -6365,7 +6365,7 @@ MonoBehaviour:
   TargetItem: {fileID: 11400000, guid: 65f86aad809a0d24eac54304001c7fcb, type: 2}
   RewardItem: {fileID: 11400000, guid: 10fe76168a0881a43b0f0dad6cc85e6e, type: 2}
   ChronoChargeReward: 5
-  WinPanel: {fileID: 0}
+  WinPanel: {fileID: 1500413184}
   levelCompleteUI: {fileID: 0}
   BaseSceneName: BaseScene
   audioSource: {fileID: 1716809950}

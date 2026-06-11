@@ -35,4 +35,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/R2PLevels/Cyberpunk/Cyberpunk 3.unity
     guid: 9dc3e62dbbcc4044687c7eedd9ff367c
+  - enabled: 1
+    path: Assets/Scenes/R2PLevels/PostApocalyptic/Apokaliptik_1.unity
+    guid: c04ca54940cb0d84caf44573515b1de7
+  - enabled: 1
+    path: Assets/Scenes/R2PLevels/PostApocalyptic/Apokaliptik_2.unity
+    guid: a82b8696efffbc84bb4136aa94df9d40
+  - enabled: 1
+    path: Assets/Scenes/R2PLevels/PostApocalyptic/Apokaliptik_3.unity
+    guid: 57e2e9771777d4440b3f08c82a808e50
   m_configObjects: {}
