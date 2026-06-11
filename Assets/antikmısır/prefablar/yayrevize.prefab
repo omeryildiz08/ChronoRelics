@@ -121,6 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7e7a86c0299544e81776040711087f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemData: {fileID: 0}
+  ItemData: {fileID: 11400000, guid: 7c18b70b736b3494ea9268a37c67f06f, type: 2}
   IsInactiveAnomalyItem: 0
   CurrentGridPosition: {x: 0, y: 0}
