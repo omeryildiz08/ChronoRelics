@@ -12,6 +12,19 @@ public class IsoCameraPanController : MonoBehaviour
     [SerializeField] private float minZ = -25f;
     [SerializeField] private float maxZ = 10f;
 
+    [Header("Background Follow")]
+    [SerializeField] private Transform backgroundPlane;
+    [SerializeField] private bool moveBackgroundWithCamera = true;
+
+    [Tooltip("1 = kamera ile birebir hareket eder. 0.5 = parallax gibi daha yavaş hareket eder.")]
+    [SerializeField] private float backgroundFollowMultiplier = 1f;
+
+    [Tooltip("Background sadece X ekseninde kamerayı takip etsin mi?")]
+    [SerializeField] private bool backgroundFollowX = true;
+
+    [Tooltip("Background sadece Z ekseninde kamerayı takip etsin mi?")]
+    [SerializeField] private bool backgroundFollowZ = true;
+
     private Vector3 targetPosition;
     private Vector3 velocity;
 
@@ -22,6 +35,8 @@ public class IsoCameraPanController : MonoBehaviour
 
     private void Update()
     {
+        Vector3 cameraPositionBeforeMove = transform.position;
+
         float horizontal = Input.GetAxisRaw("Horizontal"); // A/D veya sol/sag ok
         float vertical = Input.GetAxisRaw("Vertical");     // W/S veya yukari/asagi ok
 
@@ -54,5 +69,30 @@ public class IsoCameraPanController : MonoBehaviour
             ref velocity,
             smoothTime
         );
+
+        MoveBackgroundByCameraDelta(cameraPositionBeforeMove, transform.position);
+    }
+
+    private void MoveBackgroundByCameraDelta(Vector3 oldCameraPosition, Vector3 newCameraPosition)
+    {
+        if (!moveBackgroundWithCamera || backgroundPlane == null)
+        {
+            return;
+        }
+
+        Vector3 cameraDelta = newCameraPosition - oldCameraPosition;
+        Vector3 backgroundDelta = Vector3.zero;
+
+        if (backgroundFollowX)
+        {
+            backgroundDelta.x = cameraDelta.x * backgroundFollowMultiplier;
+        }
+
+        if (backgroundFollowZ)
+        {
+            backgroundDelta.z = cameraDelta.z * backgroundFollowMultiplier;
+        }
+
+        backgroundPlane.position += backgroundDelta;
     }
 }

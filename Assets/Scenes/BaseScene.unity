@@ -6484,6 +6484,11 @@ MonoBehaviour:
   maxX: 5
   minZ: -19
   maxZ: 5
+  backgroundPlane: {fileID: 1354177913}
+  moveBackgroundWithCamera: 1
+  backgroundFollowMultiplier: 1
+  backgroundFollowX: 1
+  backgroundFollowZ: 1
 --- !u!1 &963702112
 GameObject:
   m_ObjectHideFlags: 0
