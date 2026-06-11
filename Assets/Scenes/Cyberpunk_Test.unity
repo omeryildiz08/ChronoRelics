@@ -2094,6 +2094,11 @@ MonoBehaviour:
   maxX: 10
   minZ: -25
   maxZ: 10
+  backgroundPlane: {fileID: 0}
+  moveBackgroundWithCamera: 1
+  backgroundFollowMultiplier: 1
+  backgroundFollowX: 1
+  backgroundFollowZ: 1
 --- !u!1 &974480059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 785629515480409078, guid: 1a9339f37afb80f4ab1be2bccb418d92, type: 3}
