@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: ok_lvl2
   ItemName: ok
+  MarketIcon: {fileID: 0}
   Level: 2
   Prefab: {fileID: 545131745107755254, guid: fb1b265bfdf70254f94b099de36606af, type: 3}
-  NextLevelItem: {fileID: 0}
+  NextLevelItem: {fileID: 11400000, guid: 93cc2b61b25f947488abf615e3c41fd2, type: 2}
   SellPrice: 12
   BuyPrice: 15
   FacilityPoint: 10
