@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7804807fbba704e841bbce9200c116, type: 3}
+  m_Name: aletcanta_lvl1
+  m_EditorClassIdentifier: 
+  ItemID: alet_lvl1
+  ItemName: alet cantasi
+  MarketIcon: {fileID: 0}
+  Level: 1
+  Prefab: {fileID: 2275915712955886917, guid: e164b30d167fcab49bcc39488f274223, type: 3}
+  NextLevelItem: {fileID: 11400000, guid: 071cb76b528d26f4ea319054b1d4c4f8, type: 2}
+  SellPrice: 20
+  BuyPrice: 25
+  FacilityPoint: 20
