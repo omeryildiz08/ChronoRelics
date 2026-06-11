@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d2391dc1ecdaba4284fd16d82acaf31, type: 3}
-  m_Name: level2_quest
+  m_Name: PostQuest1
   m_EditorClassIdentifier: 
-  Description: 1 adet gurz elde et
+  Description: Produce 1 Cannister
   Icon: {fileID: 21300000, guid: 5d00da692c997ae43b6eb546bb5b9283, type: 3}
   questType: 0
-  TargetItem: {fileID: 11400000, guid: 65f86aad809a0d24eac54304001c7fcb, type: 2}
+  TargetItem: {fileID: 11400000, guid: 64a5a1576faa07e4dad17e0662875016, type: 2}
   RequiredAmount: 1
