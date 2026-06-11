@@ -230,7 +230,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 41399715}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 417847922}
+        m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
+        m_MethodName: LoadLevelScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Egylvl2
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &41399715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,7 +442,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 45758794}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 417847922}
+        m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
+        m_MethodName: LoadLevelScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Cyberpunk 1
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &45758794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2405,18 +2429,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234718520}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2134296780}
+  m_Father: {fileID: 1144785282}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 163.54, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &234718522
 MonoBehaviour:
@@ -2946,7 +2970,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 310763765}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 417847922}
+        m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
+        m_MethodName: LoadLevelScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Cyberpunk 2
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &310763765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3423,7 +3459,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Level_3
+          m_StringArgument: MedLvl3
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &384208447
@@ -10116,7 +10152,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1049163376}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 417847922}
+        m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
+        m_MethodName: LoadLevelScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Cyberpunk 3
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1049163376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11443,6 +11491,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1139609095}
   m_CullTransparentMesh: 1
+--- !u!1 &1144785281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1144785282}
+  - component: {fileID: 1144785284}
+  - component: {fileID: 1144785283}
+  m_Layer: 5
+  m_Name: ChronoFrame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1144785282
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144785281}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 234718521}
+  m_Father: {fileID: 2134296780}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 7.78, y: 2.8}
+  m_SizeDelta: {x: 235.4, y: 54}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1144785283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144785281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c3c5e0e917f74ca419c0603c088f251e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1144785284
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144785281}
+  m_CullTransparentMesh: 1
 --- !u!1 &1145195207
 GameObject:
   m_ObjectHideFlags: 0
@@ -11538,7 +11663,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Level_1
+          m_StringArgument: MedLvl1
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1145195210
@@ -13878,7 +14003,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1372614278}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 417847922}
+        m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
+        m_MethodName: LoadLevelScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Egylvl2
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1372614278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16585,7 +16722,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1731749319}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 417847922}
+        m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
+        m_MethodName: LoadLevelScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Cyberpunk3
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1731749319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17167,7 +17316,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: AntikMisir_Test
+          m_StringArgument: Egylvl1
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1810349414
@@ -19351,7 +19500,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1964357059}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 417847922}
+        m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
+        m_MethodName: LoadLevelScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MedLvl3
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1964357059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19852,7 +20013,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Level_2
+          m_StringArgument: MedLvl2
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1987855414
@@ -20393,7 +20554,7 @@ MonoBehaviour:
   CurrentLockedTiles: []
   CurrentUnlockedSceneLockedTiles: []
   CurrentTimeCredits: 0
-  CurrentChronoCharge: 20
+  CurrentChronoCharge: 100
 --- !u!4 &2079014815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1315446285023241263, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
@@ -20779,7 +20940,7 @@ RectTransform:
   m_LocalScale: {x: 1.1326, y: 1.1326, z: 1.1326}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 234718521}
+  - {fileID: 1144785282}
   m_Father: {fileID: 893615860}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20887,7 +21048,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2140767464}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 417847922}
+        m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
+        m_MethodName: LoadLevelScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Egylvl2
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2140767464
 MonoBehaviour:
   m_ObjectHideFlags: 0

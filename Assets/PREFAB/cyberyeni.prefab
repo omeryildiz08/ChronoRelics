@@ -198,10 +198,10 @@ MonoBehaviour:
   GridPosition: {x: 0, y: 0}
   objectYOffset: 0.8
   StartLocked: 0
-  MyMeshRenderer: {fileID: 0}
+  MyMeshRenderer: {fileID: 201061349012356571}
   LockedMaterial: {fileID: 2100000, guid: b27c302398e412448a2ba33169d1d2e1, type: 2}
-  NormalMaterial: {fileID: 0}
-  UnlockableMaterial: {fileID: 0}
+  NormalMaterial: {fileID: -876546973899608171, guid: 875313aba6147624dad1133c024cbc86, type: 3}
+  UnlockableMaterial: {fileID: 2100000, guid: 0e18b254037c9d44582cbc59b839a444, type: 2}
   unlockAnimationSeconds: 0.45
   unlockShrinkScaleMultiplier: 0.72
   highlightOverlay: {fileID: 0}
