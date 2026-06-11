@@ -3809,6 +3809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionPanel: {fileID: 1177229125}
+  selectionPanelAnimator: {fileID: 1177229129}
   feedbackText: {fileID: 942910183}
   timePeriodGroups:
   - PeriodId: Medieval
@@ -11564,6 +11565,7 @@ GameObject:
   - component: {fileID: 1148286910}
   - component: {fileID: 1148286912}
   - component: {fileID: 1148286911}
+  - component: {fileID: 1148286913}
   m_Layer: 5
   m_Name: MarketPanel
   m_TagString: Untagged
@@ -11632,6 +11634,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148286909}
   m_CullTransparentMesh: 1
+--- !u!114 &1148286913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148286909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d33a8a9db33526439089fa93337a66d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelRect: {fileID: 0}
+  sourceButton: {fileID: 1197675486}
+  useSourceButtonAsClosedPosition: 0
+  closedOffset: {x: 0, y: -220}
+  openDuration: 0.25
+  closeDuration: 0.18
+  openEase: 27
+  closeEase: 8
+  useUnscaledTime: 1
+  closedScaleMultiplier: {x: 0.7, y: 0.7, z: 1}
+  animateFade: 1
 --- !u!4 &1148911675 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1315446285023241263, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
@@ -11981,6 +12006,7 @@ GameObject:
   - component: {fileID: 1177229126}
   - component: {fileID: 1177229128}
   - component: {fileID: 1177229127}
+  - component: {fileID: 1177229129}
   m_Layer: 5
   m_Name: LevelSelectPanel
   m_TagString: Untagged
@@ -12058,6 +12084,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177229125}
   m_CullTransparentMesh: 1
+--- !u!114 &1177229129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177229125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d33a8a9db33526439089fa93337a66d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelRect: {fileID: 0}
+  sourceButton: {fileID: 0}
+  useSourceButtonAsClosedPosition: 0
+  closedOffset: {x: 0, y: -220}
+  openDuration: 0.25
+  closeDuration: 0.18
+  openEase: 27
+  closeEase: 8
+  useUnscaledTime: 1
+  closedScaleMultiplier: {x: 0.7, y: 0.7, z: 1}
+  animateFade: 1
 --- !u!4 &1182799314 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1315446285023241263, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
@@ -15021,6 +15070,7 @@ MonoBehaviour:
   marketItemUIPrefab: {fileID: 3262975391418618887, guid: 19cf3294888420843b42055333b9c6d8, type: 3}
   feedbackText: {fileID: 1975564093}
   marketPanel: {fileID: 1148286909}
+  marketPanelAnimator: {fileID: 0}
   selectedObject: {fileID: 0}
   sellZoneRect: {fileID: 252698080}
   sellZoneVisual: {fileID: 252698079}

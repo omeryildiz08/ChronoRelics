@@ -28,6 +28,7 @@ public class LevelSelector : MonoBehaviour
 
     [Header("UI Referanslari")]
     public GameObject selectionPanel;
+    public UIPanelAnimator selectionPanelAnimator;
     public TextMeshProUGUI feedbackText;
 
     [Header("Zaman Dilimi Secimi")]
@@ -87,22 +88,41 @@ public class LevelSelector : MonoBehaviour
     {
         if (selectionPanel != null)
         {
-            bool isActive = selectionPanel.activeSelf;
+            UIPanelAnimator panelAnimator = GetSelectionPanelAnimator();
+            bool isActive = panelAnimator != null ? panelAnimator.IsVisible : selectionPanel.activeSelf;
             bool shouldShow = !isActive;
-            selectionPanel.SetActive(shouldShow);
 
             if (shouldShow)
             {
-                if (showDefaultTimePeriodOnPanelOpen && activeTimePeriodIndex < 0)
-                {
-                    SelectDefaultTimePeriod();
-                }
+                PreparePanelForShow();
 
-                BringTimePeriodButtonsToFront();
+                if (panelAnimator != null)
+                {
+                    panelAnimator.Show(BringTimePeriodButtonsToFront);
+                }
+                else
+                {
+                    selectionPanel.SetActive(true);
+                }
             }
-            else if (hideLevelGroupsOnPanelClose)
+            else if (panelAnimator != null)
             {
-                HideAllTimePeriodGroups();
+                panelAnimator.Hide(() =>
+                {
+                    if (hideLevelGroupsOnPanelClose)
+                    {
+                        HideAllTimePeriodGroups();
+                    }
+                });
+            }
+            else
+            {
+                selectionPanel.SetActive(false);
+
+                if (hideLevelGroupsOnPanelClose)
+                {
+                    HideAllTimePeriodGroups();
+                }
             }
         }
     }
@@ -199,7 +219,7 @@ public class LevelSelector : MonoBehaviour
             Debug.Log($"[LevelSelector] SelectTimePeriod index={index}, period='{GetPeriodDebugName(timePeriodGroups[index])}'.");
         }
 
-        if (selectionPanel != null && !selectionPanel.activeSelf)
+        if (selectionPanel != null && !selectionPanel.activeSelf && GetSelectionPanelAnimator() == null)
         {
             selectionPanel.SetActive(true);
         }
@@ -278,6 +298,32 @@ public class LevelSelector : MonoBehaviour
         {
             selectedPeriodTitle.text = string.Empty;
         }
+    }
+
+    private void PreparePanelForShow()
+    {
+        if (showDefaultTimePeriodOnPanelOpen && activeTimePeriodIndex < 0)
+        {
+            SelectDefaultTimePeriod();
+        }
+
+        BringTimePeriodButtonsToFront();
+    }
+
+    private UIPanelAnimator GetSelectionPanelAnimator()
+    {
+        if (selectionPanelAnimator != null)
+        {
+            return selectionPanelAnimator;
+        }
+
+        if (selectionPanel == null)
+        {
+            return null;
+        }
+
+        selectionPanelAnimator = selectionPanel.GetComponent<UIPanelAnimator>();
+        return selectionPanelAnimator;
     }
 
     private GameObject GetLevelGroupObject(TimePeriodLevelGroup group)

@@ -14,6 +14,7 @@ public class MarketManager : MonoBehaviour
     public GameObject marketItemUIPrefab;
     public TextMeshProUGUI feedbackText;
     public GameObject marketPanel;
+    public UIPanelAnimator marketPanelAnimator;
 
     [Header("Sell State")]
     public MergeableObject selectedObject;
@@ -247,8 +248,14 @@ public class MarketManager : MonoBehaviour
     {
         if (marketPanel == null) return;
 
-        bool isActive = marketPanel.activeSelf;
-        marketPanel.SetActive(!isActive);
+        UIPanelAnimator panelAnimator = GetMarketPanelAnimator();
+        if (panelAnimator != null)
+        {
+            panelAnimator.Toggle();
+            return;
+        }
+
+        marketPanel.SetActive(!marketPanel.activeSelf);
     }
 
     public void SetSellZoneActive(bool isActive)
@@ -257,5 +264,21 @@ public class MarketManager : MonoBehaviour
         {
             sellZoneVisual.SetActive(isActive);
         }
+    }
+
+    private UIPanelAnimator GetMarketPanelAnimator()
+    {
+        if (marketPanelAnimator != null)
+        {
+            return marketPanelAnimator;
+        }
+
+        if (marketPanel == null)
+        {
+            return null;
+        }
+
+        marketPanelAnimator = marketPanel.GetComponent<UIPanelAnimator>();
+        return marketPanelAnimator;
     }
 }
