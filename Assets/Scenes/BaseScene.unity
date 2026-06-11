@@ -6486,7 +6486,7 @@ MonoBehaviour:
   maxZ: 5
   backgroundPlane: {fileID: 1354177913}
   moveBackgroundWithCamera: 1
-  backgroundFollowMultiplier: 1
+  backgroundFollowMultiplier: 0.6
   backgroundFollowX: 1
   backgroundFollowZ: 1
 --- !u!1 &963702112
