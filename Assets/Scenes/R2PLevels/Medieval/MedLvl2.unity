@@ -5915,7 +5915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetItem: {fileID: 11400000, guid: 65f86aad809a0d24eac54304001c7fcb, type: 2}
-  RewardItem: {fileID: 11400000, guid: 10fe76168a0881a43b0f0dad6cc85e6e, type: 2}
+  RewardItem: {fileID: 11400000, guid: b2117c6a94fb7a244b95230dae7e6d72, type: 2}
   ChronoChargeReward: 5
   WinPanel: {fileID: 118142370}
   levelCompleteUI: {fileID: 0}
