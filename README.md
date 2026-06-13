@@ -1,6 +1,6 @@
-# eMERGEncy
+# Chrono Relics
 
-**eMERGEncy**, zaman yolculuğu teması üzerine kurulu, izometrik bakış açısına sahip bir **Merge-3 puzzle / casual adventure** oyunudur. Oyuncu, farklı çağlara ait objeleri birleştirerek yeni nesneler üretir, zaman taşlarını toplar ve karakterin kendi zamanına geri dönebilmesi için gerekli hikâye parçalarını keşfeder.
+**Chrono Relics**, zaman yolculuğu teması üzerine kurulu, izometrik bakış açısına sahip bir **Merge-3 puzzle / casual adventure** oyunudur. Oyuncu, farklı çağlara ait objeleri birleştirerek yeni nesneler üretir, zaman taşlarını toplar ve karakterin kendi zamanına geri dönebilmesi için gerekli hikâye parçalarını keşfeder.
 
 Oyunun temel amacı, klasik merge mekaniğini yalnızca dekorasyon veya kaynak toplama odaklı kullanmak yerine, **hikâye ilerleyişi**, **zaman yolculuğu** ve **ana üs geliştirme** sistemiyle birleştirmektir.
 
@@ -46,11 +46,11 @@ Bölümlerden kazanılan özel objeler, oyuncunun ana üssüne taşınır. Oyunc
 
 Main Base sistemi şu amaçlara hizmet eder:
 
-- Oyuncunun ilerlemesini görsel olarak temsil etmek
-- Hikâye parçalarını açmak
-- Yeni zaman taşlarına ulaşmak
-- Üssü geliştirmek
-- Daha geniş grid alanlarının kilidini açmak
+* Oyuncunun ilerlemesini görsel olarak temsil etmek
+* Hikâye parçalarını açmak
+* Yeni zaman taşlarına ulaşmak
+* Üssü geliştirmek
+* Daha geniş grid alanlarının kilidini açmak
 
 ---
 
@@ -82,10 +82,10 @@ Anomaly Rift, grid üzerinde ortaya çıkabilen özel bir zaman bozulması siste
 
 Anomaly Rift etkileri şunlar olabilir:
 
-- Açık bir gridi kilitli hale getirmek
-- Kapalı griddeki objenin yerini değiştirmek
-- Farklı zamana ait işlevsiz bir obje oluşturmak
-- Başka bir gride ışınlanmak
+* Açık bir gridi kilitli hale getirmek
+* Kapalı griddeki objenin yerini değiştirmek
+* Farklı zamana ait işlevsiz bir obje oluşturmak
+* Başka bir gride ışınlanmak
 
 ### Quest System
 
@@ -97,14 +97,14 @@ Ana üs tarafında ise quest sistemi, oyuncuya hangi yönde ilerlemesi gerektiğ
 
 ## 🎨 Art Style
 
-eMERGEncy, **low-poly** ve **hand-painted texture** stilini benimser. Oyunun görsel dili sade, okunabilir ve izometrik kamera açısına uygun olacak şekilde tasarlanmıştır.
+**Chrono Relics**, **low-poly** ve **hand-painted texture** stilini benimser. Oyunun görsel dili sade, okunabilir ve izometrik kamera açısına uygun olacak şekilde tasarlanmıştır.
 
 Görsel hedef:
 
-- Renkli ve anlaşılır çevre tasarımları
-- Zaman dönemlerine göre değişen objeler
-- İzometrik grid yapısına uygun modeller
-- Casual oyuncular için okunabilir ve yumuşak bir atmosfer
+* Renkli ve anlaşılır çevre tasarımları
+* Zaman dönemlerine göre değişen objeler
+* İzometrik grid yapısına uygun modeller
+* Casual oyuncular için okunabilir ve yumuşak bir atmosfer
 
 ---
 
@@ -112,13 +112,13 @@ Görsel hedef:
 
 Planlanan hedef platformlar:
 
-- PC
-- Mobile
+* PC
+* Mobile
 
 Planlanan yayın platformları:
 
-- Steam
-- Google Play Store
+* Steam
+* Google Play Store
 
 ---
 
@@ -128,16 +128,16 @@ Oyuncu, mouse veya dokunmatik ekran kullanarak objeleri kontrol eder.
 
 PC için temel kontrol:
 
-- Sol tık ile objeyi tutma
-- Objeyi grid üzerinde sürükleme
-- Uygun alana bırakma
-- Aynı objelerle merge işlemi yapma
+* Sol tık ile objeyi tutma
+* Objeyi grid üzerinde sürükleme
+* Uygun alana bırakma
+* Aynı objelerle merge işlemi yapma
 
 Mobil için temel kontrol:
 
-- Dokunarak objeyi seçme
-- Sürükleyerek taşıma
-- Uygun grid alanına bırakma
+* Dokunarak objeyi seçme
+* Sürükleyerek taşıma
+* Uygun grid alanına bırakma
 
 ---
 
@@ -163,3 +163,4 @@ Objeyi base üzerinde kullan
 Hikâyeyi ve yeni alanları aç
 ↓
 Yeni zaman dilimine ilerle
+```
