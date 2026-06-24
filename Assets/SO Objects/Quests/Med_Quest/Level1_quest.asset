@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level1_quest
   m_EditorClassIdentifier: 
   Description: 1 adet gurz uret
-  Icon: {fileID: 21300000, guid: 5d00da692c997ae43b6eb546bb5b9283, type: 3}
+  Icon: {fileID: 21300000, guid: 54824c199e1b4cb4abe674a2f93ca29c, type: 3}
   questType: 0
   TargetItem: {fileID: 11400000, guid: 65f86aad809a0d24eac54304001c7fcb, type: 2}
   RequiredAmount: 1

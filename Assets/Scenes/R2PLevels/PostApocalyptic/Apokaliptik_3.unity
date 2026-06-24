@@ -583,6 +583,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3512754096719632316, guid: e1e4f4bd1513118458e25e489e0a6566, type: 3}
+      propertyPath: StartLocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3512754096719632316, guid: e1e4f4bd1513118458e25e489e0a6566, type: 3}
       propertyPath: GridPosition.x
       value: 3
       objectReference: {fileID: 0}
@@ -1619,6 +1623,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 690861d5303ac0149815e6d290c5c516, type: 2}
   - {fileID: 11400000, guid: 698f10b0bff49274aac306381acfc399, type: 2}
   - {fileID: 11400000, guid: 7c18b70b736b3494ea9268a37c67f06f, type: 2}
+  - {fileID: 11400000, guid: bbab679c46c283a48a368a126149d7d3, type: 2}
   CurrentInventory: []
   CurrentSavedObjects: []
   CurrentLockedTiles: []
@@ -3682,24 +3687,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802b6ce50eb25de4099806ba16bedf62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anomalyChance: 90
-  enableType1: 1
+  anomalyChance: 12
+  enableType1: 0
   riftEffectPrefab: {fileID: 193692, guid: 2aa1e7c21640d254492fa8035a6411e1, type: 3}
   persistentRiftEffectPrefab: {fileID: 1548498989132598, guid: beb57d582b696b645928b556533430b2, type: 3}
   enableType2: 1
   type2ActivationChance: 100
-  allowMultipleType2ActivationsPerMerge: 0
+  allowMultipleType2ActivationsPerMerge: 1
   initialAnomalyOrbTiles:
   - {fileID: 1410532161}
   keepOrbsWithinConfiguredTiles: 1
-  anomalyOrbEffectPrefab: {fileID: 1002791833856420708, guid: 408f383bc94c1af498472487de7816c3, type: 3}
-  lockOpenTileWeight: 0
-  swapLockedItemWeight: 0
+  anomalyOrbEffectPrefab: {fileID: 4362927759568543434, guid: 29ae23ae9e61bcb4e9f012385d032fc5, type: 3}
+  lockOpenTileWeight: 25
+  swapLockedItemWeight: 25
   spawnForeignItemWeight: 100
   teleportOrbWeight: 100
   foreignEraItems:
   - {fileID: 11400000, guid: 60a9c4157b82ab34bb4ed38f91b3f4c1, type: 2}
-  - {fileID: 11400000, guid: d261a03fd6e1f6f45b1db162b4f9f880, type: 2}
+  - {fileID: 11400000, guid: 690861d5303ac0149815e6d290c5c516, type: 2}
+  - {fileID: 11400000, guid: 635840e25ad9a1e4b825558643eb762d, type: 2}
+  - {fileID: 11400000, guid: d689709d54bddfc4daffe83385134fae, type: 2}
   verboseType2Logs: 1
   forcedType2Effect: 0
 --- !u!4 &1048309921

@@ -44,6 +44,7 @@ public class AnomalyManager : MonoBehaviour
     private readonly HashSet<Vector2Int> anomalyOrbPositions = new HashSet<Vector2Int>();
     private readonly Dictionary<Vector2Int, GameObject> anomalyOrbVisuals = new Dictionary<Vector2Int, GameObject>();
     private readonly HashSet<Vector2Int> configuredOrbTilePositions = new HashSet<Vector2Int>();
+    private bool warnedType2HasNoOrbs;
 
     public enum ForcedType2Effect
     {
@@ -194,23 +195,49 @@ public class AnomalyManager : MonoBehaviour
     {
         if (!enableType2) return;
         configuredOrbTilePositions.Clear();
+        anomalyOrbPositions.Clear();
+        warnedType2HasNoOrbs = false;
 
         for (int i = 0; i < initialAnomalyOrbTiles.Count; i++)
         {
             GridTileView tile = initialAnomalyOrbTiles[i];
             if (tile == null) continue;
 
-            configuredOrbTilePositions.Add(tile.GridPosition);
-            RegisterOrbAt(tile.GridPosition);
+            Vector2Int pos = tile.GridPosition;
+            configuredOrbTilePositions.Add(pos);
+
+            if (gridManager.IsValidPosition(pos))
+            {
+                gridManager.RegisterTile(tile, pos);
+            }
+
+            RegisterOrbAt(pos);
+        }
+
+        if (anomalyOrbPositions.Count == 0)
+        {
+            Debug.LogWarning("[Anomaly Type2] Enable Type 2 açık ama runtime'da hiç orb register edilemedi. Initial Anomaly Orb Tiles referanslarını ve GridPosition değerlerini kontrol et.");
+        }
+        else if (verboseType2Logs)
+        {
+            Debug.Log($"[Anomaly Type2] Registered orb count: {anomalyOrbPositions.Count}");
         }
     }
 
     private void RegisterOrbAt(Vector2Int pos)
     {
-        if (!gridManager.IsValidPosition(pos)) return;
+        if (!gridManager.IsValidPosition(pos))
+        {
+            Debug.LogWarning($"[Anomaly Type2] Orb GridPosition geçersiz: {pos}");
+            return;
+        }
 
         GridTileData tile = gridManager.grid[pos.x, pos.y];
-        if (tile.TileView == null) return;
+        if (tile.TileView == null)
+        {
+            Debug.LogWarning($"[Anomaly Type2] Orb tile grid'e kayıtlı değil: {pos}");
+            return;
+        }
         if (anomalyOrbPositions.Contains(pos)) return;
 
         anomalyOrbPositions.Add(pos);
@@ -226,7 +253,15 @@ public class AnomalyManager : MonoBehaviour
 
     private void TryTriggerType2()
     {
-        if (anomalyOrbPositions.Count == 0) return;
+        if (anomalyOrbPositions.Count == 0)
+        {
+            if (!warnedType2HasNoOrbs)
+            {
+                Debug.LogWarning("[Anomaly Type2] Trigger atlandı: kayıtlı anomaly orb yok.");
+                warnedType2HasNoOrbs = true;
+            }
+            return;
+        }
 
         List<Vector2Int> currentOrbs = new List<Vector2Int>(anomalyOrbPositions);
         if (!allowMultipleType2ActivationsPerMerge)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PostQuest2
   m_EditorClassIdentifier: 
   Description: produce 1 Mask
-  Icon: {fileID: 21300000, guid: 5d00da692c997ae43b6eb546bb5b9283, type: 3}
+  Icon: {fileID: 21300000, guid: 54824c199e1b4cb4abe674a2f93ca29c, type: 3}
   questType: 0
   TargetItem: {fileID: 11400000, guid: b72bc415a5817d14aae2afcd5ad85893, type: 2}
   RequiredAmount: 1
