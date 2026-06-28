@@ -2429,7 +2429,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51ce5c0b82dd789408a1b0795004dec8, type: 3}
   m_Name: 
@@ -4276,7 +4276,7 @@ MonoBehaviour:
   TargetItem: {fileID: 11400000, guid: 9289c3e6533911b4dafb436db96be34e, type: 2}
   RewardItem: {fileID: 11400000, guid: 9289c3e6533911b4dafb436db96be34e, type: 2}
   ChronoChargeReward: 20
-  WinPanel: {fileID: 0}
+  WinPanel: {fileID: 686744594}
   levelCompleteUI: {fileID: 0}
   BaseSceneName: BaseScene
   audioSource: {fileID: 1716809950}

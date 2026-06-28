@@ -10624,7 +10624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &851095217
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12417,7 +12417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &959853858
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16841,7 +16841,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1244990072
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26628,53 +26628,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a4cc341a63c2e54182ac0af385e86ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllGameItems:
-  - {fileID: 11400000, guid: 3c4ee50f7e6cf9f46a2e85dc116655d5, type: 2}
-  - {fileID: 11400000, guid: b2117c6a94fb7a244b95230dae7e6d72, type: 2}
-  - {fileID: 11400000, guid: c1300ac870f9ec642a7f2057a1a30bbc, type: 2}
-  - {fileID: 11400000, guid: d261a03fd6e1f6f45b1db162b4f9f880, type: 2}
-  - {fileID: 11400000, guid: 65f86aad809a0d24eac54304001c7fcb, type: 2}
-  - {fileID: 11400000, guid: 10fe76168a0881a43b0f0dad6cc85e6e, type: 2}
-  - {fileID: 11400000, guid: d689709d54bddfc4daffe83385134fae, type: 2}
-  - {fileID: 11400000, guid: 61abf00fab6ab704cabcd6c97dcef2cf, type: 2}
-  - {fileID: 11400000, guid: ede05ccae6e0817409abe15af8314881, type: 2}
-  - {fileID: 11400000, guid: 044a0b74a28408944a487b7706645120, type: 2}
-  - {fileID: 11400000, guid: 4a12ad6934628274baaf799eb643d0fe, type: 2}
-  - {fileID: 11400000, guid: 2dce7a834913c2141b7d576e846588cc, type: 2}
-  - {fileID: 11400000, guid: 182178c5671261d4994ca6ab00f5d3e8, type: 2}
-  - {fileID: 11400000, guid: b72bc415a5817d14aae2afcd5ad85893, type: 2}
-  - {fileID: 11400000, guid: e6a6ca6d43de28a41bb8a154dac970f8, type: 2}
-  - {fileID: 11400000, guid: 60a9c4157b82ab34bb4ed38f91b3f4c1, type: 2}
-  - {fileID: 11400000, guid: 071cb76b528d26f4ea319054b1d4c4f8, type: 2}
-  - {fileID: 11400000, guid: 8431b4f3581964c4bb7b281359c1d9af, type: 2}
-  - {fileID: 11400000, guid: 64a5a1576faa07e4dad17e0662875016, type: 2}
-  - {fileID: 11400000, guid: bbdc8dbc03225e5428600bd84c9a0040, type: 2}
-  - {fileID: 11400000, guid: ed42ccd3438eaa046b0c6655af069f7e, type: 2}
-  - {fileID: 11400000, guid: c77284b0fcab5bd499ed9421472c3c7d, type: 2}
-  - {fileID: 11400000, guid: 3b4f0bd5ac267fb458b3d754740796c7, type: 2}
-  - {fileID: 11400000, guid: 9289c3e6533911b4dafb436db96be34e, type: 2}
-  - {fileID: 11400000, guid: 8a4fc1f6af545ea4fa963fa30ffe1e84, type: 2}
-  - {fileID: 11400000, guid: 8c9bb9cb8de2f194085a9c74f4147dbe, type: 2}
-  - {fileID: 11400000, guid: 3f69ed529d00e714a8e37d62348f0291, type: 2}
-  - {fileID: 11400000, guid: ecc664366f8bf6240b6a33efa1360955, type: 2}
-  - {fileID: 11400000, guid: 635840e25ad9a1e4b825558643eb762d, type: 2}
-  - {fileID: 11400000, guid: 4171552b8f932f8489bd2076042c175c, type: 2}
-  - {fileID: 11400000, guid: bda6c6e38fc55e14886315bcc885a2c8, type: 2}
-  - {fileID: 11400000, guid: 5058777f61936b84890df4a70380c8ff, type: 2}
-  - {fileID: 11400000, guid: c0ac3c682c49dc446ae595cd085add1b, type: 2}
-  - {fileID: 11400000, guid: 746f6bdfaed5574408b8374efba55916, type: 2}
-  - {fileID: 11400000, guid: 2e90c517fa899e841892d022e7e7f7a8, type: 2}
-  - {fileID: 11400000, guid: 93cc2b61b25f947488abf615e3c41fd2, type: 2}
-  - {fileID: 11400000, guid: 690861d5303ac0149815e6d290c5c516, type: 2}
-  - {fileID: 11400000, guid: 698f10b0bff49274aac306381acfc399, type: 2}
-  - {fileID: 11400000, guid: 7c18b70b736b3494ea9268a37c67f06f, type: 2}
-  - {fileID: 11400000, guid: bbab679c46c283a48a368a126149d7d3, type: 2}
+  AllGameItems: []
   CurrentInventory: []
   CurrentSavedObjects: []
   CurrentLockedTiles: []
   CurrentUnlockedSceneLockedTiles: []
-  CurrentTimeCredits: 100
-  CurrentChronoCharge: 100
+  CurrentTimeCredits: 10
+  CurrentChronoCharge: 75
 --- !u!4 &2079014815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1315446285023241263, guid: f9f40904b10b80f499d7d4ce0e2eea14, type: 3}
